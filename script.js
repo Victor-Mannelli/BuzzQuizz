@@ -9,6 +9,7 @@ function searchQuizzes() {
 
 function processResponse(response) {
     quizzesOtherUsers = response.data;
+    console.log(quizzesOtherUsers[10]);
     renderQuizzes();
 }
 
@@ -16,7 +17,10 @@ function quizzesTagLi(quizzes) {
     let quizzesLI = '';
     quizzes.forEach(quizz => { 
         quizzesLI += `
-            <li>
+            <li class="quizz">
+                <div class="overlay">
+                    <h1>${quizz.title}</h1>
+                </div>
                 <img src="${quizz.image}" alt=""></img>
             </li>
         `;
