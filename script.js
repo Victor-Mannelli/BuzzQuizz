@@ -9,10 +9,22 @@ function searchQuizzes() {
     response.catch((error => console.log(`erro: ${error.response.data}`)));
 }
 
+function separateQuizzes(quizzes) {
+    let userQuizzesIds = localStorage.getItem('quizzes');
+    if (userQuizzesIds !== null) {
+        userQuizzesIds = JSON.parse(userQuizzesIds);
+        quizzes = quizzes.map(quizz => quizz.id);
+        console.log(quizzes);
+        quizzes.filter(id => userQuizzesIds.includes(id));
+        return quizzes;
+    } else {
+        return [];
+    }
+}
+
 function responseQuizzes(response) {
-    //modificar -> criar função para separar os quizzes
-    //console.log(quizzesOtherUsers[10]);
-    quizzesOtherUsers = response.data;
+    quizzesUser = separateQuizzes(response.data);
+    quizzesOtherUsers = response.data.filter(quizz => !(quizzesUser.includes(quizz.id)));
     renderQuizzes();
 }
 
@@ -46,7 +58,7 @@ function renderQuizzes() {
             <section class="user-quizzes">
                 <div>
                     <h1>Seus Quizzes</h1>
-                    <ion-icon name="add-circle-sharp"></ion-icon>
+                    <span onclick="addQuizz()"><ion-icon name="add-circle-sharp"></ion-icon><span>
                 </div>
                 <ul>${insertQuizzes(quizzesUser)}</ul>
             </section>
@@ -111,7 +123,6 @@ function insertQuestions(questions) {
 
 function renderQuizz(quizz) {
     const container = document.querySelector('container');
-    console.log(quizz);
     container.innerHTML = `
         <header>BuzzQuizz</header>
             <section class="header-quizz">
