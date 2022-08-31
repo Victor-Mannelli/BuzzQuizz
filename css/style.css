@@ -5,11 +5,12 @@
 }
 
 .container {
-    background-color: #fafafa;
+    background-color: #FAFAFA;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 header {
     position: fixed;
     top: 0px;
@@ -28,15 +29,17 @@ header {
     font-size: 37px;
     line-height: 43px;
 }
+
 main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 146px 195px 0px 195px;
+    width: 100%;
+    max-width: 1140px;
+    margin: 146px auto 0px auto;
 }
-.hidden {
-    display: none;
+
+section {
+    margin-bottom: 48px;
 }
+
 .creating-quizz {
     width: 100%;
     height: 181px;
@@ -47,8 +50,9 @@ main {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    margin-bottom: 77px;
+    margin: 77px 0px;
 }
+
 .creating-quizz p {
     display: flex;
     text-align: center;
@@ -58,6 +62,7 @@ main {
     line-height: 23px;
     color: #B9B9B9;
 }
+
 .creating-quizz button {   
     width: 151px;
     height: 40px;
@@ -69,21 +74,40 @@ main {
     line-height: 25px;
     color: #EC362D;
 }
-main h1 {
+
+.user-quizzes ion-icon {
+    font-size: 30px;
+    color: #EC362D;
+}
+
+section div {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+section h1 {
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
-    margin-bottom: 12px;
-}
-main ul {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-main li img {
-    margin: 0px 12px 12px 0px;
-    width: 340px;
-    height: 181px;
-    border-radius: 5px;
+    align-items: center;
 }
 
+section ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+section li {
+    margin: 6px 0px;
+    width: 340px;
+    height: 181px;
+}
+
+li img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
