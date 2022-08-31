@@ -6,6 +6,9 @@
 
 .container {
     background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 header {
     position: fixed;
@@ -31,10 +34,10 @@ main {
     justify-content: center;
     margin: 146px 195px 0px 195px;
 }
-.escondido {
+.hidden {
     display: none;
 }
-.criar-quizz {
+.creating-quizz {
     width: 100%;
     height: 181px;
     border: 1px dashed #D5D5D5;
@@ -46,7 +49,7 @@ main {
     align-items: center;
     margin-bottom: 77px;
 }
-.criar-quizz p {
+.creating-quizz p {
     display: flex;
     text-align: center;
     align-items: center;
@@ -55,7 +58,7 @@ main {
     line-height: 23px;
     color: #B9B9B9;
 }
-.criar-quizz button {   
+.creating-quizz button {   
     width: 151px;
     height: 40px;
     background: #FAFAFA;
@@ -75,9 +78,9 @@ main h1 {
 main ul {
     display: flex;
     flex-direction: row;
-   
+    flex-wrap: wrap;
 }
-main li img{
+main li img {
     margin: 0px 12px 12px 0px;
     width: 340px;
     height: 181px;
