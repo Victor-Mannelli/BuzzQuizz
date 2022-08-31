@@ -13,9 +13,7 @@ function separateQuizzes(quizzes) {
     let userQuizzesIds = localStorage.getItem('quizzes');
     if (userQuizzesIds !== null) {
         userQuizzesIds = JSON.parse(userQuizzesIds);
-        quizzes = quizzes.map(quizz => quizz.id);
-        console.log(quizzes);
-        quizzes.filter(id => userQuizzesIds.includes(id));
+        quizzes = quizzes.filter(quizze => userQuizzesIds.includes(quizze.id))
         return quizzes;
     } else {
         return [];
@@ -45,7 +43,6 @@ function insertQuizzes(quizzes) {
 
 function renderQuizzes() {
     const main = document.querySelector('main');
-    //quizzesUser = [quizzesOtherUsers[30]];
     if (quizzesUser.length === 0) {
         main.innerHTML = `
             <section class="creating-quizz">
@@ -143,4 +140,5 @@ function renderQuizz(quizz) {
 
 function addQuizz() {
     console.log("Relaxa, vai sair");
+    //localStorage.setItem('quizzes', `[${quizz.id}, ${quizz.id}, ...]`);
 }
