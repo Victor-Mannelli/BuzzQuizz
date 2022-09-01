@@ -131,7 +131,7 @@ function insertQuestions(questions) {
 function renderQuizz(quizz) {
   const container = document.querySelector("container");
   container.innerHTML = `
-        <header>BuzzQuizz</header>
+        <header onclick="HomeButton()">BuzzQuizz</header>
             <section class="header-quizz">
                 <div class="overlay">
                     <h1>${quizz.title}</h1>
@@ -168,9 +168,14 @@ function addQuizz() {
     `;
 }
 
+let newQuizzObject = {};
+let newQuizzTitle = "";
+let newQuizzUrl = "";
+let newQuestions = [];
+
 function proceedToQuestions() {
-  const newQuizzTitle = document.querySelector(".input-title").value;
-  const newQuizzUrl = document.querySelector(".input-url").value;
+  newQuizzTitle = document.querySelector(".input-title").value;
+  newQuizzUrl = document.querySelector(".input-url").value;
   const newQuizzQtty = document.querySelector(".input-question-qtty").value;
   const newQuizzLvl = document.querySelector(".input-lvl-qtty").value;
 
@@ -183,25 +188,24 @@ function proceedToQuestions() {
     newQuizzLvl >= 2
   ) {
     elementoScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
-
     for (let i = 0; i < newQuizzQtty; i++) {
-      elementoScreen.innerHTML += ` <div class="box">
+      elementoScreen.innerHTML += ` <div class="box pergunta${i + 1}">
         <ul>
             <h2>Pergunta ${i + 1}</h2>
-            <li><input class="input-title" placeholder="Texto da pergunta" type="text"></li>
-            <li><input class="input-url" placeholder="Cor de fundo da pergunta" type="text"></li>
+            <li><input class="input-q-text" placeholder="Texto da pergunta" type="text"></li>
+            <li><input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text"></li>
             <h2>Resposta correta</h2>
-            <li><input class="input-question-qtty" placeholder="Resposta correta" type="text"></li>
-            <li><input class="input-lvl-qtty" placeholder="URL da imagem" type="text"></li>
+            <li><input class="input-correct-text" placeholder="Resposta correta" type="text"></li>
+            <li><input class="input-correct-url" placeholder="URL da imagem" type="text"></li>
             <h2>Respostas incorretas</h2>
-            <li><input class="input-question-qtty" placeholder="Resposta incorreta 1" type="text"></li>
-            <li><input class="input-lvl-qtty" placeholder="URL da imagem 1" type="text"></li>
+            <li><input class="input-wrong-text1" placeholder="Resposta incorreta 1" type="text"></li>
+            <li><input class="input-wrong-url1" placeholder="URL da imagem 1" type="text"></li>
             <br>
-            <li><input class="input-question-qtty" placeholder="Resposta incorreta 2" type="text"></li>
-            <li><input class="input-lvl-qtty" placeholder="URL da imagem 2" type="text"></li>
+            <li><input class="input-wrong-text2" placeholder="Resposta incorreta 2" type="text"></li>
+            <li><input class="input-wrong-url2" placeholder="URL da imagem 2" type="text"></li>
             <br>
-            <li><input class="input-question-qtty" placeholder="Resposta incorreta 3" type="text"></li>
-            <li><input class="input-lvl-qtty" placeholder="URL da imagem 3" type="text"></li>
+            <li><input class="input-wrong-text3" placeholder="Resposta incorreta 3" type="text"></li>
+            <li><input class="input-wrong-url3" placeholder="URL da imagem 3" type="text"></li>
             
           </ul>
       </div>
@@ -217,10 +221,53 @@ function proceedToQuestions() {
 
 function proceedToLevels() {
   elementoScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
+
+  for (let i = 0; i < newQuizzQtty; i++) {
+    elementoBox = document.querySelector(`.pergunta${i + 1}`);
+
+    const qText = elementoBox.querySelector(".input-q-text").value;
+    const qBgColor = elementoBox.querySelector(".input-q-bgcolor").value;
+
+    const aCorrect = elementoBox.querySelector(".input-correct-text").value;
+    const aCorrectUrl = elementoBox.querySelector(".input-correct-url").value;
+  }
 }
 
 // Apenas para saber o modelo do post do quizz:
-let arrayDeTeste = {
+
+function createObject() {
+  let objCreation = {
+    title: newQuizzTitle,
+    image: newQuizzUrl,
+    questions: [
+      {
+        title: pergunta1.titulo,
+        color: pergunta1.bgcolor,
+        answers: [
+          {
+            //pergunta 1
+            text: correct.text,
+            image: correct.url,
+            isCorrectAnswer: true,
+          },
+          {
+            text: incorrect.text,
+            image: incorrect.url,
+            isCorrectAnswer: false,
+          },
+          {
+            text: incorrect.text,
+            image: incorrect.url,
+            isCorrectAnswer: false,
+          },
+        ],
+      },
+    ],
+  };
+}
+
+// template do objeto
+let objDeTeste = {
   title: "Título do quizz",
   image: "https://http.cat/411.jpg",
   questions: [
