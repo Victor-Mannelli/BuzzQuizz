@@ -101,6 +101,7 @@ section ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, 340px);
   justify-content: space-between;
+  
 }
 
 .quizz {
@@ -176,6 +177,10 @@ section ul {
   font-size: 39px;
   color: #ffffff;
 }
+.questions ul {
+  display: flex;
+  flex-direction: column;
+}
 
 .question {
   width: 759px;
@@ -215,10 +220,15 @@ section ul {
   height: 100%;
   width: 100%;
 }
+.answers ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 .answer {
-  width: 45%;
-  height: 45%;
+  width: 48.5%;
+  height: 48.5%;
 }
 
 .answer img {

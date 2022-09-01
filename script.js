@@ -139,7 +139,7 @@ function renderQuizz(quizz) {
                 <img src="${quizz.image}" alt="${quizz.title}"></img>
             </section>
         <main>
-            <section>
+            <section class="questions">
                 <ul>${insertQuestions(quizz.questions)}</ul>
             </section>
         </main>
