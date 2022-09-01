@@ -63,7 +63,7 @@ function renderQuizzes() {
             <section class="user-quizzes">
                 <div>
                     <h1>Seus Quizzes</h1>
-                    <span onclick="addQuizz()"><ion-icon name="add-circle-sharp"></ion-icon><span>
+                    <span onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
                 </div>
                 <ul>${insertQuizzes(quizzesUser)}</ul>
             </section>
@@ -155,7 +155,7 @@ let elementoScreen = "";
 
 
 function addQuizzInfo() {
-
+  scroll(0, 0);
 
   elementoMain.innerHTML = `<div class="creation-screen">
   <h1>Comece pelo começo</h1>
@@ -227,6 +227,8 @@ function addQuizzQuestions() {
 
 function addQuizzLevels() {
   // Armazenar os valores dos inputs para cada pergunta e criar um objeto
+  scroll(0, 0);
+
   for (let i = 0; i < newQuizzQtty; i++) {
     const qAnswers = [];
 
@@ -289,7 +291,7 @@ function addQuizzLevels() {
           <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
           <li><input class="input-lvl-%" placeholder="% de acerto mínima" type="text"></li>
           <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
-          <li><input class="input-lvl-text" placeholder="Resposta incorreta 1" type="text"></li>
+          <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
           
         </ul>
     </div>
@@ -299,99 +301,39 @@ function addQuizzLevels() {
   elementoScreen.innerHTML += `<button onclick="addQuizzFinal()">Finalizar Quizz</button>`
 }
 
-function addQuizzFinal() {
+const newQuizzLvlArray = [];
 
+function addQuizzFinal() {
+  // pegar infos dos níveis e guardar num array
+  scroll(0, 0);
+
+  for (let i = 0; i < newQuizzLvl; i++) {
+    const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
+    const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-%`).value);
+    const lvlImgUrl = document.querySelector(`.level${i + 1} .input-lvl-url`).value;
+    const lvlText = document.querySelector(`.level${i + 1} .input-lvl-text`).value;
+
+    newQuizzLvlArray.push({
+      title: lvlTitle,
+      image: lvlImgUrl,
+      text: lvlText,
+      minValue: lvlPercent
+    })
+  }
+  console.log(newQuizzLvlArray);
+  createObject()
 }
+
+
 // Apenas para saber o modelo do post do quizz:
 
+
 function createObject() {
-  let objCreation = {
+  newQuizzObject = {
     title: newQuizzTitle,
     image: newQuizzUrl,
     questions: newQuestions,
-    levels: [
-      {
-        title: "Título do nível 1",
-        image: "https://http.cat/411.jpg",
-        text: "Descrição do nível 1",
-        minValue: 0,
-      },
-      {
-        title: "Título do nível 2",
-        image: "https://http.cat/412.jpg",
-        text: "Descrição do nível 2",
-        minValue: 50,
-      },
-    ],
+    levels: newQuizzLvlArray
   };
 }
 
-// template do objeto
-let objDeTeste = {
-  title: "Título do quizz",
-  image: "https://http.cat/411.jpg",
-  questions: [
-    {
-      title: "Título da pergunta 1",
-      color: "#123456",
-      answers: [
-        {
-          text: "Texto da resposta 1",
-          image: "https://http.cat/411.jpg",
-          isCorrectAnswer: true,
-        },
-        {
-          text: "Texto da resposta 2",
-          image: "https://http.cat/412.jpg",
-          isCorrectAnswer: false,
-        },
-      ],
-    },
-    {
-      title: "Título da pergunta 2",
-      color: "#123456",
-      answers: [
-        {
-          text: "Texto da resposta 1",
-          image: "https://http.cat/411.jpg",
-          isCorrectAnswer: true,
-        },
-        {
-          text: "Texto da resposta 2",
-          image: "https://http.cat/412.jpg",
-          isCorrectAnswer: false,
-        },
-      ],
-    },
-    {
-      title: "Título da pergunta 3",
-      color: "#123456",
-      answers: [
-        {
-          text: "Texto da resposta 1",
-          image: "https://http.cat/411.jpg",
-          isCorrectAnswer: true,
-        },
-        {
-          text: "Texto da resposta 2",
-          image: "https://http.cat/412.jpg",
-          isCorrectAnswer: false,
-        },
-      ],
-    },
-  ],
-  levels: [
-    {
-      title: "Título do nível 1",
-      image: "https://http.cat/411.jpg",
-      text: "Descrição do nível 1",
-      minValue: 0,
-    },
-    {
-      title: "Título do nível 2",
-      image: "https://http.cat/412.jpg",
-      text: "Descrição do nível 2",
-      minValue: 50,
-    },
-  ],
-};
