@@ -1,6 +1,10 @@
 let quizzesUser = [];
 let quizzesOtherUsers = [];
 
+function HomeButton() {
+  location.reload();
+}
+
 // SCREEN 1
 
 function searchQuizzes() {
