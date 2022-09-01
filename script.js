@@ -1,6 +1,10 @@
 let quizzesUser = [];
 let quizzesOtherUsers = [];
 
+function HomeButton() {
+    location.reload()
+}
+
 // SCREEN 1
 
 function searchQuizzes() {
@@ -142,3 +146,4 @@ function addQuizz() {
     console.log("Relaxa, vai sair");
     //localStorage.setItem('quizzes', `[${quizz.id}, ${quizz.id}, ...]`);
 }
+
