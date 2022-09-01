@@ -172,12 +172,14 @@ let newQuizzObject = {};
 let newQuizzTitle = "";
 let newQuizzUrl = "";
 let newQuestions = [];
+let newQuizzQtty = 0;
+let newQuizzLvl = 0;
 
 function proceedToQuestions() {
   newQuizzTitle = document.querySelector(".input-title").value;
   newQuizzUrl = document.querySelector(".input-url").value;
-  const newQuizzQtty = document.querySelector(".input-question-qtty").value;
-  const newQuizzLvl = document.querySelector(".input-lvl-qtty").value;
+  newQuizzQtty = document.querySelector(".input-question-qtty").value;
+  newQuizzLvl = document.querySelector(".input-lvl-qtty").value;
 
   elementoScreen = document.querySelector(".creation-screen");
 
@@ -220,17 +222,61 @@ function proceedToQuestions() {
 }
 
 function proceedToLevels() {
-  elementoScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
-
+  // Armazenar os valores dos inputs para cada pergunta e criar um objeto
   for (let i = 0; i < newQuizzQtty; i++) {
-    elementoBox = document.querySelector(`.pergunta${i + 1}`);
+    const qAnswers = [];
 
-    const qText = elementoBox.querySelector(".input-q-text").value;
-    const qBgColor = elementoBox.querySelector(".input-q-bgcolor").value;
+    const qText = document.querySelector(`.pergunta${i + 1} .input-q-text`).value;
+    const qBgColor = document.querySelector(`.pergunta${i + 1} .input-q-bgcolor`).value;
 
-    const aCorrect = elementoBox.querySelector(".input-correct-text").value;
-    const aCorrectUrl = elementoBox.querySelector(".input-correct-url").value;
+    const aCorrect = document.querySelector(`.pergunta${i + 1} .input-correct-text`).value;
+    const aCorrectUrl = document.querySelector(`.pergunta${i + 1} .input-correct-url`).value;
+
+    qAnswers.push({
+      text: aCorrect,
+      image: aCorrectUrl,
+      isCorrectAnswer: true,
+    });
+
+    const incorrectText1 = document.querySelector(`.pergunta${i + 1} .input-wrong-text1`).value;
+    const incorrectUrl1 = document.querySelector(`.pergunta${i + 1} .input-wrong-url1`).value;
+
+    qAnswers.push({
+      text: incorrectText1,
+      image: incorrectUrl1,
+      isCorrectAnswer: false,
+    });
+
+    if (document.querySelector(`.pergunta${i + 1} .input-wrong-text2`).value !== "") {
+      const incorrectText2 = document.querySelector(`.pergunta${i + 1} .input-wrong-text2`).value;
+      const incorrectUrl2 = document.querySelector(`.pergunta${i + 1} .input-wrong-url2`).value;
+
+      qAnswers.push({
+        text: incorrectText2,
+        image: incorrectUrl2,
+        isCorrectAnswer: false,
+      });
+    }
+    if (document.querySelector(`.pergunta${i + 1} .input-wrong-text3`).value !== "") {
+      const incorrectText3 = document.querySelector(`.pergunta${i + 1} .input-wrong-text3`).value;
+      const incorrectUrl3 = document.querySelector(`.pergunta${i + 1} .input-wrong-url3`).value;
+
+      qAnswers.push({
+        text: incorrectText3,
+        image: incorrectUrl3,
+        isCorrectAnswer: false,
+      });
+    }
+
+    newQuestions.push({
+      title: qText,
+      color: qBgColor,
+      answers: qAnswers,
+    });
   }
+  console.log(newQuestions);
+
+  elementoScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
 }
 
 // Apenas para saber o modelo do post do quizz:
@@ -241,7 +287,7 @@ function createObject() {
     image: newQuizzUrl,
     questions: [
       {
-        title: pergunta1.titulo,
+        title: pergunta1.texto,
         color: pergunta1.bgcolor,
         answers: [
           {
