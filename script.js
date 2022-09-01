@@ -55,7 +55,7 @@ function renderQuizzes() {
     main.innerHTML = `
             <section class="creating-quizz">
                 <p>Você não criou nenhum <br> quizz ainda :(</p>
-                <button onclick="addQuizz()">Criar Quizz</button>
+                <button onclick="addQuizzInfo()">Criar Quizz</button>
             </section>
         `;
   } else {
@@ -147,11 +147,15 @@ function renderQuizz(quizz) {
 }
 
 // SCREEN 3
+// os Quizzzes do usuário devem ser guardados assim:
+//localStorage.setItem('quizzes', `[${quizz.id}, ${quizz.id}, ...]`);
+
 const elementoMain = document.querySelector("main");
 let elementoScreen = "";
-function addQuizz() {
-  console.log("Relaxa, vai sair");
-  //localStorage.setItem('quizzes', `[${quizz.id}, ${quizz.id}, ...]`);
+
+
+function addQuizzInfo() {
+
 
   elementoMain.innerHTML = `<div class="creation-screen">
   <h1>Comece pelo começo</h1>
@@ -163,7 +167,7 @@ function addQuizz() {
         <li><input class="input-lvl-qtty" placeholder="Quantidade de níveis do quizz" type="text"></li>
         </ul>
     </div>
-    <button onclick="proceedToQuestions()">Prosseguir para criar perguntas</button>
+    <button onclick="addQuizzQuestions()">Prosseguir para criar perguntas</button>
     </div>
     `;
 }
@@ -175,7 +179,7 @@ let newQuestions = [];
 let newQuizzQtty = 0;
 let newQuizzLvl = 0;
 
-function proceedToQuestions() {
+function addQuizzQuestions() {
   newQuizzTitle = document.querySelector(".input-title").value;
   newQuizzUrl = document.querySelector(".input-url").value;
   newQuizzQtty = document.querySelector(".input-question-qtty").value;
@@ -214,14 +218,14 @@ function proceedToQuestions() {
     `;
     }
 
-    elementoScreen.innerHTML += `<button onclick="proceedToLevels()">Prosseguir para criar níveis</button>
+    elementoScreen.innerHTML += `<button onclick="addQuizzLevels()">Prosseguir para criar níveis</button>
       `;
   } else {
     alert("Favor preencher os dados corretamente!");
   }
 }
 
-function proceedToLevels() {
+function addQuizzLevels() {
   // Armazenar os valores dos inputs para cada pergunta e criar um objeto
   for (let i = 0; i < newQuizzQtty; i++) {
     const qAnswers = [];
@@ -277,36 +281,46 @@ function proceedToLevels() {
   console.log(newQuestions);
 
   elementoScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
+
+  for (let i = 0; i < newQuizzLvl; i++) {
+    elementoScreen.innerHTML += ` <div class="box level${i + 1}">
+      <ul>
+          <h2>Nível ${i + 1}</h2>
+          <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
+          <li><input class="input-lvl-%" placeholder="% de acerto mínima" type="text"></li>
+          <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
+          <li><input class="input-lvl-text" placeholder="Resposta incorreta 1" type="text"></li>
+          
+        </ul>
+    </div>
+  `;
+  }
+
+  elementoScreen.innerHTML += `<button onclick="addQuizzFinal()">Finalizar Quizz</button>`
 }
 
+function addQuizzFinal() {
+
+}
 // Apenas para saber o modelo do post do quizz:
 
 function createObject() {
   let objCreation = {
     title: newQuizzTitle,
     image: newQuizzUrl,
-    questions: [
+    questions: newQuestions,
+    levels: [
       {
-        title: pergunta1.texto,
-        color: pergunta1.bgcolor,
-        answers: [
-          {
-            //pergunta 1
-            text: correct.text,
-            image: correct.url,
-            isCorrectAnswer: true,
-          },
-          {
-            text: incorrect.text,
-            image: incorrect.url,
-            isCorrectAnswer: false,
-          },
-          {
-            text: incorrect.text,
-            image: incorrect.url,
-            isCorrectAnswer: false,
-          },
-        ],
+        title: "Título do nível 1",
+        image: "https://http.cat/411.jpg",
+        text: "Descrição do nível 1",
+        minValue: 0,
+      },
+      {
+        title: "Título do nível 2",
+        image: "https://http.cat/412.jpg",
+        text: "Descrição do nível 2",
+        minValue: 50,
       },
     ],
   };
