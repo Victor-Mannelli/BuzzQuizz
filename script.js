@@ -147,24 +147,144 @@ function renderQuizz(quizz) {
 }
 
 // SCREEN 3
-
+const elementoMain = document.querySelector("main");
+let elementoScreen = "";
 function addQuizz() {
   console.log("Relaxa, vai sair");
   //localStorage.setItem('quizzes', `[${quizz.id}, ${quizz.id}, ...]`);
 
-  const main = document.querySelector("main");
-
-  main.innerHTML = `<div class="creation-screen">
+  elementoMain.innerHTML = `<div class="creation-screen">
   <h1>Comece pelo começo</h1>
     <div class="box">
     <ul>
-        <li><input placeholder="Título do seu quizz" type="text"></li>
-        <li><input placeholder="URL da imagem do seu quizz" type="text"></li>
-        <li><input placeholder="Quantidade de perguntas do quizz" type="text"></li>
-        <li><input placeholder="Quantidade de níveis do quizz" type="text"></li>
+        <li><input class="input-title" placeholder="Título do seu quizz" type="text"></li>
+        <li><input class="input-url" placeholder="URL da imagem do seu quizz" type="text"></li>
+        <li><input class="input-question-qtty" placeholder="Quantidade de perguntas do quizz" type="text"></li>
+        <li><input class="input-lvl-qtty" placeholder="Quantidade de níveis do quizz" type="text"></li>
         </ul>
     </div>
-    <button>Prosseguir para criar perguntas</button>
+    <button onclick="proceedToQuestions()">Prosseguir para criar perguntas</button>
     </div>
     `;
 }
+
+function proceedToQuestions() {
+  const newQuizzTitle = document.querySelector(".input-title").value;
+  const newQuizzUrl = document.querySelector(".input-url").value;
+  const newQuizzQtty = document.querySelector(".input-question-qtty").value;
+  const newQuizzLvl = document.querySelector(".input-lvl-qtty").value;
+
+  elementoScreen = document.querySelector(".creation-screen");
+
+  if (
+    newQuizzTitle.length >= 20 &&
+    newQuizzTitle.length <= 65 &&
+    newQuizzQtty >= 3 &&
+    newQuizzLvl >= 2
+  ) {
+    elementoScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
+
+    for (let i = 0; i < newQuizzQtty; i++) {
+      elementoScreen.innerHTML += ` <div class="box">
+        <ul>
+            <h2>Pergunta ${i + 1}</h2>
+            <li><input class="input-title" placeholder="Texto da pergunta" type="text"></li>
+            <li><input class="input-url" placeholder="Cor de fundo da pergunta" type="text"></li>
+            <h2>Resposta correta</h2>
+            <li><input class="input-question-qtty" placeholder="Resposta correta" type="text"></li>
+            <li><input class="input-lvl-qtty" placeholder="URL da imagem" type="text"></li>
+            <h2>Respostas incorretas</h2>
+            <li><input class="input-question-qtty" placeholder="Resposta incorreta 1" type="text"></li>
+            <li><input class="input-lvl-qtty" placeholder="URL da imagem 1" type="text"></li>
+            <br>
+            <li><input class="input-question-qtty" placeholder="Resposta incorreta 2" type="text"></li>
+            <li><input class="input-lvl-qtty" placeholder="URL da imagem 2" type="text"></li>
+            <br>
+            <li><input class="input-question-qtty" placeholder="Resposta incorreta 3" type="text"></li>
+            <li><input class="input-lvl-qtty" placeholder="URL da imagem 3" type="text"></li>
+            
+          </ul>
+      </div>
+    `;
+    }
+
+    elementoScreen.innerHTML += `<button onclick="proceedToLevels()">Prosseguir para criar níveis</button>
+      `;
+  } else {
+    alert("Favor preencher os dados corretamente!");
+  }
+}
+
+function proceedToLevels() {
+  elementoScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
+}
+
+// Apenas para saber o modelo do post do quizz:
+let arrayDeTeste = {
+  title: "Título do quizz",
+  image: "https://http.cat/411.jpg",
+  questions: [
+    {
+      title: "Título da pergunta 1",
+      color: "#123456",
+      answers: [
+        {
+          text: "Texto da resposta 1",
+          image: "https://http.cat/411.jpg",
+          isCorrectAnswer: true,
+        },
+        {
+          text: "Texto da resposta 2",
+          image: "https://http.cat/412.jpg",
+          isCorrectAnswer: false,
+        },
+      ],
+    },
+    {
+      title: "Título da pergunta 2",
+      color: "#123456",
+      answers: [
+        {
+          text: "Texto da resposta 1",
+          image: "https://http.cat/411.jpg",
+          isCorrectAnswer: true,
+        },
+        {
+          text: "Texto da resposta 2",
+          image: "https://http.cat/412.jpg",
+          isCorrectAnswer: false,
+        },
+      ],
+    },
+    {
+      title: "Título da pergunta 3",
+      color: "#123456",
+      answers: [
+        {
+          text: "Texto da resposta 1",
+          image: "https://http.cat/411.jpg",
+          isCorrectAnswer: true,
+        },
+        {
+          text: "Texto da resposta 2",
+          image: "https://http.cat/412.jpg",
+          isCorrectAnswer: false,
+        },
+      ],
+    },
+  ],
+  levels: [
+    {
+      title: "Título do nível 1",
+      image: "https://http.cat/411.jpg",
+      text: "Descrição do nível 1",
+      minValue: 0,
+    },
+    {
+      title: "Título do nível 2",
+      image: "https://http.cat/412.jpg",
+      text: "Descrição do nível 2",
+      minValue: 50,
+    },
+  ],
+};
