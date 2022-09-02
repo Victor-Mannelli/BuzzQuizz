@@ -161,25 +161,28 @@ function addQuizzLevels() {
 const newQuizzLvlArray = [];
 
 function addQuizzFinal() {
-    // pegar infos dos níveis e guardar num array
-    scroll(0, 0);
+    // pegar infos dos níveis e guardar num array 
 
-    for (let i = 0; i < newQuizzLvl; i++) {
-        const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
-        const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-percent`).value);
-        const lvlImgUrl = document.querySelector(`.level${i + 1} .input-lvl-url`).value;
-        const lvlText = document.querySelector(`.level${i + 1} .input-lvl-text`).value;
+    if (validateLevels()) {
+        scroll(0, 0);
 
-        newQuizzLvlArray.push({
-            title: lvlTitle,
-            image: lvlImgUrl,
-            text: lvlText,
-            minValue: lvlPercent
-        });
+        for (let i = 0; i < newQuizzLvl; i++) {
+            const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
+            const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-percent`).value);
+            const lvlImgUrl = document.querySelector(`.level${i + 1} .input-lvl-url`).value;
+            const lvlText = document.querySelector(`.level${i + 1} .input-lvl-text`).value;
+
+            newQuizzLvlArray.push({
+                title: lvlTitle,
+                image: lvlImgUrl,
+                text: lvlText,
+                minValue: lvlPercent
+            });
+        }
+        console.log(newQuizzLvlArray);
+        createObject();
+        addQuizSend();
     }
-    console.log(newQuizzLvlArray);
-    createObject();
-    addQuizSend();
 }
 
 function createObject() {
@@ -223,7 +226,6 @@ const testHex = /^#[0-9A-Fa-f]{6}/g;
 
 function validateQuestions() {
 
-    let okNumber = 0;
 
     for (let i = 0; i < newQuizzQtty; i++) {
 
@@ -235,7 +237,7 @@ function validateQuestions() {
         const incorrectUrl1 = document.querySelector(`.pergunta${i + 1} .input-wrong-url1`).value;
 
 
-        if (qText.length <= 20) {
+        if (qText.length < 20) {
             return alert(`O título da pergunta ${i + 1} deve ter pelo menos 20 caracteres`);
         } else if (!testHex.test(qBgColor)) {
             return alert(`A cor da pergunta ${i + 1} deve ser hexadecimal com #`);
@@ -247,12 +249,32 @@ function validateQuestions() {
             return alert(`o texto da pergunta ${i + 1} não pode ser vazio`);
         } else if (!validURL(incorrectUrl1)) {
             return alert(`A url da pergunta ${i + 1} deve ser uma url`);
-        } okNumber++
+        }
 
 
         testHex.lastIndex = 0;
 
     }
 
-    return (okNumber === newQuizzQtty);
+    return (true);
+}
+
+function validateLevels() {
+    for (let i = 0; i < newQuizzLvl; i++) {
+        const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
+        const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-percent`).value);
+        const lvlImgUrl = document.querySelector(`.level${i + 1} .input-lvl-url`).value;
+        const lvlText = document.querySelector(`.level${i + 1} .input-lvl-text`).value;
+
+        if (lvlTitle.length < 10) {
+            return alert(`O título do nível ${i + 1} deve ter pelo menos 10 caracteres`);
+        } else if (lvlPercent < 0 || lvlPercent > 100) {
+            return alert(`O percentual do nível ${i + 1} deve ser um número entre 0 e 100`);
+        } else if (!validURL(lvlImgUrl)) {
+            return alert(`A url do nível ${i + 1} deve ser uma url`);
+        } else if (lvlText < 30) {
+            return alert(`A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`);
+        }
+    }
+    return true;
 }
