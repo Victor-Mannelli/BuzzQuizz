@@ -144,5 +144,8 @@ function renderQuizz(quizz) {
             </section>
         </main>
     `;
+  // const headerQuizz = document.querySelector(".header-quizz")
+  // headerQuizz.scrollIntoView();
+  scrollWithOrder()
 }
 

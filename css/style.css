@@ -228,6 +228,8 @@ section ul {
 }
 .non-chosen-answers {
   opacity: 0.3;
+}
+.non-clickable {
   pointer-events: none;
 }
 .black-text {
