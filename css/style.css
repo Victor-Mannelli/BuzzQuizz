@@ -224,9 +224,11 @@ section ul {
   font-weight: 700;
   font-size: 20px;
   margin-top: 10px;
+  word-break: break-all;
 }
 .non-chosen-answers {
   opacity: 0.3;
+  pointer-events: none;
 }
 
 /* QUIZZ CREATION */
