@@ -234,25 +234,25 @@ function validateQuestions() {
         const incorrectText1 = document.querySelector(`.pergunta${i + 1} .input-wrong-text1`).value;
         const incorrectUrl1 = document.querySelector(`.pergunta${i + 1} .input-wrong-url1`).value;
 
-        console.log(qText.length >= 20)
-        console.log(testHex.test(qBgColor))
-        console.log(aCorrect !== '')
-        console.log(validURL(aCorrectUrl))
-        console.log(incorrectText1 !== '')
-        console.log(validURL(incorrectUrl1))
+
+        if (qText.length <= 20) {
+            return alert(`O título da pergunta ${i + 1} deve ter pelo menos 20 caracteres`);
+        } else if (!testHex.test(qBgColor)) {
+            return alert(`A cor da pergunta ${i + 1} deve ser hexadecimal com #`);
+        } else if (aCorrect === '') {
+            return alert(`o texto da pergunta ${i + 1} não pode ser vazio`);
+        } else if (!validURL(aCorrectUrl)) {
+            return alert(`A url da pergunta ${i + 1} deve ser uma url`);
+        } else if (incorrectText1 == '') {
+            return alert(`o texto da pergunta ${i + 1} não pode ser vazio`);
+        } else if (!validURL(incorrectUrl1)) {
+            return alert(`A url da pergunta ${i + 1} deve ser uma url`);
+        } okNumber++
 
 
-        if (qText.length >= 20 && testHex.test(qBgColor) && aCorrect !== '' && validURL(aCorrectUrl) && incorrectText1 !== '' && validURL(incorrectUrl1)) {
-            okNumber++;
-            console.log('deu bom');
-        } else {
-            console.log('não leu');
-        }
+        testHex.lastIndex = 0;
+
     }
-    console.log('oknumber:')
-    console.log(okNumber);
-    console.log('qtty');
-    console.log(newQuizzQtty);
 
-    console.log(okNumber === newQuizzQtty);
+    return (okNumber === newQuizzQtty);
 }
