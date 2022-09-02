@@ -95,11 +95,7 @@ section ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, 340px);
   justify-content: space-between;
-<<<<<<< HEAD
-  padding: 0px ;
-=======
   padding: 0px;
->>>>>>> d15aa3dbb18011e778dd09b58d0479b4c433f80b
 }
 
 .quizz {
