@@ -100,7 +100,7 @@ function insertAnswers(answers) {
   let answersLI = "";
   answers.forEach((answer) => {
     answersLI += `
-            <li class="answer">
+            <li class="answer" onclick="selectedAnswer(this)">
                 <img src="${answer.image}" alt="${answer.text}"></img>
                 <h1>${answer.text}</h1>
             </li>
@@ -337,3 +337,4 @@ function createObject() {
   };
 }
 
+console.log(document.querySelectorAll('answers'))
