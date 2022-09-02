@@ -101,7 +101,6 @@ section ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, 340px);
   justify-content: space-between;
-  
 }
 
 .quizz {
@@ -262,7 +261,7 @@ section ul {
   margin-bottom: 5px;
 }
 .box {
-  background-color: aquamarine;
+  background-color: #ffffff;
   width: 90vw;
   max-width: 600px;
   height: auto;
