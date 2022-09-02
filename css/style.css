@@ -242,6 +242,69 @@ section ul {
   color: #FF4B4B;
 }
 
+.feedback-header {
+  width: 100%;
+  height: 138px;
+  margin-bottom: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #EC362D;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 22px;
+
+}
+.feedback-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.feedback-main img {
+  width: 48%;
+}
+.paragraph {
+  width: 48%;
+  word-break: break-all;
+  
+}
+
+.feedback-buttons {
+  margin-top: 57px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.re-start {
+  color: #FFFFFF;
+  background-color: #EC362D;
+  border: none;
+  
+  border-radius: 15px;
+  width: 30vw;
+  height: 5vh;
+  margin-bottom: 8px;
+
+  font-size: 18px;
+  line-height: 21px;
+}
+.back-home {
+  font-size: 18px;
+  line-height: 21px;
+  color: #818181;
+  background-color: #FFFFFF;
+  border: none;
+
+  border-radius: 15px;
+  width: 30vw;
+  height: 5vh;
+}
+
+
 /* QUIZZ CREATION */
 .creation-screen {
   display: flex;
