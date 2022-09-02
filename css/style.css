@@ -34,6 +34,11 @@ main {
   padding: 31px 20px;
   max-width: 1140px;
   margin: 0 auto;
+
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
+  
 }
 section {
   margin-bottom: 48px;
@@ -98,6 +103,7 @@ section ul {
   grid-template-columns: repeat(auto-fill, 340px);
   justify-content: space-between;
   padding: 0px;
+
 }
 .quizz {
   margin: 6px 0px;
@@ -172,8 +178,8 @@ section ul {
   flex-direction: column;
 }
 .question {
-  width: 759px;
   height: auto;
+  width: 95vw;
   background: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -212,6 +218,9 @@ section ul {
   flex-wrap: wrap;
   justify-content: space-between;
 }
+.answers li {
+  margin-bottom: 15px;
+}
 .answer {
   width: 48.5%;
   height: 48.5%;
@@ -242,6 +251,13 @@ section ul {
   color: #FF4B4B;
 }
 
+.feedback-content {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .feedback-header {
   width: 100%;
   height: 138px;
@@ -262,22 +278,29 @@ section ul {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
+  height: 100%;
 }
 .feedback-main img {
   width: 48%;
 }
 .paragraph {
   width: 48%;
-  word-break: break-all;
-  
+  height: 100%;
 }
-
+.paragraph p {
+  word-break: break-all; 
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 25px;
+}
 .feedback-buttons {
-  margin-top: 57px;
+  padding-top: 57px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
 }
 .re-start {
   color: #FFFFFF;
@@ -285,7 +308,7 @@ section ul {
   border: none;
   
   border-radius: 15px;
-  width: 30vw;
+  width: 20vw;
   height: 5vh;
   margin-bottom: 8px;
 
@@ -300,7 +323,7 @@ section ul {
   border: none;
 
   border-radius: 15px;
-  width: 30vw;
+  width: 20vw;
   height: 5vh;
 }
 
@@ -379,9 +402,6 @@ input:placeholder-shown {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  .question {
-    width: 95vw;
   }
 
   section div {
