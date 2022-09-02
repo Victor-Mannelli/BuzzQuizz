@@ -337,4 +337,3 @@ function createObject() {
   };
 }
 
-console.log(document.querySelectorAll('answers'))
