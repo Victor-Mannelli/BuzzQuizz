@@ -98,7 +98,7 @@ function responseQuizz(response) {
 
 function insertAnswers(answers) {
   let answersLI = "";
-  answers.forEach((answer) => {
+  answers.sort(() => Math.random() - 0.5).forEach((answer) => {
     answersLI += `
             <li class="answer">
                 <img src="${answer.image}" alt="${answer.text}"></img>
