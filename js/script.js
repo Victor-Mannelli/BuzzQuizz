@@ -119,7 +119,7 @@ function insertQuestions(questions) {
                     <div class="question-title">
                         <h1>${question.title}</h1>
                     </div>
-                    <div class="answers"">
+                    <div class="answers">
                         <ul>${insertAnswers(question.answers)}</ul>
                     </div>
                 </div>
@@ -127,6 +127,7 @@ function insertQuestions(questions) {
         `;
   });
   return questionsLI;
+
 }
 
 function renderQuizz(quizz) {
@@ -139,7 +140,7 @@ function renderQuizz(quizz) {
                 </div>
                 <img src="${quizz.image}" alt="${quizz.title}"></img>
             </section>
-        <main>
+        <main class="main-screen2">
             <section class="questions">
                 <ul>${insertQuestions(quizz.questions)}</ul>
             </section>
