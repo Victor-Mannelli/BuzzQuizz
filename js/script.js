@@ -98,9 +98,9 @@ function responseQuizz(response) {
 
 function insertAnswers(answers) {
   let answersLI = "";
-  answers.forEach((answer) => {
+  answers.sort(() => Math.random() - 0.5).forEach((answer) => {
     answersLI += `
-            <li class="answer" onclick="selectedAnswer(this)">
+            <li class="answer">
                 <img src="${answer.image}" alt="${answer.text}"></img>
                 <h1>${answer.text}</h1>
             </li>
@@ -191,7 +191,8 @@ function addQuizzQuestions() {
     newQuizzTitle.length >= 20 &&
     newQuizzTitle.length <= 65 &&
     newQuizzQtty >= 3 &&
-    newQuizzLvl >= 2
+    newQuizzLvl >= 2 &&
+    validURL(newQuizzUrl)
   ) {
     elementoScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
     for (let i = 0; i < newQuizzQtty; i++) {
@@ -289,7 +290,7 @@ function addQuizzLevels() {
       <ul>
           <h2>Nível ${i + 1}</h2>
           <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
-          <li><input class="input-lvl-%" placeholder="% de acerto mínima" type="text"></li>
+          <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
           <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
           <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
           
@@ -309,7 +310,7 @@ function addQuizzFinal() {
 
   for (let i = 0; i < newQuizzLvl; i++) {
     const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
-    const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-%`).value);
+    const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-percent`).value);
     const lvlImgUrl = document.querySelector(`.level${i + 1} .input-lvl-url`).value;
     const lvlText = document.querySelector(`.level${i + 1} .input-lvl-text`).value;
 
@@ -321,12 +322,9 @@ function addQuizzFinal() {
     })
   }
   console.log(newQuizzLvlArray);
-  createObject()
+  createObject();
+  addQuizSend();
 }
-
-
-// Apenas para saber o modelo do post do quizz:
-
 
 function createObject() {
   newQuizzObject = {
@@ -337,3 +335,28 @@ function createObject() {
   };
 }
 
+function addQuizSend() {
+  elementoScreen.innerHTML = '';
+
+  const response = axios.post('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes', newQuizzObject);
+
+  response.catch((error) => console.log(`erro: ${error.response.data}`));
+  response.then(addQuizzSuccess);
+}
+
+function addQuizzSuccess(resposta) {
+  console.log('adicionado com sucesso!');
+
+  console.log(resposta);
+
+}
+
+function validURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+  return !!pattern.test(str);
+}
