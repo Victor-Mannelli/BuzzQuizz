@@ -230,6 +230,15 @@ section ul {
   opacity: 0.3;
   pointer-events: none;
 }
+.black-text {
+  color: black;
+}
+.true {
+  color: #009C22;
+}
+.false {
+  color: #FF4B4B;
+}
 
 /* QUIZZ CREATION */
 .creation-screen {

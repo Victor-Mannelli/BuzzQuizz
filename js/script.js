@@ -100,9 +100,9 @@ function insertAnswers(answers) {
   let answersLI = "";
   answers.sort(() => Math.random() - 0.5).forEach((answer) => {
     answersLI += `
-            <li class="answer" onclick="selectedAnswer(this)">
+            <li class="answer ${answer.isCorrectAnswer}" onclick="selectedAnswer(this)">
                 <img src="${answer.image}" alt="${answer.text}"></img>
-                <h1>${answer.text}</h1>
+                <h1 class="black-text">${answer.text}</h1>
             </li>
         `;
   });
