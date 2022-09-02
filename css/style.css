@@ -10,7 +10,6 @@
   flex-direction: column;
   align-items: center;
 }
-
 header {
   position: fixed;
   z-index: 2;
@@ -30,16 +29,15 @@ header {
   font-size: 37px;
   line-height: 43px;
 }
-
 main {
-  width: 100%;
   padding: 31px 20px;
   max-width: 1140px;
-  margin: 115px auto;
 }
-
 section {
   margin-bottom: 48px;
+}
+button:hover {
+  cursor: pointer;
 }
 
 /* SCREEN 1 */
@@ -49,13 +47,13 @@ section {
   height: 181px;
   border: 1px dashed #d5d5d5;
   border-radius: 5px;
+  margin-top: 69px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
-
 .creating-quizz p {
   display: flex;
   text-align: center;
@@ -65,7 +63,6 @@ section {
   line-height: 23px;
   color: #b9b9b9;
 }
-
 .creating-quizz button {
   width: 151px;
   height: 40px;
@@ -77,7 +74,6 @@ section {
   line-height: 25px;
   color: #ec362d;
 }
-
 .user-quizzes ion-icon {
   font-size: 30px;
   color: #ec362d;
@@ -89,18 +85,21 @@ section div {
   align-items: center;
   margin-bottom: 12px;
 }
-
 section h1 {
   font-weight: 700;
   font-size: 20px;
   line-height: 23px;
   align-items: center;
 }
-
 section ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, 340px);
   justify-content: space-between;
+<<<<<<< HEAD
+=======
+  padding: 0px ;
+  
+>>>>>>> 78b161e844f2f8cd38e22974b5290e9e41bfc70f
 }
 
 .quizz {
@@ -109,14 +108,12 @@ section ul {
   height: 181px;
   position: relative;
 }
-
 .quizz img {
   width: 100%;
   height: 100%;
   border-radius: 5px;
   object-fit: cover;
 }
-
 .quizz .overlay {
   width: 100%;
   height: 100%;
@@ -131,7 +128,6 @@ section ul {
   top: 0;
   left: 0;
 }
-
 .quizz h1 {
   padding: 14px;
   color: #ffffff;
@@ -154,13 +150,11 @@ section ul {
   align-items: center;
   position: relative;
 }
-
 .header-quizz img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .header-quizz .overlay {
   width: 100%;
   height: 100%;
@@ -170,17 +164,16 @@ section ul {
   align-items: center;
   justify-content: center;
 }
-
 .header-quizz h1 {
   font-weight: 400;
   font-size: 39px;
   color: #ffffff;
 }
+
 .questions ul {
   display: flex;
   flex-direction: column;
 }
-
 .question {
   width: 759px;
   height: auto;
@@ -191,7 +184,6 @@ section ul {
   align-items: center;
   margin: 21px auto;
 }
-
 .question .content {
   width: 90%;
   height: 90%;
@@ -199,7 +191,6 @@ section ul {
   flex-direction: column;
   justify-content: space-between;
 }
-
 .question-title {
   width: 100%;
   height: 138px;
@@ -208,7 +199,6 @@ section ul {
   justify-content: center;
   align-items: center;
 }
-
 .question-title h1 {
   font-weight: 700;
   font-size: 23px;
@@ -222,19 +212,17 @@ section ul {
 .answers ul {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
-
 .answer {
   width: 48.5%;
   height: 48.5%;
 }
-
 .answer img {
   width: 100%;
   height: 45%;
 }
-
 .answer h1 {
   font-weight: 700;
   font-size: 20px;
@@ -307,17 +295,19 @@ input:placeholder-shown {
   main {
     display: flex;
     flex-direction: column;
-    margin: 69px auto;
     justify-content: center;
+    margin-top: 69px;
   }
-
   section ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-
+  .question {
+    width: 95vw;
+  }
+  
   section div {
     justify-content: space-between;
   }
