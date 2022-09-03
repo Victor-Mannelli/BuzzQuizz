@@ -212,7 +212,7 @@ function addQuizzSuccess(quizz) {
                 `;
 
     elementoScreen.innerHTML += `<button onclick="searchQuizz(${quizz.data.id}">Acessar Quizz</button>
-    <button class="back-home" onclick="location.reload()">Voltar para início</button>`
+    <button class="back-home" onclick="location.reload()">Voltar para home</button>`
 
 
 }
@@ -261,6 +261,8 @@ function validateQuestions() {
 }
 
 function validateLevels() {
+    const levelPercents = [];
+
     for (let i = 0; i < newQuizzLvl; i++) {
         const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
         const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-percent`).value);
@@ -275,8 +277,13 @@ function validateLevels() {
             return alert(`A url do nível ${i + 1} deve ser uma url`);
         } else if (lvlText < 30) {
             return alert(`A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`);
-        } //colocar mais um else if para ver se tem alguém com nível 0%
+        } levelPercents.push(lvlPercent);
     }
+
+    if (!levelPercents.includes(0)) {
+        return alert('É obrigatório existir pelo menos 1 nível cuja % de acerto mínima seja 0%')
+    }
+
     return true;
 }
 
