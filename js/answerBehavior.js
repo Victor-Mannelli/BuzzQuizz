@@ -44,7 +44,7 @@ function endOfQuizz(){
                       <div class="paragraph"> <p> ${window.tex1} </p> </div>
                   </div>
                   <div class="feedback-buttons">
-                      <button onclick="renderQuizz(idCurrentQuiz)" class="re-start"> Reiniciar Quizz </button>
+                      <button onclick="searchQuizz(idCurrentQuiz)" class="re-start"> Reiniciar Quizz </button>
                       <button onclick="location.reload()" class="back-home"> Voltar para home </button>
                   </div>
               </div>
@@ -52,5 +52,5 @@ function endOfQuizz(){
       `;
   }
 }
-let chosenQuizz = searchQuizz(idCurrentQuiz)
-console.log(chosenQuizz)
+// let chosenQuizz = searchQuizz(idCurrentQuiz)
+// console.log(chosenQuizz)
