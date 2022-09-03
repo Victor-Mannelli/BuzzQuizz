@@ -38,27 +38,27 @@ function addQuizzQuestions() {
     if (validateQuizzInfo()) {
         elementoScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
         for (let i = 0; i < newQuizzQtty; i++) {
-            elementoScreen.innerHTML += ` <div class="box pergunta${i + 1}">
-        <ul>
-            <h2>Pergunta ${i + 1}</h2>
-            <li><input class="input-q-text" placeholder="Texto da pergunta" type="text"></li>
-            <li><input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text"></li>
-            <h2>Resposta correta</h2>
-            <li><input class="input-correct-text" placeholder="Resposta correta" type="text"></li>
-            <li><input class="input-correct-url" placeholder="URL da imagem" type="text"></li>
-            <h2>Respostas incorretas</h2>
-            <li><input class="input-wrong-text1" placeholder="Resposta incorreta 1" type="text"></li>
-            <li><input class="input-wrong-url1" placeholder="URL da imagem 1" type="text"></li>
-            <br>
-            <li><input class="input-wrong-text2" placeholder="Resposta incorreta 2" type="text"></li>
-            <li><input class="input-wrong-url2" placeholder="URL da imagem 2" type="text"></li>
-            <br>
-            <li><input class="input-wrong-text3" placeholder="Resposta incorreta 3" type="text"></li>
-            <li><input class="input-wrong-url3" placeholder="URL da imagem 3" type="text"></li>
-            
-          </ul>
-      </div>
-    `;
+            elementoScreen.innerHTML += ` 
+            <div class="box pergunta${i + 1}">
+                <h2>Pergunta ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+                <ul class="the-one-who-colapses">
+                    <li><input class="input-q-text" placeholder="Texto da pergunta" type="text"></li>
+                    <li><input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text"></li>
+                    <h2>Resposta correta</h2>
+                    <li><input class="input-correct-text" placeholder="Resposta correta" type="text"></li>
+                    <li><input class="input-correct-url" placeholder="URL da imagem" type="text"></li>
+                    <h2>Respostas incorretas</h2>
+                    <li><input class="input-wrong-text1" placeholder="Resposta incorreta 1" type="text"></li>
+                    <li><input class="input-wrong-url1" placeholder="URL da imagem 1" type="text"></li>
+                    <br>
+                    <li><input class="input-wrong-text2" placeholder="Resposta incorreta 2" type="text"></li>
+                    <li><input class="input-wrong-url2" placeholder="URL da imagem 2" type="text"></li>
+                    <br>
+                    <li><input class="input-wrong-text3" placeholder="Resposta incorreta 3" type="text"></li>
+                    <li><input class="input-wrong-url3" placeholder="URL da imagem 3" type="text"></li>
+                </ul>
+            </div>
+            `;
         }
 
         elementoScreen.innerHTML += `<button onclick="addQuizzLevels()">Prosseguir para criar níveis</button>
@@ -301,7 +301,7 @@ function storeUserQuizz(id) {
 function testarCriacao() { // Função e objeto para teste da adição de quizz //
     addQuizzInfo();
     newQuizzObject = objetao;
-    addQuizSend();
+    addQuizQuestions();
 }
 
 const objetao = { // Função e objeto para teste da adição de quizz //
@@ -371,4 +371,17 @@ const objetao = { // Função e objeto para teste da adição de quizz //
             "minValue": 10
         }
     ]
+}
+
+function collapse(selector){
+    const h2 = selector.parentNode;
+    const questionBlock = h2.parentNode;
+    const ul = questionBlock.children[1]
+
+    if (ul.style.maxHeight){
+        ul.style.maxHeight = null;
+    } else {
+        ul.style.maxHeight = ul.scrollHeight + "px";
+    }
+    
 }

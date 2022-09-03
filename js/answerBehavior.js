@@ -1,4 +1,3 @@
-import {} from ".js/script.js";
 
 let counter = 0;
 function selectedAnswer(selector){
