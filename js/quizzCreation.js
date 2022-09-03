@@ -39,13 +39,7 @@ function addQuizzQuestions() {
 
     elementoScreen = document.querySelector(".creation-screen");
 
-    if (
-        newQuizzTitle.length >= 20 &&
-        newQuizzTitle.length <= 65 &&
-        newQuizzQtty >= 3 &&
-        newQuizzLvl >= 2 &&
-        validURL(newQuizzUrl)
-    ) {
+    if (validateQuizzInfo()) {
         elementoScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
         for (let i = 0; i < newQuizzQtty; i++) {
             elementoScreen.innerHTML += ` <div class="box pergunta${i + 1}">
@@ -73,8 +67,6 @@ function addQuizzQuestions() {
 
         elementoScreen.innerHTML += `<button onclick="addQuizzLevels()">Prosseguir para criar níveis</button>
       `;
-    } else {
-        alert("Favor preencher os dados corretamente!");
     }
 }
 
@@ -161,25 +153,27 @@ function addQuizzLevels() {
 const newQuizzLvlArray = [];
 
 function addQuizzFinal() {
-    // pegar infos dos níveis e guardar num array
-    scroll(0, 0);
 
-    for (let i = 0; i < newQuizzLvl; i++) {
-        const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
-        const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-percent`).value);
-        const lvlImgUrl = document.querySelector(`.level${i + 1} .input-lvl-url`).value;
-        const lvlText = document.querySelector(`.level${i + 1} .input-lvl-text`).value;
+    if (validateLevels()) {
+        scroll(0, 0);
 
-        newQuizzLvlArray.push({
-            title: lvlTitle,
-            image: lvlImgUrl,
-            text: lvlText,
-            minValue: lvlPercent
-        });
+        for (let i = 0; i < newQuizzLvl; i++) {
+            const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
+            const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-percent`).value);
+            const lvlImgUrl = document.querySelector(`.level${i + 1} .input-lvl-url`).value;
+            const lvlText = document.querySelector(`.level${i + 1} .input-lvl-text`).value;
+
+            newQuizzLvlArray.push({
+                title: lvlTitle,
+                image: lvlImgUrl,
+                text: lvlText,
+                minValue: lvlPercent
+            });
+        }
+        console.log(newQuizzLvlArray);
+        createObject();
+        addQuizSend();
     }
-    console.log(newQuizzLvlArray);
-    createObject();
-    addQuizSend();
 }
 
 function createObject() {
@@ -192,7 +186,7 @@ function createObject() {
 }
 
 function addQuizSend() {
-    elementoScreen.innerHTML = '';
+    elementoScreen.innerHTML = '<img src="./img/cupertino_activity_indicator.gif" alt="loading screen" class="loading">';
 
     const response = axios.post('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes', newQuizzObject);
 
@@ -200,10 +194,26 @@ function addQuizSend() {
     response.then(addQuizzSuccess);
 }
 
-function addQuizzSuccess(resposta) {
+function addQuizzSuccess(quizz) {
     console.log('adicionado com sucesso!');
+    console.log(quizz);
 
-    console.log(resposta);
+
+    elementoScreen.innerHTML = `<h1>Seu quizz está pronto!</h1>`;
+
+    elementoScreen.innerHTML += `<ul>
+                    <li class="quizz" onclick="searchQuizz(${quizz.data.id})">
+                        <div class="overlay">
+                            <h1>${quizz.data.title}</h1>
+                        </div>
+                        <img src="${quizz.data.image}" alt="${quizz.data.title}"></img>
+                    </li>
+                    </ul>
+                `;
+
+    elementoScreen.innerHTML += `<button onclick="searchQuizz(${quizz.data.id}">Acessar Quizz</button>
+    <button class="back-home" onclick="location.reload()">Voltar para início</button>`
+
 
 }
 
@@ -217,14 +227,11 @@ function validURL(str) {
     return !!pattern.test(str);
 }
 
+
+// Regular Expression para verificar se é Hexadecimal
 const testHex = /^#[0-9A-Fa-f]{6}/g;
 
-
-
 function validateQuestions() {
-
-    let okNumber = 0;
-
     for (let i = 0; i < newQuizzQtty; i++) {
 
         const qText = document.querySelector(`.pergunta${i + 1} .input-q-text`).value;
@@ -234,25 +241,125 @@ function validateQuestions() {
         const incorrectText1 = document.querySelector(`.pergunta${i + 1} .input-wrong-text1`).value;
         const incorrectUrl1 = document.querySelector(`.pergunta${i + 1} .input-wrong-url1`).value;
 
-        console.log(qText.length >= 20)
-        console.log(testHex.test(qBgColor))
-        console.log(aCorrect !== '')
-        console.log(validURL(aCorrectUrl))
-        console.log(incorrectText1 !== '')
-        console.log(validURL(incorrectUrl1))
-
-
-        if (qText.length >= 20 && testHex.test(qBgColor) && aCorrect !== '' && validURL(aCorrectUrl) && incorrectText1 !== '' && validURL(incorrectUrl1)) {
-            okNumber++;
-            console.log('deu bom');
-        } else {
-            console.log('não leu');
+        if (qText.length < 20) {
+            return alert(`O título da pergunta ${i + 1} deve ter pelo menos 20 caracteres`);
+        } else if (!testHex.test(qBgColor)) {
+            return alert(`A cor da pergunta ${i + 1} deve ser hexadecimal com #`);
+        } else if (aCorrect === '') {
+            return alert(`o texto da pergunta ${i + 1} não pode ser vazio`);
+        } else if (!validURL(aCorrectUrl)) {
+            return alert(`A url da pergunta ${i + 1} deve ser uma url`);
+        } else if (incorrectText1 == '') {
+            return alert(`o texto da pergunta ${i + 1} não pode ser vazio`);
+        } else if (!validURL(incorrectUrl1)) {
+            return alert(`A url da pergunta ${i + 1} deve ser uma url`);
         }
-    }
-    console.log('oknumber:')
-    console.log(okNumber);
-    console.log('qtty');
-    console.log(newQuizzQtty);
 
-    console.log(okNumber === newQuizzQtty);
+        testHex.lastIndex = 0;
+    }
+    return (true);
+}
+
+function validateLevels() {
+    for (let i = 0; i < newQuizzLvl; i++) {
+        const lvlTitle = document.querySelector(`.level${i + 1} .input-lvl-title`).value;
+        const lvlPercent = Number(document.querySelector(`.level${i + 1} .input-lvl-percent`).value);
+        const lvlImgUrl = document.querySelector(`.level${i + 1} .input-lvl-url`).value;
+        const lvlText = document.querySelector(`.level${i + 1} .input-lvl-text`).value;
+
+        if (lvlTitle.length < 10) {
+            return alert(`O título do nível ${i + 1} deve ter pelo menos 10 caracteres`);
+        } else if (lvlPercent < 0 || lvlPercent > 100) {
+            return alert(`O percentual do nível ${i + 1} deve ser um número entre 0 e 100`);
+        } else if (!validURL(lvlImgUrl)) {
+            return alert(`A url do nível ${i + 1} deve ser uma url`);
+        } else if (lvlText < 30) {
+            return alert(`A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`);
+        } //colocar mais um else if para ver se tem alguém com nível 0%
+    }
+    return true;
+}
+
+function validateQuizzInfo() {
+    if (newQuizzTitle.length < 20 || newQuizzTitle.length > 65) {
+        return alert(`O título ddo Quizz deve ter entre 20 e 65 caracteres`);
+    } else if (newQuizzQtty < 3) {
+        return alert(`O Quizz deve ter pelo menos 3 perguntas`);
+    } else if (newQuizzLvl < 2) {
+        return alert(`O Quizz deve ter pelo menos 2 níveis`);
+    } else if (!validURL(newQuizzUrl)) {
+        return alert(`A imagem do Quizz deve ser uma url`);
+    }
+    return true;
+}
+
+
+
+const objetao = {
+    "title": "https://http.dog/200.jpg",
+    "image": "https://http.dog/200.jpg",
+    "questions": [
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        }
+    ],
+    "levels": [
+        {
+            "title": "#faffaf#faffaf#faffaf#faffaf",
+            "image": "https://http.dog/200.jpg",
+            "text": "https://http.dog/200.jpg",
+            "minValue": 0
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "image": "https://http.dog/200.jpg",
+            "text": "https://http.dog/200.jpg",
+            "minValue": 10
+        }
+    ]
 }
