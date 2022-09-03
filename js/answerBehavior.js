@@ -50,6 +50,7 @@ function endOfQuizz() {
               </div>
           </li>
       `;
+        counter = 0;
     }
 }
 // let chosenQuizz = searchQuizz(idCurrentQuiz)
