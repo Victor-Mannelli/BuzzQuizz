@@ -1,3 +1,4 @@
+
 let quizzesUser = [];
 let quizzesOtherUsers = [];
 
@@ -146,5 +147,5 @@ function renderQuizz(quizz) {
             </section>
         </main>
     `;
-  scrollWithOrder()
+  scrollWithOrder();
 }

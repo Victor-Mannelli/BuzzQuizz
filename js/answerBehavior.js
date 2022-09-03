@@ -1,5 +1,6 @@
-let counter = 0;
+import { } from ".js/script.js";
 
+let counter = 0;
 function selectedAnswer(selector) {
     const chosenAnswer = selector.parentNode
     let answers = chosenAnswer.querySelectorAll('.answer')
@@ -25,12 +26,19 @@ function savingConstants(value) {
 }
 function scrollWithOrder() {
     const question = document.querySelectorAll('.question')
-    question[counter].scrollIntoView({ behavior: 'smooth' });
+    const overlay = document.querySelector('.overlay')
+    if (counter === 0) {
+        overlay.scrollIntoView();
+    } else {
+        question[counter].scrollIntoView({ behavior: 'smooth', block: "center" });
+    }
+
 }
 
 function endOfQuizz() {
     const question = document.querySelectorAll('.question')
     const questions = document.querySelector('.questions ul')
+    const feedback = document.querySelector('feedback-content')
 
     if (counter === question.length) {
         questions.innerHTML += `
@@ -52,6 +60,7 @@ function endOfQuizz() {
       `;
         counter = 0;
     }
+
+    feedback.scrollIntoView({ behavior: 'smooth' });
 }
-// let chosenQuizz = searchQuizz(idCurrentQuiz)
-// console.log(chosenQuizz)
+
