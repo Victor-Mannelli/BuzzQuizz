@@ -40,7 +40,7 @@ function insertQuizzes(quizzes) {
     quizzesLI += `
             <li class="quizz" onclick="searchQuizz(${quizz.id})">
                 <div class="overlay">
-                    <h1>${quizz.title}</h1>
+                  <h1>${quizz.title}</h1>
                 </div>
                 <img src="${quizz.image}" alt="${quizz.title}"></img>
             </li>
@@ -127,10 +127,10 @@ function insertQuestions(questions) {
         `;
   });
   return questionsLI;
-
 }
-
+const idCurrentQuiz = 0;
 function renderQuizz(quizz) {
+  idCurrentQuiz = quizz.id;
   const container = document.querySelector("container");
   container.innerHTML = `
         <header onclick="HomeButton()">BuzzQuizz</header>
@@ -146,8 +146,5 @@ function renderQuizz(quizz) {
             </section>
         </main>
     `;
-  // const headerQuizz = document.querySelector(".header-quizz")
-  // headerQuizz.scrollIntoView();
   scrollWithOrder()
 }
-
