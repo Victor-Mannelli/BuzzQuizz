@@ -1,7 +1,4 @@
 // SCREEN 3
-// os Quizzzes do usuário devem ser guardados assim:
-//localStorage.setItem('quizzes', `[${quizz.id}, ${quizz.id}, ...]`);
-
 const elementoMain = document.querySelector("main");
 let elementoScreen = "";
 
@@ -37,8 +34,6 @@ function addQuizzQuestions() {
     newQuizzUrl = document.querySelector(".input-url").value;
     newQuizzQtty = Number(document.querySelector(".input-question-qtty").value);
     newQuizzLvl = document.querySelector(".input-lvl-qtty").value;
-
-    // elementoScreen = document.querySelector(".creation-screen");
 
     if (validateQuizzInfo()) {
         elementoScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
@@ -80,7 +75,6 @@ function addQuizzLevels() {
 
             const qText = document.querySelector(`.pergunta${i + 1} .input-q-text`).value;
             const qBgColor = document.querySelector(`.pergunta${i + 1} .input-q-bgcolor`).value;
-
             const aCorrect = document.querySelector(`.pergunta${i + 1} .input-correct-text`).value;
             const aCorrectUrl = document.querySelector(`.pergunta${i + 1} .input-correct-url`).value;
 
@@ -127,26 +121,23 @@ function addQuizzLevels() {
             });
         }
 
-
         elementoScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
 
         for (let i = 0; i < newQuizzLvl; i++) {
             elementoScreen.innerHTML += ` <div class="box level${i + 1}">
-      <ul>
-          <h2>Nível ${i + 1}</h2>
-          <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
-          <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
-          <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
-          <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
-          
-        </ul>
-    </div>
-  `;
+            <ul>
+                <h2>Nível ${i + 1}</h2>
+                <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
+                <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
+                <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
+                <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
+                
+            </ul>
+            </div>
+            `;
         }
 
         elementoScreen.innerHTML += `<button onclick="addQuizzFinal()">Finalizar Quizz</button>`
-    } else {
-        alert('Preencha os dados corretamente!');
     }
 }
 
@@ -195,26 +186,19 @@ function addQuizSend() {
 }
 
 function addQuizzSuccess(quizz) {
-    console.log('adicionado com sucesso!');
-    console.log(quizz);
-    console.log(quizz.data.id);
+    storeUserQuizz(quizz.data.id);
 
-
-    elementoScreen.innerHTML = `<h1>Seu quizz está pronto!</h1>`;
-
-    elementoScreen.innerHTML += `<ul>
-                    <li class="quizz" onclick="searchQuizz(${quizz.data.id})">
-                        <div class="overlay">
-                            <h1>${quizz.data.title}</h1>
-                        </div>
-                        <img src="${quizz.data.image}" alt="${quizz.data.title}"></img>
-                    </li>
-                    </ul>
-                `;
-
-    elementoScreen.innerHTML += `<button onclick="searchQuizz(${quizz.data.id})">Acessar Quizz</button>
-    <button class="back-home" onclick="location.reload()">Voltar para home</button>`
-
+    elementoScreen.innerHTML = `<h1>Seu quizz está pronto!</h1>
+            <ul>
+            <li class="quizz" onclick="searchQuizz(${quizz.data.id})">
+                <div class="overlay">
+                    <h1>${quizz.data.title}</h1>
+                </div>
+                 <img src="${quizz.data.image}" alt="${quizz.data.title}"></img>
+            </li>
+            </ul>
+        <button onclick="searchQuizz(${quizz.data.id})">Acessar Quizz</button>
+        <button class="back-home" onclick="location.reload()">Voltar para home</button>`;
 
 }
 
@@ -229,8 +213,7 @@ function validURL(str) {
 }
 
 
-// Regular Expression para verificar se é Hexadecimal
-const testHex = /^#[0-9A-Fa-f]{6}/g;
+const testHex = /^#[0-9A-Fa-f]{6}/g; // Regular Expression para verificar se é Hexadecimal
 
 function validateQuestions() {
     for (let i = 0; i < newQuizzQtty; i++) {
@@ -302,17 +285,27 @@ function validateQuizzInfo() {
 }
 
 function storeUserQuizz(id) {
-    console.log(id)
+    let stringList = localStorage.getItem("quizzes");
+    let arrayList = [];
+
+    if (stringList === null) {
+        arrayList = [id];
+    } else {
+        arrayList = JSON.parse(stringList);
+        arrayList.push(id);
+    }
+    const newStringList = JSON.stringify(arrayList);
+    localStorage.setItem("quizzes", newStringList);
 }
 
-function testarCriacao() {
+function testarCriacao() { // Função e objeto para teste da adição de quizz //
     addQuizzInfo();
     newQuizzObject = objetao;
     addQuizSend();
 }
 
-const objetao = {
-    "title": "https://http.dog/200.jpg",
+const objetao = { // Função e objeto para teste da adição de quizz //
+    "title": "Quizz de teste, pra testar o envio",
     "image": "https://http.dog/200.jpg",
     "questions": [
         {

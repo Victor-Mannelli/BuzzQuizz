@@ -52,5 +52,5 @@ function endOfQuizz() {
       `;
     }
 }
-let chosenQuizz = searchQuizz(idCurrentQuiz)
-console.log(chosenQuizz)
+// let chosenQuizz = searchQuizz(idCurrentQuiz)
+// console.log(chosenQuizz)
