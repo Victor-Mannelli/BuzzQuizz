@@ -22,6 +22,7 @@ function addQuizzInfo() {
     <button onclick="addQuizzQuestions()">Prosseguir para criar perguntas</button>
     </div>
     `;
+    elementoScreen = document.querySelector(".creation-screen");
 }
 
 let newQuizzObject = {};
@@ -37,7 +38,7 @@ function addQuizzQuestions() {
     newQuizzQtty = Number(document.querySelector(".input-question-qtty").value);
     newQuizzLvl = document.querySelector(".input-lvl-qtty").value;
 
-    elementoScreen = document.querySelector(".creation-screen");
+    // elementoScreen = document.querySelector(".creation-screen");
 
     if (validateQuizzInfo()) {
         elementoScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
@@ -71,7 +72,6 @@ function addQuizzQuestions() {
 }
 
 function addQuizzLevels() {
-    // Armazenar os valores dos inputs para cada pergunta e criar um objeto
     scroll(0, 0);
 
     if (validateQuestions()) {
@@ -197,6 +197,7 @@ function addQuizSend() {
 function addQuizzSuccess(quizz) {
     console.log('adicionado com sucesso!');
     console.log(quizz);
+    console.log(quizz.data.id);
 
 
     elementoScreen.innerHTML = `<h1>Seu quizz está pronto!</h1>`;
@@ -211,7 +212,7 @@ function addQuizzSuccess(quizz) {
                     </ul>
                 `;
 
-    elementoScreen.innerHTML += `<button onclick="searchQuizz(${quizz.data.id}">Acessar Quizz</button>
+    elementoScreen.innerHTML += `<button onclick="searchQuizz(${quizz.data.id})">Acessar Quizz</button>
     <button class="back-home" onclick="location.reload()">Voltar para home</button>`
 
 
@@ -300,7 +301,15 @@ function validateQuizzInfo() {
     return true;
 }
 
+function storageUserQuizz(id) {
 
+}
+
+function testarCriacao() {
+    addQuizzInfo();
+    newQuizzObject = objetao;
+    addQuizSend();
+}
 
 const objetao = {
     "title": "https://http.dog/200.jpg",

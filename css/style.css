@@ -392,6 +392,18 @@ input:placeholder-shown {
   text-align: center;
   color: #fff5f4;
 }
+.creation-screen .back-home {
+  font-size: 18px;
+  line-height: 21px;
+  color: #818181;
+  background-color: #ffffff;
+  border: none;
+
+  border-radius: 15px;
+  width: 55vw;
+  max-width: 368px;
+  height: 54px;
+}
 
 .loading {
   width: 150px;
