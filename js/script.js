@@ -128,7 +128,7 @@ function insertQuestions(questions) {
   });
   return questionsLI;
 }
-const idCurrentQuiz = 0;
+let idCurrentQuiz = 0;
 function renderQuizz(quizz) {
   idCurrentQuiz = quizz.id;
   const container = document.querySelector("container");

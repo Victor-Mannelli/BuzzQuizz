@@ -301,8 +301,8 @@ function validateQuizzInfo() {
     return true;
 }
 
-function storageUserQuizz(id) {
-
+function storeUserQuizz(id) {
+    console.log(id)
 }
 
 function testarCriacao() {
