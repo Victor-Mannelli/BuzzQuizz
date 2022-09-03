@@ -1,3 +1,5 @@
+import {} from ".js/script.js";
+
 let counter = 0;
 function selectedAnswer(selector){
     const chosenAnswer = selector.parentNode
@@ -23,17 +25,20 @@ function savingConstants(value) {
     window.tex2 = value[1].text
 }
 function scrollWithOrder(){
-    const questionTitle = document.querySelectorAll('.question-title')
+    const question = document.querySelectorAll('.question')
     const overlay = document.querySelector('.overlay')
     if (counter === 0){
         overlay.scrollIntoView();
+    } else {
+        question[counter].scrollIntoView({ behavior: 'smooth', block: "center"});
     }
-    questionTitle[counter].scrollIntoView(({ behavior: 'smooth', block: "center"}));
+    
 }
 
 function endOfQuizz() {
     const question = document.querySelectorAll('.question')
     const questions = document.querySelector('.questions ul')
+    const feedback = document.querySelector('feedback-content')
 
     if (counter === question.length) {
         questions.innerHTML += `
@@ -53,5 +58,6 @@ function endOfQuizz() {
               </div>
           </li>
       `;
+      feedback.scrollIntoView({ behavior: 'smooth'});
   }
 }
