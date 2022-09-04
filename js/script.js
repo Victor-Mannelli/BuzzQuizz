@@ -238,9 +238,11 @@ function addQuizzQuestions() {
                   <p class="p1-question-${i}"> </p>
                 </li>
                 <li>
-                  <input class="color-picker" type="color" value="#000001" onchange="changeColor(this)" />
-                  <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
-                  <p class="p2-backgroundcolor-${i}"> </p>
+                  <div class="color-picker-row">
+                    <input class="color-picker" type="color" value="#000001" onchange="changeColor(this)" />
+                    <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
+                  </div>
+                    <p class="p2-backgroundcolor-${i}"> </p>
                 </li>
                 <h2>Resposta correta</h2>
                 <li>

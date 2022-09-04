@@ -430,7 +430,11 @@ span {
   line-height: 19px;
   color: #EC362D;
 }
-
+.creation-screen li > input {
+  width: calc(90vw - 40px);
+  margin: 9px 0px;
+  padding-left: 15px;
+}
 .creation-screen input {
   background-color: #ffffff;
   height: 46px;
@@ -442,12 +446,13 @@ span {
 input:placeholder-shown {
   font-style: italic;
 }
-.creation-screen li > div {
+.creation-screen .color-picker-row {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
-.color-picker {
+.the-one-who-colapses .color-picker {
   width: 40px;
   margin: 0;
   padding: 0;
