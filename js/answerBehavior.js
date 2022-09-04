@@ -1,6 +1,6 @@
 let counter = 0;
 let correctAnswers = 0;
-function selectedAnswer(selector){
+function selectedAnswer(selector) {
     const chosenAnswer = selector.parentNode
     let answers = chosenAnswer.querySelectorAll('.answer')
     counter++
@@ -11,69 +11,80 @@ function selectedAnswer(selector){
             answers[i].classList.add('non-chosen-answers')
         }
     }
-    endOfQuizz();
+    endOfQuizz(quizzData);
     setTimeout(scrollWithOrder, 2000)
 
-    if (selector.classList.contains('true')){
+    if (selector.classList.contains('true')) {
         correctAnswers++
     }
 }
 
-function scrollWithOrder(){
+function scrollWithOrder() {
     const question = document.querySelectorAll('.question')
     const overlay = document.querySelector('.overlay')
-    if (counter === 0){
+    if (counter === 0) {
         overlay.scrollIntoView();
     } else {
-        question[counter].scrollIntoView({ behavior: 'smooth', block: "center"});
+        question[counter].scrollIntoView({ behavior: 'smooth', block: "center" });
     }
-    
+
 }
 
+let quizzData = [];
 function endOfQuizz(value) {
+    quizzData = value;
     const question = document.querySelectorAll('.question');
     const questions = document.querySelector('.questions ul');
+
     const differentLevels = [];
 
     if (counter === question.length) {
 
-        for (let i = 0; i < value.levels.length; i++){
-            differentLevels.push(value.levels[i].minValue);
-        } 
-        differentLevels.sort();
-    
-        const percent = Math.round(correctAnswers/question.length); 
+        for (let i = 0; i < value.length; i++) {
+            differentLevels.push(value[i].minValue);
+        }
+        const sortedArray = differentLevels.sort();
 
-        for (let i = 0; i < differentLevels.length; i++){
-            if (percent < differentLevels[i]){
-                
+        const percent = Math.round((correctAnswers / question.length) * 100);
+
+        const lowestValues = sortedArray.filter((minvalue) => { return (minvalue <= percent) });
+        const highestUnderPercent = lowestValues[(lowestValues.length - 1)];
+        let index = 0;
+        for (let i = 0; i < value.length; i++) {
+            if (highestUnderPercent === value[i].minValue) {
+                index = i;
             }
         }
+        console.log(percent, 'percentual')
+        console.log(highestUnderPercent, 'maior')
+        console.log(lowestValues, 'menores')
 
-        if(value.levels.minValue )
-            questions.innerHTML += `
-            <li class="question">
-                <div class="feedback-content">
-                    <div class="feedback-header">
-                        <h1>${value.levels[i].title}</h1>
-                    </div>
-                    <div class="feedback-main"">
-                        <img src="${value.levels[i].image}"> </img>
-                        <div class="paragraph"> <p> ${value.levels[i].text} </p> </div>
-                    </div>
-                    <div class="feedback-buttons">
-                        <button class="re-start" onclick="searchQuizz(idCurrentQuiz)" > Reiniciar Quizz </button>
-                        <button onclick="location.reload()" class="back-home"> Voltar para home </button>
-                    </div>
-                 </div>
-              </li>
-            `;
-        }
-    
+        questions.innerHTML += `
+                 <li class="question">
+                     <div class="feedback-content">
+                         <div class="feedback-header">
+                             <h1>${value[index].title}</h1>
+                         </div>
+                         <div class="feedback-main"">
+                             <img src="${value[index].image}"> </img>
+                             <div class="paragraph"> <p> ${value[index].text} </p> </div>
+                         </div>
+                         <div class="feedback-buttons">
+                             <button class="re-start" onclick="searchQuizz(idCurrentQuiz)" > Reiniciar Quizz </button>
+                             <button onclick="location.reload()" class="back-home"> Voltar para home </button>
+                         </div>
+                      </div>
+                   </li>
+                 `;
+
+
         const feedback = document.querySelector('.feedback-content')
-        feedback?.scrollIntoView({ behavior: 'smooth'});
+        feedback?.scrollIntoView({ behavior: 'smooth' });
 
         const restartButton = document.querySelector('.re-start')
         restartButton.addEventListener("click", (() => counter = 0));
+        restartButton.addEventListener("click", (() => correctAnswers = 0));
+    }
 }
+
 

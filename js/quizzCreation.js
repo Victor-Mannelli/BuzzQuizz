@@ -306,7 +306,7 @@ function testarCriacao() { // Função e objeto para teste da adição de quizz 
 }
 
 const objetao = { // Função e objeto para teste da adição de quizz //
-    "title": "Quizz de teste, pra testar o envio",
+    "title": "Quizz de teste do grupo mais bolado para testar niveis",
     "image": "https://http.dog/200.jpg",
     "questions": [
         {
@@ -314,7 +314,7 @@ const objetao = { // Função e objeto para teste da adição de quizz //
             "color": "#faffaf",
             "answers": [
                 {
-                    "text": "https://http.dog/200.jpg",
+                    "text": "correta",
                     "image": "https://http.dog/200.jpg",
                     "isCorrectAnswer": true
                 },
@@ -330,7 +330,7 @@ const objetao = { // Função e objeto para teste da adição de quizz //
             "color": "#faffaf",
             "answers": [
                 {
-                    "text": "https://http.dog/200.jpg",
+                    "text": "correta",
                     "image": "https://http.dog/200.jpg",
                     "isCorrectAnswer": true
                 },
@@ -346,7 +346,7 @@ const objetao = { // Função e objeto para teste da adição de quizz //
             "color": "#faffaf",
             "answers": [
                 {
-                    "text": "https://http.dog/200.jpg",
+                    "text": "correta",
                     "image": "https://http.dog/200.jpg",
                     "isCorrectAnswer": true
                 },
@@ -356,21 +356,179 @@ const objetao = { // Função e objeto para teste da adição de quizz //
                     "isCorrectAnswer": false
                 }
             ]
-        }
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "correta",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "correta",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "correta",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "correta",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "correta",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "correta",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "correta",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
+        {
+            "title": "https://http.dog/200.jpg",
+            "color": "#faffaf",
+            "answers": [
+                {
+                    "text": "correta",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": true
+                },
+                {
+                    "text": "https://http.dog/200.jpg",
+                    "image": "https://http.dog/200.jpg",
+                    "isCorrectAnswer": false
+                }
+            ]
+        },
     ],
     "levels": [
         {
-            "title": "#faffaf#faffaf#faffaf#faffaf",
+            "title": "ma oeeeeeeeeeeee nivel do 00",
             "image": "https://http.dog/200.jpg",
             "text": "https://http.dog/200.jpg",
             "minValue": 0
         },
         {
-            "title": "https://http.dog/200.jpg",
+            "title": "ma oeeeeeeeeeeee nivel do 10",
             "image": "https://http.dog/200.jpg",
             "text": "https://http.dog/200.jpg",
             "minValue": 10
-        }
+        },
+        {
+            "title": "ma oeeeeeeeeeeee nivel do 30",
+            "image": "https://http.dog/200.jpg",
+            "text": "https://http.dog/200.jpg",
+            "minValue": 30
+        },
+        {
+            "title": "ma oeeeeeeeeeeee nivel do 50",
+            "image": "https://http.dog/200.jpg",
+            "text": "https://http.dog/200.jpg",
+            "minValue": 50
+        },
+        {
+            "title": "ma oeeeeeeeeeeee nivel do 20",
+            "image": "https://http.dog/200.jpg",
+            "text": "https://http.dog/200.jpg",
+            "minValue": 20
+        },
+        {
+            "title": "ma oeeeeeeeeeeee nivel do 80",
+            "image": "https://http.dog/200.jpg",
+            "text": "https://http.dog/200.jpg",
+            "minValue": 80
+        },
+        {
+            "title": "ma oeeeeeeeeeeee nivel do 90",
+            "image": "https://http.dog/200.jpg",
+            "text": "https://http.dog/200.jpg",
+            "minValue": 90
+        },
     ]
 }
 

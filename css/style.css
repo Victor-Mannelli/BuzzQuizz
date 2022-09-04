@@ -37,7 +37,6 @@ main {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  background: none;
 }
 section {
   margin-bottom: 48px;
