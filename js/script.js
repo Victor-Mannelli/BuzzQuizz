@@ -111,7 +111,7 @@ function searchQuizz(id) {
 
 function responseQuizz(response) {
   renderQuizz(response.data);
-  savingConstants(response.data.levels);
+  endOfQuizz(response.data.levels);
 }
 
 function insertAnswers(answers) {
