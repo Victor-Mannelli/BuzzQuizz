@@ -245,7 +245,7 @@ function addQuizzQuestions() {
                 <h2>Resposta correta</h2>
                 <li>
                   <input class="input-correct-text" placeholder="Resposta correta" type="text">
-                  <p class="p3-correct-text-${i}"> </p>
+                  <p class="p3-correct-answer-${i}"> </p>
                 </li>
                 <li>
                   <input class="input-correct-url" placeholder="URL da imagem" type="text">
@@ -267,16 +267,16 @@ function addQuizzQuestions() {
                 </li>
                 <li>
                   <input class="input-wrong-url2" placeholder="URL da imagem 2" type="text">
-                  <p class="p7-wrong-text2-${i}"> </p>
+                  <p class="p8-wrong-url2-${i}"> </p>
                 </li>
                 <br>
                 <li>
                   <input class="input-wrong-text3" placeholder="Resposta incorreta 3" type="text">
-                  <p class="p8-wrong-text3-${i}"> </p>
+                  <p class="p9-wrong-text3-${i}"> </p>
                 </li>
                 <li>
                   <input class="input-wrong-url3" placeholder="URL da imagem 3" type="text">
-                  <p class="p9-wrong-url3-${i}"> </p>
+                  <p class="p10-wrong-url3-${i}"> </p>
                 </li>
             </ul>
         </div>
@@ -382,46 +382,78 @@ function validateQuestions(creationScreen) {
   let errors = 0;
   let question = {}; 
 
-  let 
-
   for (let i = 0; i < quizzQtty; i++) {
     question = getQuizzQuestion(creationScreen, i);
+    console.log(question)
 
     let questionsText = document.querySelector(`.p1-question-${i}`)
     let backgroundcolor = document.querySelector(`.p2-backgroundcolor-${i}`)
-    let correctText = document.querySelector(`.p3-correct-text-${i}`)
+    let correctAnswer = document.querySelector(`.p3-correct-answer-${i}`)
     let imageUrl = document.querySelector(`.p4-image-url-${i}`)
     let wrongText1 = document.querySelector(`.p5-wrong-text1-${i}`)
     let wrongUrl1 = document.querySelector(`.p6-wrong-url1-${i}`)
-    let wrongText2 = document.querySelector(`.p7-wrong-text2-${i}`)
-    let wrongText3 = document.querySelector(`.p8-wrong-text3-${i}`)
-    let wrongUrl3 = document.querySelector(`.p9-wrong-url3-${i}`)
+    let wrongText2 = document.querySelector(`p7-wrong-text2-${i}`)
+    let wrongUrl2 = document.querySelector(`p8-wrong-url2-${i}`)
+    let wrongText3 = document.querySelector(`.p9-wrong-text3-${i}`)
+    let wrongUrl3 = document.querySelector(`.p10-wrong-url3-${i}`)
 
     if (question.text.length < 20) {
       questionsText.innerHTML = `O título da pergunta ${i+1} deve ter pelo menos 20 caracteres`;
       errors++;
+    } else {
+      questionsText.innerHTML = "";
     }
     if (!testHex.test(question.bgColor)) {
       backgroundcolor.innerHTML = `A cor da pergunta ${i+1} deve ser hexadecimal com #`;
       errors++;
-    } 
+    } else {
+      backgroundcolor.innerHTML = "";
+    }
     if (question.answerCorrectText === '') {
       correctAnswer.innerHTML = `o texto da pergunta ${i+1} não pode ser vazio`;
       errors++;
+    } else {
+      correctAnswer.innerHTML = "";
     }
     if (!validURL(question.answerCorrectUrl)) {
       imageUrl.innerHTML = `A url da pergunta ${i+1} deve ser uma url`;
       errors++;
     } 
-    for (let j = 0; j < question.incorretAnswers.length; j++) {
-      if (question.incorretAnswers[j].answerIncorrectText == '') {
-        wrongTextj.innerHTML = `o texto da resposta incorreta ${j+1} não pode ser vazio`;
-        errors++;
-      } 
-      if (!validURL(question.incorretAnswers[j].answerIncorrectUrl)) {
-        alert(`A url da resposta incorreta ${j+1} deve ser uma url`);
-        errors++;
-      }
+    if (question.incorretAnswers[0].answerIncorrectText == '') {
+      wrongText1.innerHTML = `o texto da resposta incorreta ${1} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText1.innerHTML = ""
+    }
+    if (question.incorretAnswers[1].answerIncorrectText == '') {
+      wrongText2.innerHTML = `o texto da resposta incorreta ${2} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText2.innerHTML = ""
+    }
+    if (question.incorretAnswers[2].answerIncorrectText == '') {
+      wrongText3.innerHTML = `o texto da resposta incorreta ${3} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText3.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[0].answerIncorrectUrl)) {
+      wrongUrl1.innerHTML = `A url da resposta incorreta ${1} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl1.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[1].answerIncorrectUrl)) {
+      wrongUrl2.innerHTML = `A url da resposta incorreta ${2} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl2.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[2].answerIncorrectUrl)) {
+      wrongUrl3.innerHTML = `A url da resposta incorreta ${3} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl3.innerHTML = ""
     }
     testHex.lastIndex = 0;
   }
