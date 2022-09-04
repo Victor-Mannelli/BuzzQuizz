@@ -40,7 +40,7 @@ function insertQuizzes(quizzes, type) {
       quizzesLI += `
             <li class="quizz" onclick="searchQuizz(${quizz.id})">
                 <div class="edit-delet">
-                  <div onclick="editQuizz(${quizz.id})">
+                  <div onclick="editQuizz(this, ${quizz.id})">
                     <img src="./img/edit.svg" />
                   </div>    
                   <div onclick="deleteQuizz(${quizz.id})">
@@ -100,9 +100,8 @@ searchQuizzes();
 // SCREEN 2
 
 function searchQuizz(id) {
-  const response = axios.get(
-    `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`
-  );
+  alert("clicou");
+  const response = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`);
   response.then(responseQuizz);
   response.catch((error) => console.log(`erro: ${error.response.data}`));
 }
@@ -172,10 +171,10 @@ let quizzQtty = 0;
 let nQuizzLvls = 0;
 let quizzQuestions = [];
 let quizzLVLs = []
+let currentQuizzEditing;
 const testHex = /^#[0-9A-Fa-f]{6}/g; // Regular Expression para verificar se é Hexadecimal
 
-function addQuizzInfo(quizz) {
-  alert("clicou");
+function addQuizzInfo() {
   scroll(0, 0);
   const main = document.querySelector("main");
   main.innerHTML = `<div class="creation-screen">
@@ -188,11 +187,13 @@ function addQuizzInfo(quizz) {
                             <li><input class="input-lvl-qtty" placeholder="Quantidade de níveis do quizz" type="text"></li>
                         </ul>
                       </div>
-                      <button onclick="addQuizzQuestions(${quizz})">Prosseguir para criar perguntas</button>
+                      <button onclick="addQuizzQuestions()">Prosseguir para criar perguntas</button>
                     </div>
-                  `;
-  if (quizz !== null) 
-    putQuizzInfo(main.querySelector("ul"), quizz);
+                    `;
+  if (currentQuizzEditing !== undefined) {
+    main.querySelector("button").innerHTML = "Prosseguir para editar perguntas";
+    putQuizzInfo(main.querySelector("ul"));
+  }
 }
 
 function getQuizzInfo() {
@@ -202,16 +203,16 @@ function getQuizzInfo() {
   nQuizzLvls = document.querySelector(".input-lvl-qtty").value;
 }
 
-function putQuizzInfo(element, quizz) {
-  element.querySelector(".input-title").value = quizz.title;
-  element.querySelector(".input-url").value = quizz.image;
-  element.querySelector(".input-question-qtty").value = quizz.questions.length;
-  element.querySelector(".input-lvl-qtty").value = quizz.levels.length;
+function putQuizzInfo(element) {
+  element.querySelector(".input-title").value = currentQuizzEditing.title;
+  element.querySelector(".input-url").value = currentQuizzEditing.image;
+  element.querySelector(".input-question-qtty").value = currentQuizzEditing.questions.length;
+  element.querySelector(".input-lvl-qtty").value = currentQuizzEditing.levels.length;
 }
 
 // SCREEN 3 --> (2) QUIZZ QUESTIONS
 
-function addQuizzQuestions(quizz) {
+function addQuizzQuestions() {
   getQuizzInfo();
   if (validateQuizzInfo(quizzTitle, quizzUrlImage, quizzQtty, nQuizzLvls) === 0) {
     creationScreen = document.querySelector(".creation-screen");
@@ -223,7 +224,7 @@ function addQuizzQuestions(quizz) {
             <ul class="the-one-who-colapses">
                 <li><input class="input-q-text" placeholder="Texto da pergunta" type="text"></li>
                 <li>
-                    <input class="nove" type="color" value="#000001" onchange="changeColor(this)" />
+                    <input class="color-picker" type="color" value="#000001" onchange="changeColor(this)" />
                     <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
                 </li>
                 <h2>Resposta correta</h2>
@@ -242,16 +243,18 @@ function addQuizzQuestions(quizz) {
         </div>
         `;
     }
-    creationScreen.innerHTML += `<button onclick="addQuizzLevels(${quizz})">Prosseguir para criar níveis</button>`;
-    if (quizz !== null) 
-      putQuizzQuestions(creationScreen, quizz.questions);
+    creationScreen.innerHTML += `<button onclick="addQuizzLevels()">Prosseguir para criar níveis</button>`;
+    if (currentQuizzEditing !== undefined) {
+      putQuizzQuestions(creationScreen, currentQuizzEditing.questions);
+      creationScreen.querySelector("button").innerHTML = "Prosseguir para editar níveis";
+    }
   }
 }
 
 function changeColor(input) {
   const value = input.value;
   const parent = input.parentNode;
-  parent.querySelectorAll("input").forEach(element => element.value = value);
+  parent.querySelectorAll("input").forEach(element => element.value = value.toUpperCase());
 }
 
 function validateQuizzInfo(quizzTitle, quizzUrlImage, quizzQtty, nQuizzLvls) {
@@ -308,10 +311,11 @@ function putQuizzQuestions(creationScreen, questions) {
   let correctAswer = [];
   let incorretAnswers = [];
   for (let i = 0; (i < quizzQtty || i < questions.length); i++) {
-    correctAswer = questions[i].answers.filter(answer => answer.isCorrectAnswer);
-    incorretAnswers = questions.pop(correctAswer);
-    creationScreen.querySelector(`.pergunta${i} .input-q-text`).value = question.qText;
-    creationScreen.querySelector(`.pergunta${i} .input-q-bgcolor`).value = question.qBgColor;
+    correctAswer = questions[i].answers.filter(answer => answer.isCorrectAnswer)[0];
+    incorretAnswers = questions[i].answers.filter(answer => !answer.isCorrectAnswer);
+    creationScreen.querySelector(`.pergunta${i} .input-q-text`).value = questions[i].title;
+    creationScreen.querySelector(`.pergunta${i} .input-q-bgcolor`).value = questions[i].color;
+    creationScreen.querySelector(`.pergunta${i} .color-picker`).value = questions[i].color;
     creationScreen.querySelector(`.pergunta${i} .input-correct-text`).value = correctAswer.text;
     creationScreen.querySelector(`.pergunta${i} .input-correct-url`).value = correctAswer.image;
     for (let j = 0; j < incorretAnswers.length; j++) {
@@ -359,7 +363,7 @@ function validateQuestions(creationScreen) {
 
 // SCREEN 3 --> (3) QUIZZ LEVELS
 
-function addQuizzLevels(quizz) {
+function addQuizzLevels() {
   creationScreen = document.querySelector(".creation-screen");
   scroll(0, 0);
   let question = {};
@@ -399,9 +403,11 @@ function addQuizzLevels(quizz) {
           </div>
           `;
     }
-    creationScreen.innerHTML += `<button onclick="addQuizzFinal(${quizz})">Finalizar Quizz</button>`;
-    if (quizz !== null) 
-      putQuizzLevels(creationScreen, quizz.levels);
+    creationScreen.innerHTML += `<button onclick="addQuizzFinal()">Finalizar Quizz</button>`;
+    if (currentQuizzEditing !== undefined) {
+      putQuizzLevels(creationScreen, currentQuizzEditing.levels);
+      creationScreen.querySelector("button").innerHTML = "Salvar alterações";
+    }
   }
 }
 
@@ -419,10 +425,10 @@ function collapse(selector) {
 
 function putQuizzLevels(creationScreen, levels) {
   for (let i = 0; (i < nQuizzLvls || i < levels.length); i++) {
-    creationScreen.querySelector(`.level${i} .input-lvl-title`).value = levels.title;
-    creationScreen.querySelector(`.level${i} .input-lvl-percent`).value = levels.minValue;
-    creationScreen.querySelector(`.level${i} .input-lvl-url`).value = levels.image;
-    creationScreen.querySelector(`.level${i} .input-lvl-text`).value = levels.text;
+    creationScreen.querySelector(`.level${i} .input-lvl-title`).value = levels[i].title;
+    creationScreen.querySelector(`.level${i} .input-lvl-percent`).value = levels[i].minValue;
+    creationScreen.querySelector(`.level${i} .input-lvl-url`).value = levels[i].image;
+    creationScreen.querySelector(`.level${i} .input-lvl-text`).value = levels[i].text;
   }
 }
 
@@ -462,8 +468,7 @@ function validateLevels() {
 
 // SCREEN 3 --> FINAL
 
-function addQuizzFinal(quizz) {
-
+function addQuizzFinal() {
   if (validateLevels() === 0) {
     scroll(0, 0);
     for (let i = 0; i < nQuizzLvls; i++) {
@@ -479,8 +484,8 @@ function addQuizzFinal(quizz) {
             minValue: lvlPercent
         });
     }
-    if (quizz !== null) {
-      editQuizz(createObject(), quizz);
+    if (currentQuizzEditing !== undefined) {
+      editQuizzSend(createObject(), currentQuizzEditing.id);
     } else {
       addQuizSend(createObject());
     }
@@ -555,10 +560,23 @@ function deleteQuizz(id) {
 
 // BONUS - EDIT QUIZZ
 
-function editQuizz(id) {
-  alert("clicou");
+function editQuizz(element, id) { 
+  element.parentNode.parentNode.removeAttribute("onclick");
   quizz = quizzesUser.filter(quizz => (quizz.id === id));
-  console.log(quizz);
-  addQuizzInfo(quizz);
-  //axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, editedQuizz);
+  currentQuizzEditing = quizz[0];
+  addQuizzInfo();
+}
+
+function editQuizzSend(quizzObject, id) {
+  console.log(quizzObject, currentQuizzEditing)
+  axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, quizzObject, {headers: {"Secret-Key": getSecretKey(id)}})
+                  .then(() => {
+                                alert("Quizz alterado!");
+                                location.reload();
+                              })
+                  .catch(error => { 
+                                    alert("Ocorreu um erro!")
+                                    console.log("Erro: ", error);
+                                    location.reload();
+                                  });
 }
