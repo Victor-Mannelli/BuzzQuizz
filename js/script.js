@@ -223,8 +223,10 @@ function addQuizzQuestions() {
             <ul class="the-one-who-colapses">
                 <li><input class="input-q-text" placeholder="Texto da pergunta" type="text"></li>
                 <li>
+                  <div>
                     <input class="color-picker" type="color" value="#000001" onchange="changeColor(this)" />
                     <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
+                  </div>
                 </li>
                 <h2>Resposta correta</h2>
                 <li><input class="input-correct-text" placeholder="Resposta correta" type="text"></li>

@@ -420,22 +420,37 @@ span {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 24px;
 }
-
+.creation-screen li > input {
+  width: calc(90vw - 40px);
+  margin: 9px 0px;
+  padding-left: 15px;
+}
 .creation-screen input {
   background-color: #ffffff;
   height: 46px;
   border: 1px solid #d1d1d1;
   border-radius: 5px;
-  width: calc(90vw - 40px);
   max-width: 560px;
-  margin: 9px 0px;
-  padding-left: 15px;
+  
 }
-
 input:placeholder-shown {
   font-style: italic;
 }
-
+.creation-screen li > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.color-picker {
+  width: 40px;
+  margin: 0;
+  padding: 0;
+}
+.input-q-bgcolor {
+  width: 90%;
+  margin: 9px 0px;
+  padding-left: 15px;
+}
 .creation-screen button {
   margin-top: 61px;
   width: 55vw;
