@@ -27,7 +27,6 @@ function scrollWithOrder() {
     } else {
         question[counter].scrollIntoView({ behavior: 'smooth', block: "center" });
     }
-
 }
 
 let quizzData = [];
