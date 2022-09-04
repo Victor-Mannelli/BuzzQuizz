@@ -103,7 +103,7 @@ function insertAnswers(answers) {
   answers.sort(() => Math.random() - 0.5).forEach((answer) => {
     answersLI += `
             <li class="answer ${answer.isCorrectAnswer}" onclick="selectedAnswer(this)">
-                <img src="${answer.image}" alt="${answer.text}"></img>
+                <img class="black-text" src="${answer.image}" alt="${answer.text}"></img>
                 <h1 class="black-text">${answer.text}</h1>
             </li>
         `;
