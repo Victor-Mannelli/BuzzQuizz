@@ -29,6 +29,12 @@ let newQuestions = [];
 let newQuizzQtty = 0;
 let newQuizzLvl = 0;
 
+function changeColor(input) {
+    const value = input.value;
+    const parent = input.parentNode;
+    parent.querySelectorAll("input").forEach(element => element.value = value);
+}
+
 function addQuizzQuestions() {
     newQuizzTitle = document.querySelector(".input-title").value;
     newQuizzUrl = document.querySelector(".input-url").value;
@@ -43,7 +49,10 @@ function addQuizzQuestions() {
                 <h2>Pergunta ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
                 <ul class="the-one-who-colapses">
                     <li><input class="input-q-text" placeholder="Texto da pergunta" type="text"></li>
-                    <li><input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text"></li>
+                    <li>
+                        <input class="nove" type="color" value="#000001" onchange="changeColor(this)" />
+                        <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
+                    </li>
                     <h2>Resposta correta</h2>
                     <li><input class="input-correct-text" placeholder="Resposta correta" type="text"></li>
                     <li><input class="input-correct-url" placeholder="URL da imagem" type="text"></li>
@@ -186,7 +195,7 @@ function addQuizSend() {
 }
 
 function addQuizzSuccess(quizz) {
-    storeUserQuizz(quizz.data.id);
+    storeUserQuizz(quizz.data.id, quizz.data.key);
 
     elementoScreen.innerHTML = `<h1>Seu quizz está pronto!</h1>
             <ul>
@@ -284,25 +293,21 @@ function validateQuizzInfo() {
     return true;
 }
 
-function storeUserQuizz(id) {
-    let stringList = localStorage.getItem("quizzes");
-    let arrayList = [];
-
-    if (stringList === null) {
-        arrayList = [id];
+function storeUserQuizz(id, key) {
+    let userQuizzesStorage = localStorage.getItem("quizzes");
+    if (userQuizzesStorage !== null) {
+        userQuizzesStorage = JSON.parse(userQuizzesStorage);
     } else {
-        arrayList = JSON.parse(stringList);
-        arrayList.push(id);
+        userQuizzesStorage = {};
     }
-    const newStringList = JSON.stringify(arrayList);
-    localStorage.setItem("quizzes", newStringList);
+    userQuizzesStorage[id] = key;
+    localStorage.setItem("quizzes", JSON.stringify(userQuizzesStorage));
 }
 
 function testarCriacao() { // Função e objeto para teste da adição de quizz //
     addQuizzInfo();
     newQuizzObject = objetao;
     addQuizzSend();
-
 }
 
 const objetao = { // Função e objeto para teste da adição de quizz //

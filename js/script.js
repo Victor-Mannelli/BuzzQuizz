@@ -1,6 +1,6 @@
-
 let quizzesUser = [];
 let quizzesOtherUsers = [];
+let idCurrentQuiz = 0;
 
 function HomeButton() {
   location.reload();
@@ -17,10 +17,10 @@ function searchQuizzes() {
 }
 
 function separateQuizzes(quizzes) {
-  let userQuizzesIds = localStorage.getItem("quizzes");
-  if (userQuizzesIds !== null) {
-    userQuizzesIds = JSON.parse(userQuizzesIds);
-    quizzes = quizzes.filter((quizze) => userQuizzesIds.includes(quizze.id));
+  let userQuizzesStorage = localStorage.getItem("quizzes");
+  if (userQuizzesStorage !== null) {
+    userQuizzesStorage = JSON.parse(userQuizzesStorage);
+    quizzes = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id+''));
     return quizzes;
   } else {
     return [];
@@ -35,11 +35,27 @@ function responseQuizzes(response) {
   renderQuizzes();
 }
 
-function insertQuizzes(quizzes) {
+function insertQuizzes(quizzes, type) {
   let quizzesLI = "";
   quizzes.forEach((quizz) => {
-    quizzesLI += `
+    if (type === "user") {
+      quizzesLI += `
             <li class="quizz" onclick="searchQuizz(${quizz.id})">
+                <div class="edit-delet">
+                  <div onclick="editQuizz(${quizz.id})">
+                    <img src="./img/edit.svg" />
+                  </div>    
+                  <div onclick="deleteQuizz(${quizz.id})">
+                    <img src="./img/trash.svg" />
+                  </div>
+                </div>
+      `;
+    } else {
+      quizzesLI += `
+            <li class="quizz" onclick="searchQuizz(${quizz.id})">
+      `;
+    }
+    quizzesLI += `
                 <div class="overlay">
                   <h1>${quizz.title}</h1>
                 </div>
@@ -66,7 +82,7 @@ function renderQuizzes() {
                     <h1>Seus Quizzes</h1>
                     <span onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
                 </div>
-                <ul>${insertQuizzes(quizzesUser)}</ul>
+                <ul>${insertQuizzes(quizzesUser, "user")}</ul>
             </section>
         `;
   }
@@ -76,7 +92,7 @@ function renderQuizzes() {
             <div>
                 <h1>Todos os Quizzes</h1>
             </div>
-            <ul>${insertQuizzes(quizzesOtherUsers)}</ul>
+            <ul>${insertQuizzes(quizzesOtherUsers, "otherUsers")}</ul>
         </section>
         `;
 }
@@ -112,12 +128,13 @@ function insertAnswers(answers) {
 }
 
 function insertQuestions(questions) {
+  console.log(questions);
   let questionsLI = "";
   questions.forEach((question) => {
     questionsLI += `
             <li class="question">
                 <div class="content">
-                    <div class="question-title">
+                    <div class="question-title" style="background-color: ${question.color};">
                         <h1>${question.title}</h1>
                     </div>
                     <div class="answers">
@@ -129,7 +146,7 @@ function insertQuestions(questions) {
   });
   return questionsLI;
 }
-let idCurrentQuiz = 0;
+
 function renderQuizz(quizz) {
   idCurrentQuiz = quizz.id;
   const container = document.querySelector("container");
@@ -148,4 +165,32 @@ function renderQuizz(quizz) {
         </main>
     `;
   scrollWithOrder();
+}
+
+// BONUS - DELETE QUIZZ
+
+function getSecretKey(id) {
+  return JSON.parse(localStorage.getItem("quizzes"))[id];
+}
+
+function getUserQuizz(id) {
+  return quizzesUser.filter(quizz => (quizz.id === id))[0];
+}
+
+function deleteQuizz(id) {
+  if (window.confirm("Você realmente deseja apagar este quiz?")) {
+    axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, 
+                  {headers: {"Secret-Key": getSecretKey(id)}})
+                  .then(alert("Quizz Excluído"))
+                  .catch(error => {
+                    console.log('Um erro ocorreu!', error);});
+  }
+  location.reload();
+}
+
+// BONUS - EDIT QUIZZ
+
+function editQuizz(id) {
+  const editedQuizz = {};
+  axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, editedQuizz);
 }
