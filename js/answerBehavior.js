@@ -1,4 +1,4 @@
-import { } from ".js/script.js";
+//import { } from ".js/script.js";
 
 let counter = 0;
 function selectedAnswer(selector) {
@@ -38,7 +38,7 @@ function scrollWithOrder() {
 function endOfQuizz() {
     const question = document.querySelectorAll('.question')
     const questions = document.querySelector('.questions ul')
-    const feedback = document.querySelector('feedback-content')
+
 
     if (counter === question.length) {
         questions.innerHTML += `
@@ -59,8 +59,11 @@ function endOfQuizz() {
           </li>
       `;
         counter = 0;
+        const feedback = document.querySelector('.feedback-content');
+        feedback?.scrollIntoView({ behavior: 'smooth' });
     }
 
-    feedback.scrollIntoView({ behavior: 'smooth' });
+
+
 }
 
