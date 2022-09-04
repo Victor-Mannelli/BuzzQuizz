@@ -12,7 +12,7 @@
 }
 header {
   position: fixed;
-  z-index: 3;
+  z-index: 2;
   top: 0px;
   left: 0px;
 
@@ -129,7 +129,6 @@ section ul {
     rgba(0, 0, 0, 0.8) 100%
   );
   position: absolute;
-  z-index: 1;
   top: 0;
   left: 0;
 }
@@ -153,7 +152,7 @@ section ul {
   justify-content: space-around;
   align-items: center;
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   top: 9px;
   right: 0px;
 }
@@ -161,13 +160,18 @@ section ul {
   height: 50%;
   width: 100%;
   display: flex;
+  z-index: 2;
   justify-content: center;
   align-items: center;
 }
 .edit-delet div:first-child {
+  top: 0;
+  right: 0;
   border-radius: 10px 0px 0px 0px;
 }
 .edit-delet div:last-child {
+  bottom: 0;
+  right: 0;
   border-radius: 0px 0px 0px 10px;
 }
 .edit-delet div:hover {
