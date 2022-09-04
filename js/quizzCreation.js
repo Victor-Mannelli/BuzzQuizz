@@ -10,7 +10,7 @@ function addQuizzInfo() {
   <h1>Comece pelo começo</h1>
     <div class="box">
     <ul>
-        <li><input class="input-title" placeholder="Título do seu quizz" type="text"></li>
+        <li><input class="input-title" placeholder="Título do seu quizz" type="text"> </li>
         <li><input class="input-url" placeholder="URL da imagem do seu quizz" type="text"></li>
         <li><input class="input-question-qtty" placeholder="Quantidade de perguntas do quizz" type="text"></li>
         <li><input class="input-lvl-qtty" placeholder="Quantidade de níveis do quizz" type="text"></li>
@@ -234,6 +234,8 @@ function validateQuestions() {
         const incorrectText1 = document.querySelector(`.pergunta${i + 1} .input-wrong-text1`).value;
         const incorrectUrl1 = document.querySelector(`.pergunta${i + 1} .input-wrong-url1`).value;
 
+
+
         if (qText.length < 20) {
             return alert(`O título da pergunta ${i + 1} deve ter pelo menos 20 caracteres`);
         } else if (!testHex.test(qBgColor)) {
@@ -281,8 +283,9 @@ function validateLevels() {
 }
 
 function validateQuizzInfo() {
+
     if (newQuizzTitle.length < 20 || newQuizzTitle.length > 65) {
-        return alert(`O título ddo Quizz deve ter entre 20 e 65 caracteres`);
+        return alert(`O título do Quizz deve ter entre 20 e 65 caracteres`);
     } else if (newQuizzQtty < 3) {
         return alert(`O Quizz deve ter pelo menos 3 perguntas`);
     } else if (newQuizzLvl < 2) {

@@ -18,18 +18,20 @@ function separateQuizzes(quizzes) {
   let userQuizzesStorage = localStorage.getItem("quizzes");
   if (userQuizzesStorage !== null) {
     userQuizzesStorage = JSON.parse(userQuizzesStorage);
+<<<<<<< HEAD
     quizzes = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id + ''));
     return quizzes;
+=======
+    quizzesUser = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id+''));
+    quizzesOtherUsers = quizzes.filter(quizze => !(Object.keys(userQuizzesStorage).includes(quizze.id+'')));
+>>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
   } else {
-    return [];
+    quizzesOtherUsers = quizzes;
   }
 }
 
 function responseQuizzes(response) {
-  quizzesUser = separateQuizzes(response.data);
-  quizzesOtherUsers = response.data.filter(
-    (quizz) => !quizzesUser.includes(quizz.id)
-  );
+  separateQuizzes(response.data);
   renderQuizzes();
 }
 
@@ -43,7 +45,7 @@ function insertQuizzes(quizzes, type) {
                   <div onclick="editQuizz(this, ${quizz.id})">
                     <img src="./img/edit.svg" />
                   </div>    
-                  <div onclick="deleteQuizz(${quizz.id})">
+                  <div onclick="deleteQuizz(this, ${quizz.id})">
                     <img src="./img/trash.svg" />
                   </div>
                 </div>
@@ -70,7 +72,7 @@ function renderQuizzes() {
     main.innerHTML = `
             <section class="creating-quizz">
                 <p>Você não criou nenhum <br> quizz ainda :(</p>
-                <button onclick="addQuizzInfo(null)">Criar Quizz</button>
+                <button onclick="addQuizzInfo()">Criar Quizz</button>
             </section>
         `;
   } else {
@@ -78,7 +80,7 @@ function renderQuizzes() {
             <section class="user-quizzes">
                 <div>
                     <h1>Seus Quizzes</h1>
-                    <span onclick="addQuizzInfo(null)"><ion-icon name="add-circle-sharp"></ion-icon><span>
+                    <span onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
                 </div>
                 <ul>${insertQuizzes(quizzesUser, "user")}</ul>
             </section>
@@ -182,10 +184,22 @@ function addQuizzInfo() {
                       <h1>Comece pelo começo</h1>
                       <div class="box">
                         <ul>
-                            <li><input class="input-title" placeholder="Título do seu quizz" type="text"></li>
-                            <li><input class="input-url" placeholder="URL da imagem do seu quizz" type="text"></li>
-                            <li><input class="input-question-qtty" placeholder="Quantidade de perguntas do quizz" type="text"></li>
-                            <li><input class="input-lvl-qtty" placeholder="Quantidade de níveis do quizz" type="text"></li>
+                            <li>
+                              <input class="input-title" placeholder="Título do seu quizz" type="text"> </input>
+                              <p class="p1start"> </p>
+                            </li>
+                            <li>
+                              <input class="input-url" placeholder="URL da imagem do seu quizz" type="text"> </input>
+                              <p class="p2start"> </p>
+                            </li>
+                            <li>
+                              <input class="input-question-qtty" placeholder="Quantidade de perguntas do quizz" type="text"> </input>
+                              <p class="p3start"> </p>
+                            </li>
+                            <li>
+                              <input class="input-lvl-qtty" placeholder="Quantidade de níveis do quizz" type="text"> </input>
+                              <p class="p4start"> </p>
+                            </li>
                         </ul>
                       </div>
                       <button onclick="addQuizzQuestions()">Prosseguir para criar perguntas</button>
@@ -223,25 +237,53 @@ function addQuizzQuestions() {
         <div class="box pergunta${i}">
             <h2>Pergunta ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
             <ul class="the-one-who-colapses">
-                <li><input class="input-q-text" placeholder="Texto da pergunta" type="text"></li>
                 <li>
-                  <div>
+                  <input class="input-q-text" placeholder="Texto da pergunta" type="text">
+                  <p class="p1-question-${i}"> </p>
+                </li>
+                <li>
+                  <div class="color-picker-row">
                     <input class="color-picker" type="color" value="#000001" onchange="changeColor(this)" />
                     <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
                   </div>
+                    <p class="p2-backgroundcolor-${i}"> </p>
                 </li>
                 <h2>Resposta correta</h2>
-                <li><input class="input-correct-text" placeholder="Resposta correta" type="text"></li>
-                <li><input class="input-correct-url" placeholder="URL da imagem" type="text"></li>
+                <li>
+                  <input class="input-correct-text" placeholder="Resposta correta" type="text">
+                  <p class="p3-correct-answer-${i}"> </p>
+                </li>
+                <li>
+                  <input class="input-correct-url" placeholder="URL da imagem" type="text">
+                  <p class="p4-image-url-${i}"> </p>
+                </li>
                 <h2>Respostas incorretas</h2>
-                <li><input class="input-wrong-text1" placeholder="Resposta incorreta 1" type="text"></li>
-                <li><input class="input-wrong-url1" placeholder="URL da imagem 1" type="text"></li>
+                <li>
+                  <input class="input-wrong-text1" placeholder="Resposta incorreta 1" type="text">
+                  <p class="p5-wrong-text1-${i}"> </p>
+                </li>
+                <li>
+                  <input class="input-wrong-url1" placeholder="URL da imagem 1" type="text">
+                  <p class="p6-wrong-url1-${i}"> </p>
+                </li>
                 <br>
-                <li><input class="input-wrong-text2" placeholder="Resposta incorreta 2" type="text"></li>
-                <li><input class="input-wrong-url2" placeholder="URL da imagem 2" type="text"></li>
+                <li>
+                  <input class="input-wrong-text2" placeholder="Resposta incorreta 2" type="text">
+                  <p class="p7-wrong-text2-${i}"> </p>
+                </li>
+                <li>
+                  <input class="input-wrong-url2" placeholder="URL da imagem 2" type="text">
+                  <p class="p8-wrong-url2-${i}"> </p>
+                </li>
                 <br>
-                <li><input class="input-wrong-text3" placeholder="Resposta incorreta 3" type="text"></li>
-                <li><input class="input-wrong-url3" placeholder="URL da imagem 3" type="text"></li>
+                <li>
+                  <input class="input-wrong-text3" placeholder="Resposta incorreta 3" type="text">
+                  <p class="p9-wrong-text3-${i}"> </p>
+                </li>
+                <li>
+                  <input class="input-wrong-url3" placeholder="URL da imagem 3" type="text">
+                  <p class="p10-wrong-url3-${i}"> </p>
+                </li>
             </ul>
         </div>
         `;
@@ -261,22 +303,36 @@ function changeColor(input) {
 }
 
 function validateQuizzInfo(quizzTitle, quizzUrlImage, quizzQtty, nQuizzLvls) {
+
+  const startTitleP = document.querySelector('.p1start')
+  const startUrlP = document.querySelector('.p2start')
+  const startQuestionsP = document.querySelector('.p3start')
+  const startLevelsP = document.querySelector('.p4start')
+
   let errors = 0;
   if (quizzTitle.length < 20 || quizzTitle.length > 65) {
-    alert(`O título ddo Quizz deve ter entre 20 e 65 caracteres`);
+    startTitleP.innerHTML = `O título do Quizz deve ter entre 20 e 65 caracteres`;
     errors++;
+  } else {
+    startTitleP.innerHTML = ""
   }
   if (!validURL(quizzUrlImage)) {
-    alert(`A imagem do Quizz deve ser uma url`);
+    startUrlP.innerHTML = `A imagem do Quizz deve ser uma url`;
     errors++;
+  } else {
+    startUrlP.innerHTML = ""
   }
   if (quizzQtty < 3) {
-    alert(`O Quizz deve ter pelo menos 3 perguntas`);
+    startQuestionsP.innerHTML = `O Quizz deve ter pelo menos 3 perguntas`;
     errors++;
+  } else {
+    startQuestionsP.innerHTML = ""
   }
   if (nQuizzLvls < 2) {
-    alert(`O Quizz deve ter pelo menos 2 níveis`);
+    startLevelsP.innerHTML = `O Quizz deve ter pelo menos 2 níveis`;
     errors++;
+  } else {
+    startLevelsP.innerHTML = ""
   }
   return errors;
 }
@@ -337,22 +393,59 @@ function putQuizzQuestions(creationScreen, questions) {
 
 function validateQuestions(creationScreen) {
   let errors = 0;
+<<<<<<< HEAD
   let question = {};
+=======
+  let question = {}; 
+
+>>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
   for (let i = 0; i < quizzQtty; i++) {
     question = getQuizzQuestion(creationScreen, i);
+    console.log(question)
+
+    let questionsText = document.querySelector(`.p1-question-${i}`)
+    let backgroundcolor = document.querySelector(`.p2-backgroundcolor-${i}`)
+    let correctAnswer = document.querySelector(`.p3-correct-answer-${i}`)
+    let imageUrl = document.querySelector(`.p4-image-url-${i}`)
+    let wrongText1 = document.querySelector(`.p5-wrong-text1-${i}`)
+    let wrongUrl1 = document.querySelector(`.p6-wrong-url1-${i}`)
+    let wrongText2 = document.querySelector(`p7-wrong-text2-${i}`)
+    let wrongUrl2 = document.querySelector(`p8-wrong-url2-${i}`)
+    let wrongText3 = document.querySelector(`.p9-wrong-text3-${i}`)
+    let wrongUrl3 = document.querySelector(`.p10-wrong-url3-${i}`)
+
     if (question.text.length < 20) {
+<<<<<<< HEAD
       alert(`O título da pergunta ${i + 1} deve ter pelo menos 20 caracteres`);
+=======
+      questionsText.innerHTML = `O título da pergunta ${i+1} deve ter pelo menos 20 caracteres`;
+>>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
       errors++;
+    } else {
+      questionsText.innerHTML = "";
     }
     if (!testHex.test(question.bgColor)) {
+<<<<<<< HEAD
       alert(`A cor da pergunta ${i + 1} deve ser hexadecimal com #`);
       errors++;
     }
     if (question.answerCorrectText === '') {
       alert(`o texto da pergunta ${i + 1} não pode ser vazio`);
+=======
+      backgroundcolor.innerHTML = `A cor da pergunta ${i+1} deve ser hexadecimal com #`;
       errors++;
+    } else {
+      backgroundcolor.innerHTML = "";
+    }
+    if (question.answerCorrectText === '') {
+      correctAnswer.innerHTML = `o texto da pergunta ${i+1} não pode ser vazio`;
+>>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
+      errors++;
+    } else {
+      correctAnswer.innerHTML = "";
     }
     if (!validURL(question.answerCorrectUrl)) {
+<<<<<<< HEAD
       alert(`A url da pergunta ${i + 1} deve ser uma url`);
       errors++;
     }
@@ -365,6 +458,48 @@ function validateQuestions(creationScreen) {
         alert(`A url da resposta incorreta ${j + 1} deve ser uma url`);
         errors++;
       }
+=======
+      imageUrl.innerHTML = `A url da pergunta ${i+1} deve ser uma url`;
+      errors++;
+    } else {
+      imageUrl.innerHTML = ""
+    }
+    if (question.incorretAnswers[0].answerIncorrectText == '') {
+      wrongText1.innerHTML = `o texto da resposta incorreta ${1} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText1.innerHTML = ""
+    }
+    if (question.incorretAnswers[1].answerIncorrectText == '') {
+      wrongText2.innerHTML = `o texto da resposta incorreta ${2} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText2.innerHTML = ""
+    }
+    if (question.incorretAnswers[2].answerIncorrectText == '') {
+      wrongText3.innerHTML = `o texto da resposta incorreta ${3} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText3.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[0].answerIncorrectUrl)) {
+      wrongUrl1.innerHTML = `A url da resposta incorreta ${1} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl1.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[1].answerIncorrectUrl)) {
+      wrongUrl2.innerHTML = `A url da resposta incorreta ${2} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl2.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[2].answerIncorrectUrl)) {
+      wrongUrl3.innerHTML = `A url da resposta incorreta ${3} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl3.innerHTML = ""
+>>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
     }
     testHex.lastIndex = 0;
   }
@@ -556,7 +691,8 @@ function getSecretKey(id) {
   return JSON.parse(localStorage.getItem("quizzes"))[id];
 }
 
-function deleteQuizz(id) {
+function deleteQuizz(element, id) {
+  element.parentNode.parentNode.removeAttribute("onclick");
   if (window.confirm("Você realmente deseja apagar este quiz?")) {
     axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, { headers: { "Secret-Key": getSecretKey(id) } })
       .then(() => {
