@@ -341,9 +341,7 @@ section ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 69px;
 }
-
 .creation-screen h1 {
   font-size: 23px;
   font-weight: 700;
@@ -355,6 +353,17 @@ section ul {
   font-weight: 700;
   margin-top: 15px;
   margin-bottom: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+span {
+  cursor: pointer;
+}
+.the-one-who-colapses {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
 }
 .box {
   background-color: #ffffff;
