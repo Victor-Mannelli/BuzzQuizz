@@ -1,6 +1,6 @@
 
 let counter = 0;
-function selectedAnswer(selector) {
+function selectedAnswer(selector){
     const chosenAnswer = selector.parentNode
     let answers = chosenAnswer.querySelectorAll('.answer')
     counter++
@@ -23,46 +23,45 @@ function savingConstants(value) {
     window.tex1 = value[0].text
     window.tex2 = value[1].text
 }
-function scrollWithOrder() {
+function scrollWithOrder(){
     const question = document.querySelectorAll('.question')
     const overlay = document.querySelector('.overlay')
-    if (counter === 0) {
+    if (counter === 0){
         overlay.scrollIntoView();
     } else {
-        question[counter].scrollIntoView({ behavior: 'smooth', block: "center" });
+        question[counter].scrollIntoView({ behavior: 'smooth', block: "center"});
     }
-
+    
 }
 
 function endOfQuizz() {
     const question = document.querySelectorAll('.question')
     const questions = document.querySelector('.questions ul')
 
-
     if (counter === question.length) {
         questions.innerHTML += `
-          <li class="question">
-              <div class="feedback-content">
-                  <div class="feedback-header">
-                      <h1>${window.title1}</h1>
-                  </div>
-                  <div class="feedback-main"">
-                      <img src="${window.imgUrl0}"> </img>
-                      <div class="paragraph"> <p> ${window.tex1} </p> </div>
-                  </div>
-                  <div class="feedback-buttons">
-                      <button onclick="searchQuizz(idCurrentQuiz)" class="re-start"> Reiniciar Quizz </button>
-                      <button onclick="location.reload()" class="back-home"> Voltar para home </button>
-                  </div>
-              </div>
-          </li>
-      `;
-        counter = 0;
-        const feedback = document.querySelector('.feedback-content');
-        feedback?.scrollIntoView({ behavior: 'smooth' });
+            <li class="question">
+                <div class="feedback-content">
+                    <div class="feedback-header">
+                        <h1>${window.title1}</h1>
+                    </div>
+                    <div class="feedback-main"">
+                        <img src="${window.imgUrl0}"> </img>
+                        <div class="paragraph"> <p> ${window.tex1} </p> </div>
+                    </div>
+                    <div class="feedback-buttons">
+                        <button class="re-start" onclick="searchQuizz(idCurrentQuiz)" > Reiniciar Quizz </button>
+                        <button onclick="location.reload()" class="back-home"> Voltar para home </button>
+                    </div>
+                 </div>
+              </li>
+        `;
+        const feedback = document.querySelector('.feedback-content')
+        feedback?.scrollIntoView({ behavior: 'smooth'});
+
+        const restartButton = document.querySelector('.re-start')
+        restartButton.addEventListener("click", (() => counter = 0));
+
     }
-
-
-
 }
 
