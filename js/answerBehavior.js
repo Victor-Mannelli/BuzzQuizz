@@ -1,7 +1,6 @@
-
 let counter = 0;
-
-function selectedAnswer(selector) {
+let correctAnswers = 0;
+function selectedAnswer(selector){
     const chosenAnswer = selector.parentNode
     let answers = chosenAnswer.querySelectorAll('.answer')
     counter++
@@ -14,36 +13,53 @@ function selectedAnswer(selector) {
     }
     endOfQuizz();
     setTimeout(scrollWithOrder, 2000)
+
+    if (selector.classList.contains('true')){
+        correctAnswers++
+    }
 }
 
-
-function scrollWithOrder() {
-
+function scrollWithOrder(){
     const question = document.querySelectorAll('.question')
     const overlay = document.querySelector('.overlay')
-    if (counter === 0) {
+    if (counter === 0){
         overlay.scrollIntoView();
     } else {
-        question[counter].scrollIntoView({ behavior: 'smooth', block: "center" });
+        question[counter].scrollIntoView({ behavior: 'smooth', block: "center"});
     }
-
+    
 }
 
 function endOfQuizz(value) {
-    const question = document.querySelectorAll('.question')
-    const questions = document.querySelector('.questions ul')
+    const question = document.querySelectorAll('.question');
+    const questions = document.querySelector('.questions ul');
+    const differentLevels = [];
 
     if (counter === question.length) {
-        for (let i = 0; i < value.length; i++) {
+
+        for (let i = 0; i < value.levels.length; i++){
+            differentLevels.push(value.levels[i].minValue);
+        } 
+        differentLevels.sort();
+    
+        const percent = Math.round(correctAnswers/question.length); 
+
+        for (let i = 0; i < differentLevels.length; i++){
+            if (percent < differentLevels[i]){
+                
+            }
+        }
+
+        if(value.levels.minValue )
             questions.innerHTML += `
             <li class="question">
                 <div class="feedback-content">
                     <div class="feedback-header">
-                        <h1>${value[i].title}</h1>
+                        <h1>${value.levels[i].title}</h1>
                     </div>
                     <div class="feedback-main"">
-                        <img src="${value[i].imgUrl0}"> </img>
-                        <div class="paragraph"> <p> ${value[i].tex1} </p> </div>
+                        <img src="${value.levels[i].image}"> </img>
+                        <div class="paragraph"> <p> ${value.levels[i].text} </p> </div>
                     </div>
                     <div class="feedback-buttons">
                         <button class="re-start" onclick="searchQuizz(idCurrentQuiz)" > Reiniciar Quizz </button>
@@ -53,13 +69,11 @@ function endOfQuizz(value) {
               </li>
             `;
         }
-
-
+    
         const feedback = document.querySelector('.feedback-content')
-        feedback?.scrollIntoView({ behavior: 'smooth' });
+        feedback?.scrollIntoView({ behavior: 'smooth'});
 
         const restartButton = document.querySelector('.re-start')
         restartButton.addEventListener("click", (() => counter = 0));
-    }
 }
 
