@@ -18,18 +18,15 @@ function separateQuizzes(quizzes) {
   let userQuizzesStorage = localStorage.getItem("quizzes");
   if (userQuizzesStorage !== null) {
     userQuizzesStorage = JSON.parse(userQuizzesStorage);
-    quizzes = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id+''));
-    return quizzes;
+    quizzesUser = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id+''));
+    quizzesOtherUsers = quizzes.filter(quizze => !(Object.keys(userQuizzesStorage).includes(quizze.id+'')));
   } else {
-    return [];
+    quizzesOtherUsers = quizzes;
   }
 }
 
 function responseQuizzes(response) {
-  quizzesUser = separateQuizzes(response.data);
-  quizzesOtherUsers = response.data.filter(
-    (quizz) => !quizzesUser.includes(quizz.id)
-  );
+  separateQuizzes(response.data);
   renderQuizzes();
 }
 
@@ -43,7 +40,7 @@ function insertQuizzes(quizzes, type) {
                   <div onclick="editQuizz(this, ${quizz.id})">
                     <img src="./img/edit.svg" />
                   </div>    
-                  <div onclick="deleteQuizz(${quizz.id})">
+                  <div onclick="deleteQuizz(this, ${quizz.id})">
                     <img src="./img/trash.svg" />
                   </div>
                 </div>
@@ -70,7 +67,7 @@ function renderQuizzes() {
     main.innerHTML = `
             <section class="creating-quizz">
                 <p>Você não criou nenhum <br> quizz ainda :(</p>
-                <button onclick="addQuizzInfo(null)">Criar Quizz</button>
+                <button onclick="addQuizzInfo()">Criar Quizz</button>
             </section>
         `;
   } else {
@@ -78,7 +75,7 @@ function renderQuizzes() {
             <section class="user-quizzes">
                 <div>
                     <h1>Seus Quizzes</h1>
-                    <span onclick="addQuizzInfo(null)"><ion-icon name="add-circle-sharp"></ion-icon><span>
+                    <span onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
                 </div>
                 <ul>${insertQuizzes(quizzesUser, "user")}</ul>
             </section>
@@ -545,7 +542,8 @@ function getSecretKey(id) {
   return JSON.parse(localStorage.getItem("quizzes"))[id];
 }
 
-function deleteQuizz(id) {
+function deleteQuizz(element, id) {
+  element.parentNode.parentNode.removeAttribute("onclick");
   if (window.confirm("Você realmente deseja apagar este quiz?")) {
     axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {headers: {"Secret-Key": getSecretKey(id)}})
                   .then(() => {
