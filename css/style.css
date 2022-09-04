@@ -420,11 +420,17 @@ span {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 24px;
 }
-.creation-screen li > input {
-  width: calc(90vw - 40px);
-  margin: 9px 0px;
-  padding-left: 15px;
+.box li {
+  display: flex;
+  flex-direction: column;
 }
+.box p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 19px;
+  color: #EC362D;
+}
+
 .creation-screen input {
   background-color: #ffffff;
   height: 46px;

@@ -54,28 +54,23 @@ function endOfQuizz(value) {
                 index = i;
             }
         }
-        console.log(percent, 'percentual')
-        console.log(highestUnderPercent, 'maior')
-        console.log(lowestValues, 'menores')
-
         questions.innerHTML += `
-                 <li class="question">
-                     <div class="feedback-content">
-                         <div class="feedback-header">
-                             <h1>${value[index].title}</h1>
-                         </div>
-                         <div class="feedback-main"">
-                             <img src="${value[index].image}"> </img>
-                             <div class="paragraph"> <p> ${value[index].text} </p> </div>
-                         </div>
-                         <div class="feedback-buttons">
-                             <button class="re-start" onclick="searchQuizz(idCurrentQuiz)" > Reiniciar Quizz </button>
-                             <button onclick="location.reload()" class="back-home"> Voltar para home </button>
-                         </div>
-                      </div>
-                   </li>
-                 `;
-
+                <li class="question">
+                    <div class="feedback-content">
+                        <div class="feedback-header">
+                            <h1>${value[index].title}</h1>
+                        </div>
+                        <div class="feedback-main"">
+                            <img src="${value[index].image}"> </img>
+                            <div class="paragraph"> <p> ${value[index].text} </p> </div>
+                        </div>
+                        <div class="feedback-buttons">
+                            <button class="re-start" onclick="searchQuizz(idCurrentQuiz)" > Reiniciar Quizz </button>
+                            <button onclick="location.reload()" class="back-home"> Voltar para home </button>
+                        </div>
+                    </div>
+                </li>
+            `;
 
         const feedback = document.querySelector('.feedback-content')
         feedback?.scrollIntoView({ behavior: 'smooth' });

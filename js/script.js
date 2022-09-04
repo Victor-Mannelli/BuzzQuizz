@@ -177,10 +177,22 @@ function addQuizzInfo() {
                       <h1>Comece pelo começo</h1>
                       <div class="box">
                         <ul>
-                            <li><input class="input-title" placeholder="Título do seu quizz" type="text"></li>
-                            <li><input class="input-url" placeholder="URL da imagem do seu quizz" type="text"></li>
-                            <li><input class="input-question-qtty" placeholder="Quantidade de perguntas do quizz" type="text"></li>
-                            <li><input class="input-lvl-qtty" placeholder="Quantidade de níveis do quizz" type="text"></li>
+                            <li>
+                              <input class="input-title" placeholder="Título do seu quizz" type="text"> </input>
+                              <p class="p1start"> </p>
+                            </li>
+                            <li>
+                              <input class="input-url" placeholder="URL da imagem do seu quizz" type="text"> </input>
+                              <p class="p2start"> </p>
+                            </li>
+                            <li>
+                              <input class="input-question-qtty" placeholder="Quantidade de perguntas do quizz" type="text"> </input>
+                              <p class="p3start"> </p>
+                            </li>
+                            <li>
+                              <input class="input-lvl-qtty" placeholder="Quantidade de níveis do quizz" type="text"> </input>
+                              <p class="p4start"> </p>
+                            </li>
                         </ul>
                       </div>
                       <button onclick="addQuizzQuestions()">Prosseguir para criar perguntas</button>
@@ -218,25 +230,51 @@ function addQuizzQuestions() {
         <div class="box pergunta${i}">
             <h2>Pergunta ${i+1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
             <ul class="the-one-who-colapses">
-                <li><input class="input-q-text" placeholder="Texto da pergunta" type="text"></li>
                 <li>
-                  <div>
-                    <input class="color-picker" type="color" value="#000001" onchange="changeColor(this)" />
-                    <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
-                  </div>
+                  <input class="input-q-text" placeholder="Texto da pergunta" type="text">
+                  <p class="p1-question-${i}"> </p>
+                </li>
+                <li>
+                  <input class="color-picker" type="color" value="#000001" onchange="changeColor(this)" />
+                  <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
+                  <p class="p2-backgroundcolor-${i}"> </p>
                 </li>
                 <h2>Resposta correta</h2>
-                <li><input class="input-correct-text" placeholder="Resposta correta" type="text"></li>
-                <li><input class="input-correct-url" placeholder="URL da imagem" type="text"></li>
+                <li>
+                  <input class="input-correct-text" placeholder="Resposta correta" type="text">
+                  <p class="p3-correct-answer-${i}"> </p>
+                </li>
+                <li>
+                  <input class="input-correct-url" placeholder="URL da imagem" type="text">
+                  <p class="p4-image-url-${i}"> </p>
+                </li>
                 <h2>Respostas incorretas</h2>
-                <li><input class="input-wrong-text1" placeholder="Resposta incorreta 1" type="text"></li>
-                <li><input class="input-wrong-url1" placeholder="URL da imagem 1" type="text"></li>
+                <li>
+                  <input class="input-wrong-text1" placeholder="Resposta incorreta 1" type="text">
+                  <p class="p5-wrong-text1-${i}"> </p>
+                </li>
+                <li>
+                  <input class="input-wrong-url1" placeholder="URL da imagem 1" type="text">
+                  <p class="p6-wrong-url1-${i}"> </p>
+                </li>
                 <br>
-                <li><input class="input-wrong-text2" placeholder="Resposta incorreta 2" type="text"></li>
-                <li><input class="input-wrong-url2" placeholder="URL da imagem 2" type="text"></li>
+                <li>
+                  <input class="input-wrong-text2" placeholder="Resposta incorreta 2" type="text">
+                  <p class="p7-wrong-text2-${i}"> </p>
+                </li>
+                <li>
+                  <input class="input-wrong-url2" placeholder="URL da imagem 2" type="text">
+                  <p class="p8-wrong-url2-${i}"> </p>
+                </li>
                 <br>
-                <li><input class="input-wrong-text3" placeholder="Resposta incorreta 3" type="text"></li>
-                <li><input class="input-wrong-url3" placeholder="URL da imagem 3" type="text"></li>
+                <li>
+                  <input class="input-wrong-text3" placeholder="Resposta incorreta 3" type="text">
+                  <p class="p9-wrong-text3-${i}"> </p>
+                </li>
+                <li>
+                  <input class="input-wrong-url3" placeholder="URL da imagem 3" type="text">
+                  <p class="p10-wrong-url3-${i}"> </p>
+                </li>
             </ul>
         </div>
         `;
@@ -256,22 +294,36 @@ function changeColor(input) {
 }
 
 function validateQuizzInfo(quizzTitle, quizzUrlImage, quizzQtty, nQuizzLvls) {
+
+  const startTitleP = document.querySelector('.p1start')
+  const startUrlP = document.querySelector('.p2start')
+  const startQuestionsP = document.querySelector('.p3start')
+  const startLevelsP = document.querySelector('.p4start')
+
   let errors = 0;
   if (quizzTitle.length < 20 || quizzTitle.length > 65) {
-    alert(`O título ddo Quizz deve ter entre 20 e 65 caracteres`);
+    startTitleP.innerHTML = `O título do Quizz deve ter entre 20 e 65 caracteres`;
     errors++;
+  } else {
+    startTitleP.innerHTML = ""
   }
   if (!validURL(quizzUrlImage)) {
-    alert(`A imagem do Quizz deve ser uma url`);
+    startUrlP.innerHTML = `A imagem do Quizz deve ser uma url`;
     errors++;
+  } else {
+    startUrlP.innerHTML = ""
   }
   if (quizzQtty < 3) {
-    alert(`O Quizz deve ter pelo menos 3 perguntas`);
+    startQuestionsP.innerHTML = `O Quizz deve ter pelo menos 3 perguntas`;
     errors++;
+  } else {
+    startQuestionsP.innerHTML = ""
   }
   if (nQuizzLvls < 2) {
-    alert(`O Quizz deve ter pelo menos 2 níveis`);
+    startLevelsP.innerHTML = `O Quizz deve ter pelo menos 2 níveis`;
     errors++;
+  } else {
+    startLevelsP.innerHTML = ""
   }
   return errors;
 }
@@ -326,33 +378,81 @@ function putQuizzQuestions(creationScreen, questions) {
 function validateQuestions(creationScreen) {
   let errors = 0;
   let question = {}; 
+
   for (let i = 0; i < quizzQtty; i++) {
     question = getQuizzQuestion(creationScreen, i);
+    console.log(question)
+
+    let questionsText = document.querySelector(`.p1-question-${i}`)
+    let backgroundcolor = document.querySelector(`.p2-backgroundcolor-${i}`)
+    let correctAnswer = document.querySelector(`.p3-correct-answer-${i}`)
+    let imageUrl = document.querySelector(`.p4-image-url-${i}`)
+    let wrongText1 = document.querySelector(`.p5-wrong-text1-${i}`)
+    let wrongUrl1 = document.querySelector(`.p6-wrong-url1-${i}`)
+    let wrongText2 = document.querySelector(`p7-wrong-text2-${i}`)
+    let wrongUrl2 = document.querySelector(`p8-wrong-url2-${i}`)
+    let wrongText3 = document.querySelector(`.p9-wrong-text3-${i}`)
+    let wrongUrl3 = document.querySelector(`.p10-wrong-url3-${i}`)
+
     if (question.text.length < 20) {
-      alert(`O título da pergunta ${i+1} deve ter pelo menos 20 caracteres`);
+      questionsText.innerHTML = `O título da pergunta ${i+1} deve ter pelo menos 20 caracteres`;
       errors++;
+    } else {
+      questionsText.innerHTML = "";
     }
     if (!testHex.test(question.bgColor)) {
-      alert(`A cor da pergunta ${i+1} deve ser hexadecimal com #`);
+      backgroundcolor.innerHTML = `A cor da pergunta ${i+1} deve ser hexadecimal com #`;
       errors++;
-    } 
+    } else {
+      backgroundcolor.innerHTML = "";
+    }
     if (question.answerCorrectText === '') {
-      alert(`o texto da pergunta ${i+1} não pode ser vazio`);
+      correctAnswer.innerHTML = `o texto da pergunta ${i+1} não pode ser vazio`;
       errors++;
+    } else {
+      correctAnswer.innerHTML = "";
     }
     if (!validURL(question.answerCorrectUrl)) {
-      alert(`A url da pergunta ${i+1} deve ser uma url`);
+      imageUrl.innerHTML = `A url da pergunta ${i+1} deve ser uma url`;
       errors++;
-    } 
-    for (let j = 0; j < question.incorretAnswers.length; j++) {
-      if (question.incorretAnswers[j].answerIncorrectText == '') {
-        alert(`o texto da resposta incorreta ${j+1} não pode ser vazio`);
-        errors++;
-      } 
-      if (!validURL(question.incorretAnswers[j].answerIncorrectUrl)) {
-        alert(`A url da resposta incorreta ${j+1} deve ser uma url`);
-        errors++;
-      }
+    } else {
+      imageUrl.innerHTML = ""
+    }
+    if (question.incorretAnswers[0].answerIncorrectText == '') {
+      wrongText1.innerHTML = `o texto da resposta incorreta ${1} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText1.innerHTML = ""
+    }
+    if (question.incorretAnswers[1].answerIncorrectText == '') {
+      wrongText2.innerHTML = `o texto da resposta incorreta ${2} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText2.innerHTML = ""
+    }
+    if (question.incorretAnswers[2].answerIncorrectText == '') {
+      wrongText3.innerHTML = `o texto da resposta incorreta ${3} não pode ser vazio`
+      errors++;
+    } else {
+      wrongText3.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[0].answerIncorrectUrl)) {
+      wrongUrl1.innerHTML = `A url da resposta incorreta ${1} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl1.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[1].answerIncorrectUrl)) {
+      wrongUrl2.innerHTML = `A url da resposta incorreta ${2} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl2.innerHTML = ""
+    }
+    if (!validURL(question.incorretAnswers[2].answerIncorrectUrl)) {
+      wrongUrl3.innerHTML = `A url da resposta incorreta ${3} deve ser uma url`
+      errors++;
+    } else {
+      wrongUrl3.innerHTML = ""
     }
     testHex.lastIndex = 0;
   }
