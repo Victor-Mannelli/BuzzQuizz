@@ -238,7 +238,7 @@ function addQuizzQuestions() {
                   <p class="p1-question-${i}"> </p>
                 </li>
                 <li>
-                  <input class="color-input" type="color" value="#000001" onchange="changeColor(this)" />
+                  <input class="color-picker" type="color" value="#000001" onchange="changeColor(this)" />
                   <input class="input-q-bgcolor" placeholder="Cor de fundo da pergunta" type="text" onchange="changeColor(this)" />
                   <p class="p2-backgroundcolor-${i}"> </p>
                 </li>
@@ -418,7 +418,9 @@ function validateQuestions(creationScreen) {
     if (!validURL(question.answerCorrectUrl)) {
       imageUrl.innerHTML = `A url da pergunta ${i+1} deve ser uma url`;
       errors++;
-    } 
+    } else {
+      imageUrl.innerHTML = ""
+    }
     if (question.incorretAnswers[0].answerIncorrectText == '') {
       wrongText1.innerHTML = `o texto da resposta incorreta ${1} não pode ser vazio`
       errors++;
