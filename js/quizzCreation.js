@@ -301,7 +301,7 @@ function storeUserQuizz(id) {
 function testarCriacao() { // Função e objeto para teste da adição de quizz //
     addQuizzInfo();
     newQuizzObject = objetao;
-    addQuizzSend();
+    addQuizSend();
 
 }
 
