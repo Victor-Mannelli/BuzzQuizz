@@ -124,15 +124,15 @@ function addQuizzLevels() {
         elementoScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
 
         for (let i = 0; i < newQuizzLvl; i++) {
-            elementoScreen.innerHTML += ` <div class="box level${i + 1}">
-            <ul>
-                <h2>Nível ${i + 1}</h2>
-                <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
-                <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
-                <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
-                <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
-                
-            </ul>
+            elementoScreen.innerHTML += ` 
+            <div class="box level${i + 1}">
+                <h2>Nível ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+                <ul class="the-one-who-colapses">
+                    <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
+                    <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
+                    <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
+                    <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
+                </ul>
             </div>
             `;
         }

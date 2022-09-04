@@ -37,26 +37,31 @@ function scrollWithOrder(){
 function endOfQuizz() {
     const question = document.querySelectorAll('.question')
     const questions = document.querySelector('.questions ul')
-    const feedback = document.querySelector('feedback-content')
 
     if (counter === question.length) {
         questions.innerHTML += `
-          <li class="question">
-              <div class="feedback-content">
-                  <div class="feedback-header">
-                      <h1>${window.title1}</h1>
-                  </div>
-                  <div class="feedback-main"">
-                      <img src="${window.imgUrl0}"> </img>
-                      <div class="paragraph"> <p> ${window.tex1} </p> </div>
-                  </div>
-                  <div class="feedback-buttons">
-                      <button onclick="searchQuizz(idCurrentQuiz)" class="re-start"> Reiniciar Quizz </button>
-                      <button onclick="location.reload()" class="back-home"> Voltar para home </button>
-                  </div>
-              </div>
-          </li>
-      `;
-      feedback.scrollIntoView({ behavior: 'smooth'});
-  }
+            <li class="question">
+                <div class="feedback-content">
+                    <div class="feedback-header">
+                        <h1>${window.title1}</h1>
+                    </div>
+                    <div class="feedback-main"">
+                        <img src="${window.imgUrl0}"> </img>
+                        <div class="paragraph"> <p> ${window.tex1} </p> </div>
+                    </div>
+                    <div class="feedback-buttons">
+                        <button class="re-start" onclick="searchQuizz(idCurrentQuiz)" > Reiniciar Quizz </button>
+                        <button onclick="location.reload()" class="back-home"> Voltar para home </button>
+                    </div>
+                 </div>
+              </li>
+        `;
+        const feedback = document.querySelector('.feedback-content')
+        feedback?.scrollIntoView({ behavior: 'smooth'});
+
+        const restartButton = document.querySelector('.re-start')
+        restartButton.addEventListener("click", (() => counter = 0));
+
+    }
 }
+
