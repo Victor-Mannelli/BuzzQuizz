@@ -301,7 +301,8 @@ function storeUserQuizz(id) {
 function testarCriacao() { // Função e objeto para teste da adição de quizz //
     addQuizzInfo();
     newQuizzObject = objetao;
-    addQuizQuestions();
+    addQuizzSend();
+
 }
 
 const objetao = { // Função e objeto para teste da adição de quizz //
@@ -373,15 +374,15 @@ const objetao = { // Função e objeto para teste da adição de quizz //
     ]
 }
 
-function collapse(selector){
+function collapse(selector) {
     const h2 = selector.parentNode;
     const questionBlock = h2.parentNode;
     const ul = questionBlock.children[1]
 
-    if (ul.style.maxHeight){
+    if (ul.style.maxHeight) {
         ul.style.maxHeight = null;
     } else {
         ul.style.maxHeight = ul.scrollHeight + "px";
     }
-    
+
 }
