@@ -15,14 +15,6 @@ function selectedAnswer(selector){
     setTimeout(scrollWithOrder, 2000)
 }
 
-function savingConstants(value) {
-    window.title1 = value[0].title
-    window.title2 = value[1].title
-    window.imgUrl0 = value[0].image
-    window.imgUrl1 = value[1].image
-    window.tex1 = value[0].text
-    window.tex2 = value[1].text
-}
 function scrollWithOrder(){
     const question = document.querySelectorAll('.question')
     const overlay = document.querySelector('.overlay')
@@ -34,20 +26,21 @@ function scrollWithOrder(){
     
 }
 
-function endOfQuizz() {
+function endOfQuizz(value) {
     const question = document.querySelectorAll('.question')
     const questions = document.querySelector('.questions ul')
 
     if (counter === question.length) {
-        questions.innerHTML += `
+        for (let i = 0; i < value.length; i++){
+            questions.innerHTML += `
             <li class="question">
                 <div class="feedback-content">
                     <div class="feedback-header">
-                        <h1>${window.title1}</h1>
+                        <h1>${value[i].title}</h1>
                     </div>
                     <div class="feedback-main"">
-                        <img src="${window.imgUrl0}"> </img>
-                        <div class="paragraph"> <p> ${window.tex1} </p> </div>
+                        <img src="${value[i].imgUrl0}"> </img>
+                        <div class="paragraph"> <p> ${value[i].tex1} </p> </div>
                     </div>
                     <div class="feedback-buttons">
                         <button class="re-start" onclick="searchQuizz(idCurrentQuiz)" > Reiniciar Quizz </button>
@@ -55,13 +48,15 @@ function endOfQuizz() {
                     </div>
                  </div>
               </li>
-        `;
+            `;
+        }
+
+        
         const feedback = document.querySelector('.feedback-content')
         feedback?.scrollIntoView({ behavior: 'smooth'});
 
         const restartButton = document.querySelector('.re-start')
         restartButton.addEventListener("click", (() => counter = 0));
-
     }
 }
 
