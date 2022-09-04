@@ -1,6 +1,7 @@
 
 let counter = 0;
-function selectedAnswer(selector){
+
+function selectedAnswer(selector) {
     const chosenAnswer = selector.parentNode
     let answers = chosenAnswer.querySelectorAll('.answer')
     counter++
@@ -23,15 +24,15 @@ function savingConstants(value) {
     window.tex1 = value[0].text
     window.tex2 = value[1].text
 }
-function scrollWithOrder(){
+function scrollWithOrder() {
     const question = document.querySelectorAll('.question')
     const overlay = document.querySelector('.overlay')
-    if (counter === 0){
+    if (counter === 0) {
         overlay.scrollIntoView();
     } else {
-        question[counter].scrollIntoView({ behavior: 'smooth', block: "center"});
+        question[counter].scrollIntoView({ behavior: 'smooth', block: "center" });
     }
-    
+
 }
 
 function endOfQuizz() {
@@ -57,7 +58,7 @@ function endOfQuizz() {
               </li>
         `;
         const feedback = document.querySelector('.feedback-content')
-        feedback?.scrollIntoView({ behavior: 'smooth'});
+        feedback?.scrollIntoView({ behavior: 'smooth' });
 
         const restartButton = document.querySelector('.re-start')
         restartButton.addEventListener("click", (() => counter = 0));

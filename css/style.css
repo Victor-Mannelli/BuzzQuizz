@@ -37,6 +37,7 @@ main {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background: none;
 }
 section {
   margin-bottom: 48px;
@@ -195,7 +196,6 @@ section ul {
   margin: 21px auto;
 }
 .question .content {
-  
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -318,7 +318,7 @@ section ul {
 
   border-radius: 15px;
   width: 260.38px;
-  height: 52px; 
+  height: 52px;
   margin-bottom: 8px;
 
   font-size: 18px;
@@ -458,7 +458,7 @@ input:placeholder-shown {
   }
   .feedback-header {
     height: 15vh;
-    border-top:0px;
+    border-top: 0px;
   }
   .feedback-content {
     width: 90vw;
