@@ -100,7 +100,6 @@ searchQuizzes();
 // SCREEN 2
 
 function searchQuizz(id) {
-  alert("clicou");
   const response = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`);
   response.then(responseQuizz);
   response.catch((error) => console.log(`erro: ${error.response.data}`));
@@ -614,16 +613,17 @@ function getSecretKey(id) {
 
 function deleteQuizz(id) {
   if (window.confirm("Você realmente deseja apagar este quiz?")) {
-    axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, 
-                  {headers: {"Secret-Key": getSecretKey(id)}})
+    axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {headers: {"Secret-Key": getSecretKey(id)}})
                   .then(() => {
                                 alert("Quizz Excluído");
-                                
+                                location.reload();
                               })
                   .catch(error => {
-                    console.log('Um erro ocorreu!', error);});
+                                    alert("Ocorreu um erro!")
+                                    console.log("Erro: ", error);
+                                    location.reload();
+                                  });
   }
-  location.reload();
 }
 
 // BONUS - EDIT QUIZZ
@@ -636,7 +636,6 @@ function editQuizz(element, id) {
 }
 
 function editQuizzSend(quizzObject, id) {
-  console.log(quizzObject, currentQuizzEditing)
   axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, quizzObject, {headers: {"Secret-Key": getSecretKey(id)}})
                   .then(() => {
                                 alert("Quizz alterado!");
