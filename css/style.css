@@ -491,6 +491,7 @@ input:placeholder-shown {
 .loading {
   width: 150px;
   height: auto;
+  align-self: center;
 }
 
 /* MOBILE LAYOUT SCREEN 1 */

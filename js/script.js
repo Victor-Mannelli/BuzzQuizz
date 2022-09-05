@@ -100,6 +100,8 @@ function searchQuizz(id) {
   const response = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`);
   response.then(responseQuizz);
   response.catch((error) => console.log(`erro: ${error.response.data}`));
+  const main = document.querySelector("main");
+  main.innerHTML = '<img src="./img/Rolling-1s-150px.gif" alt="loading screen" class="loading">';
 }
 
 function responseQuizz(response) {
@@ -228,7 +230,7 @@ function addQuizzQuestions() {
     for (let i = 0; i < quizzQtty; i++) {
       creationScreen.innerHTML += ` 
         <div class="box pergunta${i}">
-            <h2>Pergunta ${i+1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+            <h2>Pergunta ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
             <ul class="the-one-who-colapses">
                 <li>
                   <input class="input-q-text" placeholder="Texto da pergunta" type="text">
@@ -332,29 +334,36 @@ function validateQuizzInfo(quizzTitle, quizzUrlImage, quizzQtty, nQuizzLvls) {
 
 function validURL(str) {
   var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
   return pattern.test(str);
 }
 
 function getQuizzQuestion(creationScreen, nthQuestion) {
-  question = {"text": creationScreen.querySelector(`.pergunta${nthQuestion} .input-q-text`).value,
-              "bgColor":creationScreen.querySelector(`.pergunta${nthQuestion} .input-q-bgcolor`).value,
-              "answerCorrectText":creationScreen.querySelector(`.pergunta${nthQuestion} .input-correct-text`).value,
-              "answerCorrectUrl":creationScreen.querySelector(`.pergunta${nthQuestion} .input-correct-url`).value,
-              "incorretAnswers":[{
-                "answerIncorrectText":creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-text1`).value,
-                "answerIncorrectUrl":creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-url1`).value}]}
+  question = {
+    "text": creationScreen.querySelector(`.pergunta${nthQuestion} .input-q-text`).value,
+    "bgColor": creationScreen.querySelector(`.pergunta${nthQuestion} .input-q-bgcolor`).value,
+    "answerCorrectText": creationScreen.querySelector(`.pergunta${nthQuestion} .input-correct-text`).value,
+    "answerCorrectUrl": creationScreen.querySelector(`.pergunta${nthQuestion} .input-correct-url`).value,
+    "incorretAnswers": [{
+      "answerIncorrectText": creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-text1`).value,
+      "answerIncorrectUrl": creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-url1`).value
+    }]
+  }
   if (creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-text2`).value !== "") {
-    question.incorretAnswers.push({"answerIncorrectText":creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-text2`).value,
-                                    "answerIncorrectUrl":creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-url2`).value});
+    question.incorretAnswers.push({
+      "answerIncorrectText": creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-text2`).value,
+      "answerIncorrectUrl": creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-url2`).value
+    });
   }
   if (creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-text3`).value !== "") {
-    question.incorretAnswers.push({"answerIncorrectText":creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-text3`).value,
-                                    "answerIncorrectUrl":creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-url3`).value});
+    question.incorretAnswers.push({
+      "answerIncorrectText": creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-text3`).value,
+      "answerIncorrectUrl": creationScreen.querySelector(`.pergunta${nthQuestion} .input-wrong-url3`).value
+    });
   }
   return question;
 }
@@ -365,14 +374,15 @@ function putQuizzQuestions(creationScreen, questions) {
   for (let i = 0; (i < quizzQtty || i < questions.length); i++) {
     correctAswer = questions[i].answers.filter(answer => answer.isCorrectAnswer)[0];
     incorretAnswers = questions[i].answers.filter(answer => !answer.isCorrectAnswer);
+    console.log(incorretAnswers);
     creationScreen.querySelector(`.pergunta${i} .input-q-text`).value = questions[i].title;
     creationScreen.querySelector(`.pergunta${i} .input-q-bgcolor`).value = questions[i].color;
     creationScreen.querySelector(`.pergunta${i} .color-picker`).value = questions[i].color;
     creationScreen.querySelector(`.pergunta${i} .input-correct-text`).value = correctAswer.text;
     creationScreen.querySelector(`.pergunta${i} .input-correct-url`).value = correctAswer.image;
     for (let j = 0; j < incorretAnswers.length; j++) {
-      creationScreen.querySelector(`.pergunta${i} .input-wrong-text${j+1}`).value = incorretAnswers[j].text;
-      creationScreen.querySelector(`.pergunta${i} .input-wrong-url${j+1}`).value = incorretAnswers[j].image;
+      creationScreen.querySelector(`.pergunta${i} .input-wrong-text${j + 1}`).value = incorretAnswers[j].text;
+      creationScreen.querySelector(`.pergunta${i} .input-wrong-url${j + 1}`).value = incorretAnswers[j].image;
     }
   }
 }
@@ -421,40 +431,48 @@ function validateQuestions(creationScreen) {
       imageUrl.innerHTML = ""
     }
     if (question.incorretAnswers[0].answerIncorrectText == '') {
-      wrongText1.innerHTML = `o texto da resposta incorreta ${1} não pode ser vazio`
+      wrongText1.innerHTML = `o texto da resposta incorreta 1 não pode ser vazio`;
       errors++;
     } else {
       wrongText1.innerHTML = ""
     }
-    if (question.incorretAnswers[1].answerIncorrectText == '') {
-      wrongText2.innerHTML = `o texto da resposta incorreta ${2} não pode ser vazio`
-      errors++;
-    } else {
-      wrongText2.innerHTML = ""
+    if (question.incorretAnswers.length > 1){
+      if (question.incorretAnswers[1].answerIncorrectText == '') {
+        wrongText2.innerHTML = `o texto da resposta incorreta 2 não pode ser vazio`;
+        errors++;
+      } else {
+        wrongText2.innerHTML = ""
+      }
     }
-    if (question.incorretAnswers[2].answerIncorrectText == '') {
-      wrongText3.innerHTML = `o texto da resposta incorreta ${3} não pode ser vazio`
-      errors++;
-    } else {
-      wrongText3.innerHTML = ""
+    if (question.incorretAnswers.length > 2){
+      if (question.incorretAnswers[2].answerIncorrectText == '') {
+        wrongText3.innerHTML = `o texto da resposta incorreta 3 não pode ser vazio`;
+        errors++;
+      } else {
+        wrongText3.innerHTML = ""
+      }
     }
     if (!validURL(question.incorretAnswers[0].answerIncorrectUrl)) {
-      wrongUrl1.innerHTML = `A url da resposta incorreta ${1} deve ser uma url`
+      wrongUrl1.innerHTML = `A url da resposta incorreta 1 deve ser uma url`;
       errors++;
     } else {
       wrongUrl1.innerHTML = ""
     }
-    if (!validURL(question.incorretAnswers[1].answerIncorrectUrl)) {
-      wrongUrl2.innerHTML = `A url da resposta incorreta ${2} deve ser uma url`
-      errors++;
-    } else {
-      wrongUrl2.innerHTML = ""
+    if (question.incorretAnswers.length > 1) {
+      if (!validURL(question.incorretAnswers[1].answerIncorrectUrl)) {
+        wrongUrl2.innerHTML = `A url da resposta incorreta 2 deve ser uma url`;
+        errors++;
+      } else {
+        wrongUrl2.innerHTML = ""
+      }
     }
-    if (!validURL(question.incorretAnswers[2].answerIncorrectUrl)) {
-      wrongUrl3.innerHTML = `A url da resposta incorreta ${3} deve ser uma url`
-      errors++;
-    } else {
-      wrongUrl3.innerHTML = ""
+    if (question.incorretAnswers.length > 2) {
+      if (!validURL(question.incorretAnswers[2].answerIncorrectUrl)) {
+        wrongUrl3.innerHTML = `A url da resposta incorreta 3 deve ser uma url`;
+        errors++;
+      } else {
+        wrongUrl3.innerHTML = ""
+      }
     }
     testHex.lastIndex = 0;
   }
@@ -467,7 +485,7 @@ function addQuizzLevels() {
   creationScreen = document.querySelector(".creation-screen");
   scroll(0, 0);
   let question = {};
-  if (validateQuestions(creationScreen) === 0) { 
+  if (validateQuestions(creationScreen) === 0) {
     for (let i = 0; i < quizzQtty; i++) {
       let answers = [];
       question = getQuizzQuestion(creationScreen, i);
@@ -484,16 +502,16 @@ function addQuizzLevels() {
         });
       }
       quizzQuestions.push({
-          title: question.text,
-          color: question.bgColor,
-          answers: answers,
+        title: question.text,
+        color: question.bgColor,
+        answers: answers,
       });
     }
     creationScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
     for (let i = 0; i < nQuizzLvls; i++) {
       creationScreen.innerHTML += ` 
           <div class="box level${i}">
-              <h2>Nível ${i+1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+              <h2>Nível ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
               <ul class="the-one-who-colapses">
                   <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
                   <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
@@ -517,9 +535,9 @@ function collapse(selector) {
   const ul = questionBlock.children[1];
 
   if (ul.style.maxHeight) {
-      ul.style.maxHeight = null;
+    ul.style.maxHeight = null;
   } else {
-      ul.style.maxHeight = ul.scrollHeight + "px";
+    ul.style.maxHeight = ul.scrollHeight + "px";
   }
 }
 
@@ -536,28 +554,28 @@ function validateLevels() {
   const levelPercents = [];
   let errors = 0;
   for (let i = 0; i < nQuizzLvls; i++) {
-      const lvlTitle = document.querySelector(`.level${i} .input-lvl-title`).value;
-      const lvlPercent = Number(document.querySelector(`.level${i} .input-lvl-percent`).value);
-      const lvlImgUrl = document.querySelector(`.level${i} .input-lvl-url`).value;
-      const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
+    const lvlTitle = document.querySelector(`.level${i} .input-lvl-title`).value;
+    const lvlPercent = Number(document.querySelector(`.level${i} .input-lvl-percent`).value);
+    const lvlImgUrl = document.querySelector(`.level${i} .input-lvl-url`).value;
+    const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
 
-      if (lvlTitle.length < 10) {
-        alert(`O título do nível ${i + 1} deve ter pelo menos 10 caracteres`);
-        errors++;
-      } 
-      if (lvlPercent < 0 || lvlPercent > 100) {
-        alert(`O percentual do nível ${i + 1} deve ser um número entre 0 e 100`);
-        errors++;
-      } 
-      if (!validURL(lvlImgUrl)) {
-        alert(`A url do nível ${i + 1} deve ser uma url`);
-        errors++;
-      } 
-      if (lvlText < 30) {
-        alert(`A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`);
-        errors++;
-      } 
-      levelPercents.push(lvlPercent);
+    if (lvlTitle.length < 10) {
+      alert(`O título do nível ${i + 1} deve ter pelo menos 10 caracteres`);
+      errors++;
+    }
+    if (lvlPercent < 0 || lvlPercent > 100) {
+      alert(`O percentual do nível ${i + 1} deve ser um número entre 0 e 100`);
+      errors++;
+    }
+    if (!validURL(lvlImgUrl)) {
+      alert(`A url do nível ${i + 1} deve ser uma url`);
+      errors++;
+    }
+    if (lvlText < 30) {
+      alert(`A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`);
+      errors++;
+    }
+    levelPercents.push(lvlPercent);
   }
   if (!levelPercents.includes(0)) {
     alert('É obrigatório existir pelo menos 1 nível cuja % de acerto mínima seja 0%');
@@ -572,20 +590,22 @@ function addQuizzFinal() {
   if (validateLevels() === 0) {
     scroll(0, 0);
     for (let i = 0; i < nQuizzLvls; i++) {
-        const lvlTitle = document.querySelector(`.level${i} .input-lvl-title`).value;
-        const lvlPercent = Number(document.querySelector(`.level${i} .input-lvl-percent`).value);
-        const lvlImgUrl = document.querySelector(`.level${i} .input-lvl-url`).value;
-        const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
+      const lvlTitle = document.querySelector(`.level${i} .input-lvl-title`).value;
+      const lvlPercent = Number(document.querySelector(`.level${i} .input-lvl-percent`).value);
+      const lvlImgUrl = document.querySelector(`.level${i} .input-lvl-url`).value;
+      const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
 
-        quizzLVLs.push({
-            title: lvlTitle,
-            image: lvlImgUrl,
-            text: lvlText,
-            minValue: lvlPercent
-        });
+      quizzLVLs.push({
+        title: lvlTitle,
+        image: lvlImgUrl,
+        text: lvlText,
+        minValue: lvlPercent
+      });
     }
     if (currentQuizzEditing !== undefined) {
       editQuizzSend(createObject(), currentQuizzEditing.id);
+      const main = document.querySelector("main");
+      main.innerHTML = '<img src="./img/Rolling-1s-150px.gif" alt="loading screen" class="loading">';
     } else {
       addQuizSend(createObject());
     }
@@ -603,7 +623,7 @@ function createObject() {
 
 function addQuizSend(quizzObject) {
   creationScreen = document.querySelector(".creation-screen");
-  creationScreen.innerHTML = '<img src="./img/cupertino_activity_indicator.gif" alt="loading screen" class="loading">';
+  creationScreen.innerHTML = '<img src="./img/Rolling-1s-150px.gif" alt="loading screen" class="loading">';
   const response = axios.post('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes', quizzObject);
   response.catch((error) => console.log(`erro: ${error.response.data}`));
   response.then(addQuizzSuccess);
@@ -630,9 +650,9 @@ function addQuizzSuccess(quizz) {
 function storeUserQuizz(id, key) {
   let userQuizzesStorage = localStorage.getItem("quizzes");
   if (userQuizzesStorage !== null) {
-      userQuizzesStorage = JSON.parse(userQuizzesStorage);
+    userQuizzesStorage = JSON.parse(userQuizzesStorage);
   } else {
-      userQuizzesStorage = {};
+    userQuizzesStorage = {};
   }
   userQuizzesStorage[id] = key;
   localStorage.setItem("quizzes", JSON.stringify(userQuizzesStorage));
@@ -647,22 +667,21 @@ function getSecretKey(id) {
 function deleteQuizz(element, id) {
   element.parentNode.parentNode.removeAttribute("onclick");
   if (window.confirm("Você realmente deseja apagar este quiz?")) {
-    axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, {headers: {"Secret-Key": getSecretKey(id)}})
-                  .then(() => {
-                                alert("Quizz Excluído");
-                                location.reload();
-                              })
-                  .catch(error => {
-                                    alert("Ocorreu um erro!")
-                                    console.log("Erro: ", error);
-                                    location.reload();
-                                  });
+    axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, { headers: { "Secret-Key": getSecretKey(id) } })
+      .then(() => {
+        location.reload();
+      })
+      .catch(error => {
+        alert("Ocorreu um erro!")
+        console.log("Erro: ", error);
+        location.reload();
+      });
   }
 }
 
 // BONUS - EDIT QUIZZ
 
-function editQuizz(element, id) { 
+function editQuizz(element, id) {
   element.parentNode.parentNode.removeAttribute("onclick");
   quizz = quizzesUser.filter(quizz => (quizz.id === id));
   currentQuizzEditing = quizz[0];
@@ -670,14 +689,246 @@ function editQuizz(element, id) {
 }
 
 function editQuizzSend(quizzObject, id) {
-  axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, quizzObject, {headers: {"Secret-Key": getSecretKey(id)}})
-                  .then(() => {
-                                alert("Quizz alterado!");
-                                location.reload();
-                              })
-                  .catch(error => { 
-                                    alert("Ocorreu um erro!")
-                                    console.log("Erro: ", error);
-                                    location.reload();
-                                  });
+  axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, quizzObject, { headers: { "Secret-Key": getSecretKey(id) } })
+    .then(() => {
+      location.reload();
+    })
+    .catch(error => {
+      alert("Ocorreu um erro!")
+      console.log("Erro: ", error);
+      location.reload();
+    });
+}
+
+function testarCriacao() { // Função e objeto para teste da adição de quizz //
+  addQuizzInfo();
+  //quizzObject = objetao;
+  addQuizSend(objetao);
+}
+
+const objetao = { // Função e objeto para teste da adição de quizz //
+  "title": "Quizz de teste do grupo mais bolado para testar niveis",
+  "image": "https://http.dog/200.jpg",
+  "questions": [
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+    {
+      "title": "https://http.dog/200.jpg",
+      "color": "#faffaf",
+      "answers": [
+        {
+          "text": "correta",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": true
+        },
+        {
+          "text": "https://http.dog/200.jpg",
+          "image": "https://http.dog/200.jpg",
+          "isCorrectAnswer": false
+        }
+      ]
+    },
+  ],
+  "levels": [
+    {
+      "title": "ma oeeeeeeeeeeee nivel do 00",
+      "image": "https://http.dog/200.jpg",
+      "text": "https://http.dog/200.jpg",
+      "minValue": 0
+    },
+    {
+      "title": "ma oeeeeeeeeeeee nivel do 10",
+      "image": "https://http.dog/200.jpg",
+      "text": "https://http.dog/200.jpg",
+      "minValue": 10
+    },
+    {
+      "title": "ma oeeeeeeeeeeee nivel do 30",
+      "image": "https://http.dog/200.jpg",
+      "text": "https://http.dog/200.jpg",
+      "minValue": 30
+    },
+    {
+      "title": "ma oeeeeeeeeeeee nivel do 50",
+      "image": "https://http.dog/200.jpg",
+      "text": "https://http.dog/200.jpg",
+      "minValue": 50
+    },
+    {
+      "title": "ma oeeeeeeeeeeee nivel do 20",
+      "image": "https://http.dog/200.jpg",
+      "text": "https://http.dog/200.jpg",
+      "minValue": 20
+    },
+    {
+      "title": "ma oeeeeeeeeeeee nivel do 80",
+      "image": "https://http.dog/200.jpg",
+      "text": "https://http.dog/200.jpg",
+      "minValue": 80
+    },
+    {
+      "title": "ma oeeeeeeeeeeee nivel do 90",
+      "image": "https://http.dog/200.jpg",
+      "text": "https://http.dog/200.jpg",
+      "minValue": 90
+    },
+  ]
 }
