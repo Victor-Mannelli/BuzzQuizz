@@ -44,10 +44,7 @@ function endOfQuizz(value) {
             differentLevels.push(value[i].minValue);
         }
         const sortedArray = differentLevels.sort();
-
         const percent = Math.round((correctAnswers / question.length) * 100);
-        console.log(correctAnswers, percent);
-
         const lowestValues = sortedArray.filter((minvalue) => { return (minvalue <= percent) });
         const highestUnderPercent = lowestValues[(lowestValues.length - 1)];
         let index = 0;
