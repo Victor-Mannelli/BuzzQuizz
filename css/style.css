@@ -228,6 +228,7 @@ section ul {
   color: #ffffff;
   word-break: break-word;
   position: absolute;
+  text-shadow: 1px 1px #000000;
 }
 .questions {
   display: flex;
@@ -263,6 +264,7 @@ section ul {
   font-size: 23px;
   color: #ffffff;
   word-break: break-word;
+  text-shadow: 2px 2px #000000;
 }
 .answers {
   height: 100%;
