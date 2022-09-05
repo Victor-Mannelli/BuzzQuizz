@@ -35,7 +35,7 @@ function insertQuizzes(quizzes, type) {
   quizzes.forEach((quizz) => {
     if (type === "user") {
       quizzesLI += `
-            <li class="quizz" onclick="searchQuizz(${quizz.id})">
+      <li data-identifier="quizz-card" class="quizz" onclick="searchQuizz(${quizz.id})">
                 <div class="edit-delet">
                   <div onclick="editQuizz(this, ${quizz.id})">
                     <img src="./img/edit.svg" />
@@ -47,7 +47,7 @@ function insertQuizzes(quizzes, type) {
       `;
     } else {
       quizzesLI += `
-            <li class="quizz" onclick="searchQuizz(${quizz.id})">
+      <li data-identifier="quizz-card" class="quizz" onclick="searchQuizz(${quizz.id})">
       `;
     }
     quizzesLI += `
@@ -67,15 +67,15 @@ function renderQuizzes() {
     main.innerHTML = `
             <section class="creating-quizz">
                 <p>Você não criou nenhum <br> quizz ainda :(</p>
-                <button onclick="addQuizzInfo()">Criar Quizz</button>
+                <button data-identifier="create-quizz" onclick="addQuizzInfo()">Criar Quizz</button>
             </section>
         `;
   } else {
     main.innerHTML = `
-            <section class="user-quizzes">
+    <section data-identifier="user-quizzes" class="user-quizzes">
                 <div>
                     <h1>Seus Quizzes</h1>
-                    <span onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
+                    <span data-identifier="create-quizz" onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
                 </div>
                 <ul>${insertQuizzes(quizzesUser, "user")}</ul>
             </section>
@@ -83,7 +83,7 @@ function renderQuizzes() {
   }
 
   main.innerHTML += `
-        <section class="other-user-quizzes">
+        <section data-identifier="general-quizzes" class="other-user-quizzes">
             <div>
                 <h1>Todos os Quizzes</h1>
             </div>
@@ -113,7 +113,7 @@ function insertAnswers(answers) {
   let answersLI = "";
   answers.sort(() => Math.random() - 0.5).forEach((answer) => {
     answersLI += `
-            <li class="answer ${answer.isCorrectAnswer}" onclick="selectedAnswer(this)">
+            <li data-identifier="answer" class="answer ${answer.isCorrectAnswer}" onclick="selectedAnswer(this)">
                 <img class="black-text" src="${answer.image}" alt="${answer.text}"></img>
                 <h1 class="black-text">${answer.text}</h1>
             </li>
@@ -126,7 +126,7 @@ function insertQuestions(questions) {
   let questionsLI = "";
   questions.forEach((question) => {
     questionsLI += `
-            <li class="question">
+            <li data-identifier="question"  class="question">
                 <div class="content">
                     <div class="question-title" style="background-color: ${question.color};">
                         <h1>${question.title}</h1>
@@ -229,8 +229,8 @@ function addQuizzQuestions() {
     creationScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
     for (let i = 0; i < quizzQtty; i++) {
       creationScreen.innerHTML += ` 
-        <div class="box pergunta${i}">
-            <h2>Pergunta ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+        <div data-identifier="question-form" class="box pergunta${i}">
+            <h2>Pergunta ${i + 1} <span data-identifier="expand" onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
             <ul class="the-one-who-colapses">
                 <li>
                   <input class="input-q-text" placeholder="Texto da pergunta" type="text">
@@ -507,13 +507,25 @@ function addQuizzLevels() {
     creationScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
     for (let i = 0; i < nQuizzLvls; i++) {
       creationScreen.innerHTML += ` 
-          <div class="box level${i}">
-              <h2>Nível ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+          <div data-identifier="level" class="box level${i}">
+              <h2>Nível ${i + 1} <span data-identifier="expand" onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
               <ul class="the-one-who-colapses">
-                  <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
-                  <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
-                  <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
-                  <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
+              <li>
+              <input class="input-lvl-title" placeholder="Título do nível" type="text">
+              <p class="p1-input-lvl-title-${i}"> </p>
+            </li>
+            <li>
+              <input class="input-lvl-percent" placeholder="% de acerto mínima" type="text">
+              <p class="p2-input-lvl-percent-${i}">  </p>
+            </li>
+            <li>
+              <input class="input-lvl-url" placeholder="URL da imagem do nível" type="text">
+              <p class="p3-input-lvl-url-${i}"> </p>
+            </li>
+            <li>
+              <input class="input-lvl-text" placeholder="Descrição do nível" type="text">
+              <p class="p4-input-lvl-text-${i}"> </p>
+            </li>
               </ul>
           </div>
           `;
@@ -534,7 +546,7 @@ function collapse(selector) {
   if (ul.style.maxHeight) {
     ul.style.maxHeight = null;
   } else {
-    ul.style.maxHeight = ul.scrollHeight + "px";
+    ul.style.maxHeight = 800 + "px";
   }
 }
 
@@ -556,7 +568,6 @@ function validateLevels() {
     const lvlImgUrl = document.querySelector(`.level${i} .input-lvl-url`).value;
     const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
     const lvlPercentString = document.querySelector(`.level${i} .input-lvl-percent`).value;
-
 
     let p1Title = document.querySelector(`.p1-input-lvl-title-${i}`);
     let p2Percent = document.querySelector(`.p2-input-lvl-percent-${i}`);
