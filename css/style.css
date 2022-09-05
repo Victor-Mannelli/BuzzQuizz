@@ -3,9 +3,11 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
-
-.container {
+body{
   background-color: #fafafa;
+}
+.container {
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,6 +42,7 @@ main {
   display: flex;
   justify-content: center;
   flex-direction: column;
+ 
 }
 section {
   margin-bottom: 48px;
