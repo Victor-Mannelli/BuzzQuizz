@@ -557,22 +557,35 @@ function validateLevels() {
     const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
     const lvlPercentString = document.querySelector(`.level${i} .input-lvl-percent`).value;
 
-    if (lvlTitle.length < 10) {
-      alert(`O título do nível ${i + 1} deve ter pelo menos 10 caracteres`);
-      errors++;
-    }
 
+    let p1Title = document.querySelector(`.p1-input-lvl-title-${i}`);
+    let p2Percent = document.querySelector(`.p2-input-lvl-percent-${i}`);
+    let p3Url = document.querySelector(`.p3-input-lvl-url-${i}`);
+    let p4Text = document.querySelector(`.p4-input-lvl-text-${i}`);
+
+    if (lvlTitle.length < 10) {
+      p1Title.innerHTML = `O título do nível ${i + 1} deve ter pelo menos 10 caracteres`;
+      errors++;
+    } else {
+      p1Title.innerHTML = "";
+    }
     if (lvlPercent < 0 || lvlPercent > 100 || lvlPercentString === '') {
       p2Percent.innerHTML = `O percentual do nível ${i + 1} deve ser um número entre 0 e 100`;
       errors++;
+    } else {
+      p2Percent.innerHTML = "";
     }
     if (!validURL(lvlImgUrl)) {
-      alert(`A url do nível ${i + 1} deve ser uma url`);
+      p3Url.innerHTML = `A url do nível ${i + 1} deve ser uma url`;
       errors++;
+    } else {
+      p3Url.innerHTML = "";
     }
     if (lvlText < 30) {
-      alert(`A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`);
+      p4Text.innerHTML = `A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`;
       errors++;
+    } else {
+      p4Text.innerHTML = ""
     }
     levelPercents.push(lvlPercent);
   }
