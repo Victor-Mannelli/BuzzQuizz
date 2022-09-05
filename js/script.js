@@ -570,6 +570,7 @@ function validateLevels() {
     const lvlPercent = Number(document.querySelector(`.level${i} .input-lvl-percent`).value);
     const lvlImgUrl = document.querySelector(`.level${i} .input-lvl-url`).value;
     const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
+    const lvlPercentString = document.querySelector(`.level${i} .input-lvl-percent`).value;
 
     let p1Title = document.querySelector(`.p1-input-lvl-title-${i}`);
     let p2Percent = document.querySelector(`.p2-input-lvl-percent-${i}`);
@@ -582,7 +583,7 @@ function validateLevels() {
     } else {
       p1Title.innerHTML = "";
     }
-    if (lvlPercent < 0 || lvlPercent > 100 || !null) {
+    if (lvlPercent < 0 || lvlPercent > 100 || lvlPercentString === '') {
       p2Percent.innerHTML = `O percentual do nível ${i + 1} deve ser um número entre 0 e 100`;
       errors++;
     } else {
