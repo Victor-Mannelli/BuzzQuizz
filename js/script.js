@@ -35,7 +35,7 @@ function insertQuizzes(quizzes, type) {
   quizzes.forEach((quizz) => {
     if (type === "user") {
       quizzesLI += `
-            <li data-identifier="quizz-card" class="quizz" onclick="searchQuizz(${quizz.id})">
+            <li class="quizz" onclick="searchQuizz(${quizz.id})">
                 <div class="edit-delet">
                   <div onclick="editQuizz(this, ${quizz.id})">
                     <img src="./img/edit.svg" />
@@ -47,7 +47,7 @@ function insertQuizzes(quizzes, type) {
       `;
     } else {
       quizzesLI += `
-            <li data-identifier="quizz-card" class="quizz" onclick="searchQuizz(${quizz.id})">
+            <li class="quizz" onclick="searchQuizz(${quizz.id})">
       `;
     }
     quizzesLI += `
@@ -67,15 +67,15 @@ function renderQuizzes() {
     main.innerHTML = `
             <section class="creating-quizz">
                 <p>Você não criou nenhum <br> quizz ainda :(</p>
-                <button data-identifier="create-quizz" onclick="addQuizzInfo()">Criar Quizz</button>
+                <button onclick="addQuizzInfo()">Criar Quizz</button>
             </section>
         `;
   } else {
     main.innerHTML = `
-            <section data-identifier="user-quizzes" class="user-quizzes">
+            <section class="user-quizzes">
                 <div>
                     <h1>Seus Quizzes</h1>
-                    <span data-identifier="create-quizz" onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
+                    <span onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
                 </div>
                 <ul>${insertQuizzes(quizzesUser, "user")}</ul>
             </section>
@@ -83,7 +83,7 @@ function renderQuizzes() {
   }
 
   main.innerHTML += `
-        <section data-identifier="general-quizzes" class="other-user-quizzes">
+        <section class="other-user-quizzes">
             <div>
                 <h1>Todos os Quizzes</h1>
             </div>
@@ -113,7 +113,7 @@ function insertAnswers(answers) {
   let answersLI = "";
   answers.sort(() => Math.random() - 0.5).forEach((answer) => {
     answersLI += `
-            <li data-identifier="answer" class="answer ${answer.isCorrectAnswer}" onclick="selectedAnswer(this)">
+            <li class="answer ${answer.isCorrectAnswer}" onclick="selectedAnswer(this)">
                 <img class="black-text" src="${answer.image}" alt="${answer.text}"></img>
                 <h1 class="black-text">${answer.text}</h1>
             </li>
@@ -126,7 +126,7 @@ function insertQuestions(questions) {
   let questionsLI = "";
   questions.forEach((question) => {
     questionsLI += `
-            <li data-identifier="question"  class="question">
+            <li class="question">
                 <div class="content">
                     <div class="question-title" style="background-color: ${question.color};">
                         <h1>${question.title}</h1>
@@ -229,8 +229,8 @@ function addQuizzQuestions() {
     creationScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
     for (let i = 0; i < quizzQtty; i++) {
       creationScreen.innerHTML += ` 
-        <div data-identifier="question-form" class="box pergunta${i}">
-            <h2>Pergunta ${i + 1} <span data-identifier="expand" onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+        <div class="box pergunta${i}">
+            <h2>Pergunta ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
             <ul class="the-one-who-colapses">
                 <li>
                   <input class="input-q-text" placeholder="Texto da pergunta" type="text">
@@ -374,7 +374,6 @@ function putQuizzQuestions(creationScreen, questions) {
   for (let i = 0; (i < quizzQtty || i < questions.length); i++) {
     correctAswer = questions[i].answers.filter(answer => answer.isCorrectAnswer)[0];
     incorretAnswers = questions[i].answers.filter(answer => !answer.isCorrectAnswer);
-    console.log(incorretAnswers);
     creationScreen.querySelector(`.pergunta${i} .input-q-text`).value = questions[i].title;
     creationScreen.querySelector(`.pergunta${i} .input-q-bgcolor`).value = questions[i].color;
     creationScreen.querySelector(`.pergunta${i} .color-picker`).value = questions[i].color;
@@ -393,8 +392,6 @@ function validateQuestions(creationScreen) {
 
   for (let i = 0; i < quizzQtty; i++) {
     question = getQuizzQuestion(creationScreen, i);
-    console.log(question)
-
     let questionsText = document.querySelector(`.p1-question-${i}`)
     let backgroundcolor = document.querySelector(`.p2-backgroundcolor-${i}`)
     let correctAnswer = document.querySelector(`.p3-correct-answer-${i}`)
@@ -510,25 +507,13 @@ function addQuizzLevels() {
     creationScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
     for (let i = 0; i < nQuizzLvls; i++) {
       creationScreen.innerHTML += ` 
-          <div data-identifier="level" class="box level${i}">
-              <h2>Nível ${i + 1} <span data-identifier="expand" onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+          <div class="box level${i}">
+              <h2>Nível ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
               <ul class="the-one-who-colapses">
-                  <li>
-                    <input class="input-lvl-title" placeholder="Título do nível" type="text">
-                    <p class="p1-input-lvl-title-${i}"> </p>
-                  </li>
-                  <li>
-                    <input class="input-lvl-percent" placeholder="% de acerto mínima" type="text">
-                    <p class="p2-input-lvl-percent-${i}">  </p>
-                  </li>
-                  <li>
-                    <input class="input-lvl-url" placeholder="URL da imagem do nível" type="text">
-                    <p class="p3-input-lvl-url-${i}"> </p>
-                  </li>
-                  <li>
-                    <input class="input-lvl-text" placeholder="Descrição do nível" type="text">
-                    <p class="p4-input-lvl-text-${i}"> </p>
-                  </li>
+                  <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
+                  <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
+                  <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
+                  <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
               </ul>
           </div>
           `;
@@ -549,7 +534,7 @@ function collapse(selector) {
   if (ul.style.maxHeight) {
     ul.style.maxHeight = null;
   } else {
-    ul.style.maxHeight = 800 + "px";
+    ul.style.maxHeight = ul.scrollHeight + "px";
   }
 }
 
@@ -572,34 +557,22 @@ function validateLevels() {
     const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
     const lvlPercentString = document.querySelector(`.level${i} .input-lvl-percent`).value;
 
-    let p1Title = document.querySelector(`.p1-input-lvl-title-${i}`);
-    let p2Percent = document.querySelector(`.p2-input-lvl-percent-${i}`);
-    let p3Url = document.querySelector(`.p3-input-lvl-url-${i}`);
-    let p4Text = document.querySelector(`.p4-input-lvl-text-${i}`);
-
     if (lvlTitle.length < 10) {
-      p1Title.innerHTML = `O título do nível ${i + 1} deve ter pelo menos 10 caracteres`;
+      alert(`O título do nível ${i + 1} deve ter pelo menos 10 caracteres`);
       errors++;
-    } else {
-      p1Title.innerHTML = "";
     }
+
     if (lvlPercent < 0 || lvlPercent > 100 || lvlPercentString === '') {
       p2Percent.innerHTML = `O percentual do nível ${i + 1} deve ser um número entre 0 e 100`;
       errors++;
-    } else {
-      p2Percent.innerHTML = "";
     }
     if (!validURL(lvlImgUrl)) {
-      p3Url.innerHTML = `A url do nível ${i + 1} deve ser uma url`;
+      alert(`A url do nível ${i + 1} deve ser uma url`);
       errors++;
-    } else {
-      p3Url.innerHTML = "";
     }
     if (lvlText < 30) {
-      p4Text.innerHTML = `A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`;
+      alert(`A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`);
       errors++;
-    } else {
-      p4Text.innerHTML = ""
     }
     levelPercents.push(lvlPercent);
   }
@@ -724,237 +697,4 @@ function editQuizzSend(quizzObject, id) {
       console.log("Erro: ", error);
       location.reload();
     });
-}
-
-function testarCriacao() { // Função e objeto para teste da adição de quizz //
-  addQuizzInfo();
-  //quizzObject = objetao;
-  addQuizSend(objetao);
-}
-
-const objetao = { // Função e objeto para teste da adição de quizz //
-  "title": "Quizz de teste do grupo mais bolado para testar niveis",
-  "image": "https://http.dog/200.jpg",
-  "questions": [
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-    {
-      "title": "https://http.dog/200.jpg",
-      "color": "#faffaf",
-      "answers": [
-        {
-          "text": "correta",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": true
-        },
-        {
-          "text": "https://http.dog/200.jpg",
-          "image": "https://http.dog/200.jpg",
-          "isCorrectAnswer": false
-        }
-      ]
-    },
-  ],
-  "levels": [
-    {
-      "title": "ma oeeeeeeeeeeee nivel do 00",
-      "image": "https://http.dog/200.jpg",
-      "text": "https://http.dog/200.jpg",
-      "minValue": 0
-    },
-    {
-      "title": "ma oeeeeeeeeeeee nivel do 10",
-      "image": "https://http.dog/200.jpg",
-      "text": "https://http.dog/200.jpg",
-      "minValue": 10
-    },
-    {
-      "title": "ma oeeeeeeeeeeee nivel do 30",
-      "image": "https://http.dog/200.jpg",
-      "text": "https://http.dog/200.jpg",
-      "minValue": 30
-    },
-    {
-      "title": "ma oeeeeeeeeeeee nivel do 50",
-      "image": "https://http.dog/200.jpg",
-      "text": "https://http.dog/200.jpg",
-      "minValue": 50
-    },
-    {
-      "title": "ma oeeeeeeeeeeee nivel do 20",
-      "image": "https://http.dog/200.jpg",
-      "text": "https://http.dog/200.jpg",
-      "minValue": 20
-    },
-    {
-      "title": "ma oeeeeeeeeeeee nivel do 80",
-      "image": "https://http.dog/200.jpg",
-      "text": "https://http.dog/200.jpg",
-      "minValue": 80
-    },
-    {
-      "title": "ma oeeeeeeeeeeee nivel do 90",
-      "image": "https://http.dog/200.jpg",
-      "text": "https://http.dog/200.jpg",
-      "minValue": 90
-    },
-  ]
 }
