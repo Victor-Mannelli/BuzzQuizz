@@ -513,10 +513,22 @@ function addQuizzLevels() {
           <div data-identifier="level" class="box level${i}">
               <h2>Nível ${i + 1} <span data-identifier="expand" onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
               <ul class="the-one-who-colapses">
-                  <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
-                  <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
-                  <li><input class="input-lvl-url" placeholder="URL da imagem do nível" type="text"></li>
-                  <li><input class="input-lvl-text" placeholder="Descrição do nível" type="text"></li>
+                  <li>
+                    <input class="input-lvl-title" placeholder="Título do nível" type="text">
+                    <p class="p1-input-lvl-title-${i}"> </p>
+                  </li>
+                  <li>
+                    <input class="input-lvl-percent" placeholder="% de acerto mínima" type="text">
+                    <p class="p2-input-lvl-percent-${i}">  </p>
+                  </li>
+                  <li>
+                    <input class="input-lvl-url" placeholder="URL da imagem do nível" type="text">
+                    <p class="p3-input-lvl-url-${i}"> </p>
+                  </li>
+                  <li>
+                    <input class="input-lvl-text" placeholder="Descrição do nível" type="text">
+                    <p class="p4-input-lvl-text-${i}"> </p>
+                  </li>
               </ul>
           </div>
           `;
@@ -537,7 +549,7 @@ function collapse(selector) {
   if (ul.style.maxHeight) {
     ul.style.maxHeight = null;
   } else {
-    ul.style.maxHeight = ul.scrollHeight + "px";
+    ul.style.maxHeight = 800 + "px";
   }
 }
 
@@ -559,21 +571,34 @@ function validateLevels() {
     const lvlImgUrl = document.querySelector(`.level${i} .input-lvl-url`).value;
     const lvlText = document.querySelector(`.level${i} .input-lvl-text`).value;
 
+    let p1Title = document.querySelector(`.p1-input-lvl-title-${i}`);
+    let p2Percent = document.querySelector(`.p2-input-lvl-percent-${i}`);
+    let p3Url = document.querySelector(`.p3-input-lvl-url-${i}`);
+    let p4Text = document.querySelector(`.p4-input-lvl-text-${i}`);
+
     if (lvlTitle.length < 10) {
-      alert(`O título do nível ${i + 1} deve ter pelo menos 10 caracteres`);
+      p1Title.innerHTML = `O título do nível ${i + 1} deve ter pelo menos 10 caracteres`;
       errors++;
+    } else {
+      p1Title.innerHTML = "";
     }
-    if (lvlPercent < 0 || lvlPercent > 100) {
-      alert(`O percentual do nível ${i + 1} deve ser um número entre 0 e 100`);
+    if (lvlPercent < 0 || lvlPercent > 100 || !null) {
+      p2Percent.innerHTML = `O percentual do nível ${i + 1} deve ser um número entre 0 e 100`;
       errors++;
+    } else {
+      p2Percent.innerHTML = "";
     }
     if (!validURL(lvlImgUrl)) {
-      alert(`A url do nível ${i + 1} deve ser uma url`);
+      p3Url.innerHTML = `A url do nível ${i + 1} deve ser uma url`;
       errors++;
+    } else {
+      p3Url.innerHTML = "";
     }
     if (lvlText < 30) {
-      alert(`A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`);
+      p4Text.innerHTML = `A descrição do nível ${i + 1} deve ter pelo menos 30 caracteres`;
       errors++;
+    } else {
+      p4Text.innerHTML = ""
     }
     levelPercents.push(lvlPercent);
   }
