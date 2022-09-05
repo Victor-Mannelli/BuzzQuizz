@@ -170,7 +170,6 @@ function addQuizzFinal() {
                 minValue: lvlPercent
             });
         }
-        console.log(newQuizzLvlArray);
         createObject();
         addQuizSend();
     }
@@ -190,7 +189,7 @@ function addQuizSend() {
 
     const response = axios.post('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes', newQuizzObject);
 
-    response.catch((error) => console.log(`erro: ${error.response.data}`));
+    response.catch((error) => alert(`erro: ${error.response.data}`));
     response.then(addQuizzSuccess);
 }
 
@@ -307,239 +306,6 @@ function storeUserQuizz(id, key) {
     localStorage.setItem("quizzes", JSON.stringify(userQuizzesStorage));
 }
 
-function testarCriacao() { // Função e objeto para teste da adição de quizz //
-    addQuizzInfo();
-    newQuizzObject = objetao;
-    addQuizzSend();
-}
-
-const objetao = { // Função e objeto para teste da adição de quizz //
-    "title": "Quizz de teste do grupo mais bolado para testar niveis",
-    "image": "https://http.dog/200.jpg",
-    "questions": [
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-        {
-            "title": "https://http.dog/200.jpg",
-            "color": "#faffaf",
-            "answers": [
-                {
-                    "text": "correta",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": true
-                },
-                {
-                    "text": "https://http.dog/200.jpg",
-                    "image": "https://http.dog/200.jpg",
-                    "isCorrectAnswer": false
-                }
-            ]
-        },
-    ],
-    "levels": [
-        {
-            "title": "ma oeeeeeeeeeeee nivel do 00",
-            "image": "https://http.dog/200.jpg",
-            "text": "https://http.dog/200.jpg",
-            "minValue": 0
-        },
-        {
-            "title": "ma oeeeeeeeeeeee nivel do 10",
-            "image": "https://http.dog/200.jpg",
-            "text": "https://http.dog/200.jpg",
-            "minValue": 10
-        },
-        {
-            "title": "ma oeeeeeeeeeeee nivel do 30",
-            "image": "https://http.dog/200.jpg",
-            "text": "https://http.dog/200.jpg",
-            "minValue": 30
-        },
-        {
-            "title": "ma oeeeeeeeeeeee nivel do 50",
-            "image": "https://http.dog/200.jpg",
-            "text": "https://http.dog/200.jpg",
-            "minValue": 50
-        },
-        {
-            "title": "ma oeeeeeeeeeeee nivel do 20",
-            "image": "https://http.dog/200.jpg",
-            "text": "https://http.dog/200.jpg",
-            "minValue": 20
-        },
-        {
-            "title": "ma oeeeeeeeeeeee nivel do 80",
-            "image": "https://http.dog/200.jpg",
-            "text": "https://http.dog/200.jpg",
-            "minValue": 80
-        },
-        {
-            "title": "ma oeeeeeeeeeeee nivel do 90",
-            "image": "https://http.dog/200.jpg",
-            "text": "https://http.dog/200.jpg",
-            "minValue": 90
-        },
-    ]
-}
-
 function collapse(selector) {
     const h2 = selector.parentNode;
     const questionBlock = h2.parentNode;
@@ -550,5 +316,4 @@ function collapse(selector) {
     } else {
         ul.style.maxHeight = ul.scrollHeight + "px";
     }
-
 }
