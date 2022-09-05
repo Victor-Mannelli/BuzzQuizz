@@ -18,8 +18,8 @@ function separateQuizzes(quizzes) {
   let userQuizzesStorage = localStorage.getItem("quizzes");
   if (userQuizzesStorage !== null) {
     userQuizzesStorage = JSON.parse(userQuizzesStorage);
-    quizzesUser = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id+''));
-    quizzesOtherUsers = quizzes.filter(quizze => !(Object.keys(userQuizzesStorage).includes(quizze.id+'')));
+    quizzesUser = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id + ''));
+    quizzesOtherUsers = quizzes.filter(quizze => !(Object.keys(userQuizzesStorage).includes(quizze.id + '')));
   } else {
     quizzesOtherUsers = quizzes;
   }
@@ -35,7 +35,7 @@ function insertQuizzes(quizzes, type) {
   quizzes.forEach((quizz) => {
     if (type === "user") {
       quizzesLI += `
-            <li class="quizz" onclick="searchQuizz(${quizz.id})">
+            <li data-identifier="quizz-card" class="quizz" onclick="searchQuizz(${quizz.id})">
                 <div class="edit-delet">
                   <div onclick="editQuizz(this, ${quizz.id})">
                     <img src="./img/edit.svg" />
@@ -47,7 +47,7 @@ function insertQuizzes(quizzes, type) {
       `;
     } else {
       quizzesLI += `
-            <li class="quizz" onclick="searchQuizz(${quizz.id})">
+            <li data-identifier="quizz-card" class="quizz" onclick="searchQuizz(${quizz.id})">
       `;
     }
     quizzesLI += `
@@ -67,15 +67,15 @@ function renderQuizzes() {
     main.innerHTML = `
             <section class="creating-quizz">
                 <p>Você não criou nenhum <br> quizz ainda :(</p>
-                <button onclick="addQuizzInfo()">Criar Quizz</button>
+                <button data-identifier="create-quizz" onclick="addQuizzInfo()">Criar Quizz</button>
             </section>
         `;
   } else {
     main.innerHTML = `
-            <section class="user-quizzes">
+            <section data-identifier="user-quizzes" class="user-quizzes">
                 <div>
                     <h1>Seus Quizzes</h1>
-                    <span onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
+                    <span data-identifier="create-quizz" onclick="addQuizzInfo()"><ion-icon name="add-circle-sharp"></ion-icon><span>
                 </div>
                 <ul>${insertQuizzes(quizzesUser, "user")}</ul>
             </section>
@@ -83,7 +83,7 @@ function renderQuizzes() {
   }
 
   main.innerHTML += `
-        <section class="other-user-quizzes">
+        <section data-identifier="general-quizzes" class="other-user-quizzes">
             <div>
                 <h1>Todos os Quizzes</h1>
             </div>
@@ -113,7 +113,7 @@ function insertAnswers(answers) {
   let answersLI = "";
   answers.sort(() => Math.random() - 0.5).forEach((answer) => {
     answersLI += `
-            <li class="answer ${answer.isCorrectAnswer}" onclick="selectedAnswer(this)">
+            <li data-identifier="answer" class="answer ${answer.isCorrectAnswer}" onclick="selectedAnswer(this)">
                 <img class="black-text" src="${answer.image}" alt="${answer.text}"></img>
                 <h1 class="black-text">${answer.text}</h1>
             </li>
@@ -126,7 +126,7 @@ function insertQuestions(questions) {
   let questionsLI = "";
   questions.forEach((question) => {
     questionsLI += `
-            <li class="question">
+            <li data-identifier="question"  class="question">
                 <div class="content">
                     <div class="question-title" style="background-color: ${question.color};">
                         <h1>${question.title}</h1>
@@ -229,8 +229,8 @@ function addQuizzQuestions() {
     creationScreen.innerHTML = `<h1>Crie suas perguntas</h1>`;
     for (let i = 0; i < quizzQtty; i++) {
       creationScreen.innerHTML += ` 
-        <div class="box pergunta${i}">
-            <h2>Pergunta ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+        <div data-identifier="question-form" class="box pergunta${i}">
+            <h2>Pergunta ${i + 1} <span data-identifier="expand" onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
             <ul class="the-one-who-colapses">
                 <li>
                   <input class="input-q-text" placeholder="Texto da pergunta" type="text">
@@ -389,7 +389,7 @@ function putQuizzQuestions(creationScreen, questions) {
 
 function validateQuestions(creationScreen) {
   let errors = 0;
-  let question = {}; 
+  let question = {};
 
   for (let i = 0; i < quizzQtty; i++) {
     question = getQuizzQuestion(creationScreen, i);
@@ -407,25 +407,25 @@ function validateQuestions(creationScreen) {
     let wrongUrl3 = document.querySelector(`.p10-wrong-url3-${i}`)
 
     if (question.text.length < 20) {
-      questionsText.innerHTML = `O título da pergunta ${i+1} deve ter pelo menos 20 caracteres`;
+      questionsText.innerHTML = `O título da pergunta ${i + 1} deve ter pelo menos 20 caracteres`;
       errors++;
     } else {
       questionsText.innerHTML = "";
     }
     if (!testHex.test(question.bgColor)) {
-      backgroundcolor.innerHTML = `A cor da pergunta ${i+1} deve ser hexadecimal com #`;
+      backgroundcolor.innerHTML = `A cor da pergunta ${i + 1} deve ser hexadecimal com #`;
       errors++;
     } else {
       backgroundcolor.innerHTML = "";
     }
     if (question.answerCorrectText === '') {
-      correctAnswer.innerHTML = `o texto da pergunta ${i+1} não pode ser vazio`;
+      correctAnswer.innerHTML = `o texto da pergunta ${i + 1} não pode ser vazio`;
       errors++;
     } else {
       correctAnswer.innerHTML = "";
     }
     if (!validURL(question.answerCorrectUrl)) {
-      imageUrl.innerHTML = `A url da pergunta ${i+1} deve ser uma url`;
+      imageUrl.innerHTML = `A url da pergunta ${i + 1} deve ser uma url`;
       errors++;
     } else {
       imageUrl.innerHTML = ""
@@ -436,7 +436,7 @@ function validateQuestions(creationScreen) {
     } else {
       wrongText1.innerHTML = ""
     }
-    if (question.incorretAnswers.length > 1){
+    if (question.incorretAnswers.length > 1) {
       if (question.incorretAnswers[1].answerIncorrectText == '') {
         wrongText2.innerHTML = `o texto da resposta incorreta 2 não pode ser vazio`;
         errors++;
@@ -444,7 +444,7 @@ function validateQuestions(creationScreen) {
         wrongText2.innerHTML = ""
       }
     }
-    if (question.incorretAnswers.length > 2){
+    if (question.incorretAnswers.length > 2) {
       if (question.incorretAnswers[2].answerIncorrectText == '') {
         wrongText3.innerHTML = `o texto da resposta incorreta 3 não pode ser vazio`;
         errors++;
@@ -510,8 +510,8 @@ function addQuizzLevels() {
     creationScreen.innerHTML = `<h1>Agora, decida os níveis</h1>`;
     for (let i = 0; i < nQuizzLvls; i++) {
       creationScreen.innerHTML += ` 
-          <div class="box level${i}">
-              <h2>Nível ${i + 1} <span onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
+          <div data-identifier="level" class="box level${i}">
+              <h2>Nível ${i + 1} <span data-identifier="expand" onclick="collapse(this)"> <ion-icon name="create-outline"></ion-icon> </span> </h2>
               <ul class="the-one-who-colapses">
                   <li><input class="input-lvl-title" placeholder="Título do nível" type="text"></li>
                   <li><input class="input-lvl-percent" placeholder="% de acerto mínima" type="text"></li>
