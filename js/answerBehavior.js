@@ -57,7 +57,7 @@ function endOfQuizz(value) {
             }
         }
         questions.innerHTML += `
-                <li class="question">
+                <li data-identifier="quizz-result" class="question">
                     <div class="feedback-content">
                         <div class="feedback-header">
                             <h1>${percent}% de acerto: ${value[index].title}</h1>
