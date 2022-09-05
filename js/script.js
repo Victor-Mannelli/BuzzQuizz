@@ -391,8 +391,8 @@ function validateQuestions(creationScreen) {
     let imageUrl = document.querySelector(`.p4-image-url-${i}`)
     let wrongText1 = document.querySelector(`.p5-wrong-text1-${i}`)
     let wrongUrl1 = document.querySelector(`.p6-wrong-url1-${i}`)
-    let wrongText2 = document.querySelector(`p7-wrong-text2-${i}`)
-    let wrongUrl2 = document.querySelector(`p8-wrong-url2-${i}`)
+    let wrongText2 = document.querySelector(`.p7-wrong-text2-${i}`)
+    let wrongUrl2 = document.querySelector(`.p8-wrong-url2-${i}`)
     let wrongText3 = document.querySelector(`.p9-wrong-text3-${i}`)
     let wrongUrl3 = document.querySelector(`.p10-wrong-url3-${i}`)
 
