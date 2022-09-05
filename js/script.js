@@ -18,13 +18,8 @@ function separateQuizzes(quizzes) {
   let userQuizzesStorage = localStorage.getItem("quizzes");
   if (userQuizzesStorage !== null) {
     userQuizzesStorage = JSON.parse(userQuizzesStorage);
-<<<<<<< HEAD
-    quizzes = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id + ''));
-    return quizzes;
-=======
     quizzesUser = quizzes.filter(quizze => Object.keys(userQuizzesStorage).includes(quizze.id+''));
     quizzesOtherUsers = quizzes.filter(quizze => !(Object.keys(userQuizzesStorage).includes(quizze.id+'')));
->>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
   } else {
     quizzesOtherUsers = quizzes;
   }
@@ -379,6 +374,7 @@ function putQuizzQuestions(creationScreen, questions) {
   for (let i = 0; (i < quizzQtty || i < questions.length); i++) {
     correctAswer = questions[i].answers.filter(answer => answer.isCorrectAnswer)[0];
     incorretAnswers = questions[i].answers.filter(answer => !answer.isCorrectAnswer);
+    console.log(incorretAnswers);
     creationScreen.querySelector(`.pergunta${i} .input-q-text`).value = questions[i].title;
     creationScreen.querySelector(`.pergunta${i} .input-q-bgcolor`).value = questions[i].color;
     creationScreen.querySelector(`.pergunta${i} .color-picker`).value = questions[i].color;
@@ -393,12 +389,8 @@ function putQuizzQuestions(creationScreen, questions) {
 
 function validateQuestions(creationScreen) {
   let errors = 0;
-<<<<<<< HEAD
-  let question = {};
-=======
   let question = {}; 
 
->>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
   for (let i = 0; i < quizzQtty; i++) {
     question = getQuizzQuestion(creationScreen, i);
     console.log(question)
@@ -409,29 +401,18 @@ function validateQuestions(creationScreen) {
     let imageUrl = document.querySelector(`.p4-image-url-${i}`)
     let wrongText1 = document.querySelector(`.p5-wrong-text1-${i}`)
     let wrongUrl1 = document.querySelector(`.p6-wrong-url1-${i}`)
-    let wrongText2 = document.querySelector(`p7-wrong-text2-${i}`)
-    let wrongUrl2 = document.querySelector(`p8-wrong-url2-${i}`)
+    let wrongText2 = document.querySelector(`.p7-wrong-text2-${i}`)
+    let wrongUrl2 = document.querySelector(`.p8-wrong-url2-${i}`)
     let wrongText3 = document.querySelector(`.p9-wrong-text3-${i}`)
     let wrongUrl3 = document.querySelector(`.p10-wrong-url3-${i}`)
 
     if (question.text.length < 20) {
-<<<<<<< HEAD
-      alert(`O título da pergunta ${i + 1} deve ter pelo menos 20 caracteres`);
-=======
       questionsText.innerHTML = `O título da pergunta ${i+1} deve ter pelo menos 20 caracteres`;
->>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
       errors++;
     } else {
       questionsText.innerHTML = "";
     }
     if (!testHex.test(question.bgColor)) {
-<<<<<<< HEAD
-      alert(`A cor da pergunta ${i + 1} deve ser hexadecimal com #`);
-      errors++;
-    }
-    if (question.answerCorrectText === '') {
-      alert(`o texto da pergunta ${i + 1} não pode ser vazio`);
-=======
       backgroundcolor.innerHTML = `A cor da pergunta ${i+1} deve ser hexadecimal com #`;
       errors++;
     } else {
@@ -439,67 +420,59 @@ function validateQuestions(creationScreen) {
     }
     if (question.answerCorrectText === '') {
       correctAnswer.innerHTML = `o texto da pergunta ${i+1} não pode ser vazio`;
->>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
       errors++;
     } else {
       correctAnswer.innerHTML = "";
     }
     if (!validURL(question.answerCorrectUrl)) {
-<<<<<<< HEAD
-      alert(`A url da pergunta ${i + 1} deve ser uma url`);
-      errors++;
-    }
-    for (let j = 0; j < question.incorretAnswers.length; j++) {
-      if (question.incorretAnswers[j].answerIncorrectText == '') {
-        alert(`o texto da resposta incorreta ${j + 1} não pode ser vazio`);
-        errors++;
-      }
-      if (!validURL(question.incorretAnswers[j].answerIncorrectUrl)) {
-        alert(`A url da resposta incorreta ${j + 1} deve ser uma url`);
-        errors++;
-      }
-=======
       imageUrl.innerHTML = `A url da pergunta ${i+1} deve ser uma url`;
       errors++;
     } else {
       imageUrl.innerHTML = ""
     }
     if (question.incorretAnswers[0].answerIncorrectText == '') {
-      wrongText1.innerHTML = `o texto da resposta incorreta ${1} não pode ser vazio`
+      wrongText1.innerHTML = `o texto da resposta incorreta 1 não pode ser vazio`;
       errors++;
     } else {
       wrongText1.innerHTML = ""
     }
-    if (question.incorretAnswers[1].answerIncorrectText == '') {
-      wrongText2.innerHTML = `o texto da resposta incorreta ${2} não pode ser vazio`
-      errors++;
-    } else {
-      wrongText2.innerHTML = ""
+    if (question.incorretAnswers.length > 1){
+      if (question.incorretAnswers[1].answerIncorrectText == '') {
+        wrongText2.innerHTML = `o texto da resposta incorreta 2 não pode ser vazio`;
+        errors++;
+      } else {
+        wrongText2.innerHTML = ""
+      }
     }
-    if (question.incorretAnswers[2].answerIncorrectText == '') {
-      wrongText3.innerHTML = `o texto da resposta incorreta ${3} não pode ser vazio`
-      errors++;
-    } else {
-      wrongText3.innerHTML = ""
+    if (question.incorretAnswers.length > 2){
+      if (question.incorretAnswers[2].answerIncorrectText == '') {
+        wrongText3.innerHTML = `o texto da resposta incorreta 3 não pode ser vazio`;
+        errors++;
+      } else {
+        wrongText3.innerHTML = ""
+      }
     }
     if (!validURL(question.incorretAnswers[0].answerIncorrectUrl)) {
-      wrongUrl1.innerHTML = `A url da resposta incorreta ${1} deve ser uma url`
+      wrongUrl1.innerHTML = `A url da resposta incorreta 1 deve ser uma url`;
       errors++;
     } else {
       wrongUrl1.innerHTML = ""
     }
-    if (!validURL(question.incorretAnswers[1].answerIncorrectUrl)) {
-      wrongUrl2.innerHTML = `A url da resposta incorreta ${2} deve ser uma url`
-      errors++;
-    } else {
-      wrongUrl2.innerHTML = ""
+    if (question.incorretAnswers.length > 1) {
+      if (!validURL(question.incorretAnswers[1].answerIncorrectUrl)) {
+        wrongUrl2.innerHTML = `A url da resposta incorreta 2 deve ser uma url`;
+        errors++;
+      } else {
+        wrongUrl2.innerHTML = ""
+      }
     }
-    if (!validURL(question.incorretAnswers[2].answerIncorrectUrl)) {
-      wrongUrl3.innerHTML = `A url da resposta incorreta ${3} deve ser uma url`
-      errors++;
-    } else {
-      wrongUrl3.innerHTML = ""
->>>>>>> f8d9cc4769460ea522858ffa94e4cc67dbb2fd8a
+    if (question.incorretAnswers.length > 2) {
+      if (!validURL(question.incorretAnswers[2].answerIncorrectUrl)) {
+        wrongUrl3.innerHTML = `A url da resposta incorreta 3 deve ser uma url`;
+        errors++;
+      } else {
+        wrongUrl3.innerHTML = ""
+      }
     }
     testHex.lastIndex = 0;
   }
@@ -696,7 +669,6 @@ function deleteQuizz(element, id) {
   if (window.confirm("Você realmente deseja apagar este quiz?")) {
     axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, { headers: { "Secret-Key": getSecretKey(id) } })
       .then(() => {
-        alert("Quizz Excluído");
         location.reload();
       })
       .catch(error => {
@@ -719,7 +691,6 @@ function editQuizz(element, id) {
 function editQuizzSend(quizzObject, id) {
   axios.put(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`, quizzObject, { headers: { "Secret-Key": getSecretKey(id) } })
     .then(() => {
-      alert("Quizz alterado!");
       location.reload();
     })
     .catch(error => {
