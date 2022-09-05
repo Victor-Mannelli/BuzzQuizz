@@ -1,27 +1,28 @@
 let counter = 0;
 let correctAnswers = 0;
 function selectedAnswer(selector) {
-    const chosenAnswer = selector.parentNode
-    let answers = chosenAnswer.querySelectorAll('.answer')
-    counter++
+    const chosenAnswer = selector.parentNode;
+    let answers = chosenAnswer.querySelectorAll('.answer');
+    counter++;
     for (i = 0; i < answers.length; i++) {
-        answers[i].children[1].classList.remove('black-text')
-        answers[i].classList.add('non-clickable')
+        answers[i].children[1].classList.remove('black-text');
+        answers[i].classList.add('non-clickable');
         if (answers[i] !== selector) {
-            answers[i].classList.add('non-chosen-answers')
+            answers[i].classList.add('non-chosen-answers');
         }
     }
-    endOfQuizz(quizzData);
-    setTimeout(scrollWithOrder, 2000)
 
     if (selector.classList.contains('true')) {
-        correctAnswers++
+        correctAnswers++;
     }
+
+    endOfQuizz(quizzData);
+    setTimeout(scrollWithOrder, 2000);
 }
 
 function scrollWithOrder() {
-    const question = document.querySelectorAll('.question')
-    const overlay = document.querySelector('.overlay')
+    const question = document.querySelectorAll('.question');
+    const overlay = document.querySelector('.overlay');
     if (counter === 0) {
         overlay.scrollIntoView();
     } else {
@@ -45,6 +46,7 @@ function endOfQuizz(value) {
         const sortedArray = differentLevels.sort();
 
         const percent = Math.round((correctAnswers / question.length) * 100);
+        console.log(correctAnswers, percent);
 
         const lowestValues = sortedArray.filter((minvalue) => { return (minvalue <= percent) });
         const highestUnderPercent = lowestValues[(lowestValues.length - 1)];
@@ -58,7 +60,7 @@ function endOfQuizz(value) {
                 <li class="question">
                     <div class="feedback-content">
                         <div class="feedback-header">
-                            <h1>${value[index].title}</h1>
+                            <h1>${percent}% de acerto: ${value[index].title}</h1>
                         </div>
                         <div class="feedback-main"">
                             <img src="${value[index].image}"> </img>
@@ -72,7 +74,7 @@ function endOfQuizz(value) {
                 </li>
             `;
 
-        const feedback = document.querySelector('.feedback-content')
+        const feedback = document.querySelector('.feedback-content');
         feedback?.scrollIntoView({ behavior: 'smooth' });
 
         const restartButton = document.querySelector('.re-start')
